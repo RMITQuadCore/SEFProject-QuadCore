@@ -11,12 +11,28 @@ public class StudentEntersArrayofPreferredClients {
 	String [] emptyarray4 = new String [4];
 	String [] emptyarray3 = new String [3];
 	String [] emptyarray2 = new String [2];
+	
 	Student s1 = new Student("","","","",0.0,0.0,'F',emptyList,emptyList,emptyarray4,emptyarray2,emptyarray3);
     String testOfferedPreferredProjects[]= {"Amazon","Google","HP","Telstra"};//dummy
+    Project p1 = new Project("CL101", "Amazon", "xyz1", "xyz1", "xyz1", null, 0);
+
+
+	Project p2 = new Project("CL102", "Google", "xyz2", "xyz2", "xyz2", null, 0);
+	
+
+	Project p3 = new Project("CL103", "HP", "xyz3", "xyz3", "xyz3", null, 0);
+
+
+	Project p4 = new Project("CL104", "Telstra", "xyz4", "xyz4", "xyz4", null, 0);
+
     
     @Before
 	public void setUp() throws Exception {
-		
+    	
+		Project.pr.add(p1);
+		Project.pr.add(p2);
+		Project.pr.add(p3);
+		Project.pr.add(p4);
 		System.out.println("Before");
 		
 		
