@@ -157,13 +157,13 @@ public class Project {
 
 	public static void discardUnpopularProjects() {
 		int numStudents = Student.allStudents.size();
-		System.out.println("Number of students: " + numStudents);
+		System.out.println("no of studs" + numStudents);
 
 		int numProjects = pr.size();
-		System.out.println("Number of projects: " + numProjects);
+		System.out.println("no of projs" + numProjects);
 
 		int numProjectReqd = (numStudents / 4);
-		System.out.println("Number of projects required: " + numProjectReqd);
+		System.out.println("no of projs reqd" + numProjectReqd);
 
 		Project temp;
 		if (pr.size() > 1) // check if the number of orders is larger than 1
@@ -179,12 +179,12 @@ public class Project {
 				}
 			}
 		}
-//		for (Project p : pr) {
-//			System.out.println(p.getPopularityCounter());
-//		}
+		for (Project p : pr) {
+			System.out.println(p.getPopularityCounter());
+		}
 
 		for (int i = numProjects - 1; i >= numProjectReqd; i--) {
-
+			System.out.println("i=" + i);
 			pr.remove(i);
 		}
 
