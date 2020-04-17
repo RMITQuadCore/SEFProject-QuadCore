@@ -1,24 +1,20 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class ClientRepresentative {
+public class ClientRepresentative extends User {
 	public static ArrayList<ClientRepresentative> cr = new ArrayList<ClientRepresentative>();
-	// public String[] projects = new String[20];
 	public ArrayList<String> projects = new ArrayList<String>();
+	Project pr = new Project();
 	Scanner sc = new Scanner(System.in);
 
 	public ClientRepresentative() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ClientRepresentative(String clientId, String firstName, String lastName, String userName, String password,
-			String organisation, String emailId, ArrayList<String> projects) {
-		this.clientId = clientId;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.userName = userName;
-		this.organisation = organisation;
-		this.emailId = emailId;
+	public ClientRepresentative(String id, String firstName, String lastName, String emailID, String userName,
+			String password, String org, ArrayList<String> projects) {
+		super(id, firstName, lastName, emailID, userName, password, org);
+
 		this.projects = null;
 	}
 
@@ -29,13 +25,21 @@ public class ClientRepresentative {
 			ArrayList<String> projects = new ArrayList<String>();
 			String choice;
 			do {
-				Project pr = new Project();
+
 				projects.add(pr.createProject());
 				System.out.println("Do you want to add more projects? Y/N");
 				choice = sc.nextLine();
 			} while (choice.toUpperCase().compareTo("N") != 0);
 		}
-		cr.add(new ClientRepresentative(clientId, organisation, emailId, projects));
+		this.setProjects(projects);
+	}
+
+	public ArrayList<String> getProjects() {
+		return projects;
+	}
+
+	public void setProjects(ArrayList<String> projects) {
+		this.projects = projects;
 	}
 
 //	public static void main(String[] args) {

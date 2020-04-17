@@ -1,4 +1,10 @@
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Project {
@@ -20,7 +26,7 @@ public class Project {
 	}
 
 	public Project(String clientId, String projectId, String projectTitle, String projectDetails, String role,
-			String[] framework) {
+			String[] framework, int popularityCounter) {
 		this.clientId = clientId;
 		this.projectId = projectId;
 		this.projectTitle = projectTitle;
@@ -28,7 +34,7 @@ public class Project {
 		this.studentId = null;
 		this.role = role;
 		this.framework = framework;
-		this.popularityCounter = 0;
+		this.popularityCounter = popularityCounter;
 	}
 
 	public String getRole() {
@@ -145,12 +151,47 @@ public class Project {
 			choice = sc.nextLine();
 		} while (choice.toUpperCase().compareTo("N") != 0);
 		this.setFramework(framework1);
-		pr.add(new Project(clientId, projectId, projectTitle, projectDetails, role, framework));
+		this.popularityCounter++;
+		pr.add(new Project(clientId, projectId, projectTitle, projectDetails, role, framework, popularityCounter));
 	}
 
-	public static void main(String[] args) {
-		Project pr1 = new Project();
-		pr1.createProject();
+	public static void discardUnpopularProjects() {
+		int numStudents = Student.allStudents.size();
+		System.out.println("Number of students: " + numStudents);
+
+		int numProjects = pr.size();
+		System.out.println("Number of projects: " + numProjects);
+
+		int numProjectReqd = (numStudents / 4);
+		System.out.println("Number of projects required: " + numProjectReqd);
+
+		Project temp;
+		if (pr.size() > 1) // check if the number of orders is larger than 1
+		{
+			for (int x = 0; x < pr.size(); x++) // bubble sort outer loop
+			{
+				for (int i = 0; i < pr.size() - x - 1; i++) {
+					if (pr.get(i).getPopularityCounter() < (pr.get(i + 1).getPopularityCounter())) {
+						temp = pr.get(i);
+						pr.set(i, pr.get(i + 1));
+						pr.set(i + 1, temp);
+					}
+				}
+			}
+		}
+//		for (Project p : pr) {
+//			System.out.println(p.getPopularityCounter());
+//		}
+
+		for (int i = numProjects - 1; i >= numProjectReqd; i--) {
+
+			pr.remove(i);
+		}
+
+		for (Project p : pr) {
+			System.out.println("Required Projects:\nProject ID: " + p.getProjectId() + "\nProject Details: "
+					+ p.getProjectDetails() + "\nProject Popularity Counter:" + p.getPopularityCounter());
+		}
 	}
 
 }

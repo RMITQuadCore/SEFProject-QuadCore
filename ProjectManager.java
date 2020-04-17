@@ -1,104 +1,103 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class ProjectManager //extends User
-{
+public class ProjectManager extends User {
 
-    //Actual constructor
-  /*  public ProjectManager()
-    {
-        //super(id, firstName, lastName, emailId, userName, password, org)
+	public ArrayList<String> studentPersonalities = new ArrayList<String>();
+	Scanner scan = new Scanner(System.in);
 
-    }
-   */
+	public ProjectManager() {
+	}
 
-    public ArrayList<String> studentPersonalities = new ArrayList<String>();
-    Scanner scan = new Scanner(System.in);
+	public ProjectManager(String id, String firstName, String lastName, String emailID, String userName,
+			String password, String org) {
 
-    public ProjectManager(String projManagerId, String firstName, String lastName, String userName, String password,
-                          String organisation, String emailId, ArrayList<String> projects) {
-        //super(name, emailId, organisation, ID)
-        this.clientId = clientId;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.userName = userName;
-        this.organisation = organisation;
-        this.emailId = emailId;
-        this.projects = null;
-    }
+		super(id, firstName, lastName, emailID, userName, password, org);
 
-   
-    public void pmMenu() {
-        int choice = 0;
-        do {
-            try {
-                System.out.println("Project Manager Menu!\n1.Enter Personality of students\n2. Change Sign up status" +
-                        " \n3. Discard Unpopular Projects");
-                choice = Integer.parseInt(s.next());
-            } catch (NumberFormatException e) {
-                System.err.println("Please enter an integer");
-            }
-        } while (choice < 1 || choice > 3);
+	}
 
-        switch (choice)
-        {
-            case 1:
-                enterStudentPersonality();
-                break;
-            case 2:
-                setSignUpStatus();
-                break;
+	public void pmMenu() {
+		int choice = 0;
+		do {
+			try {
+				System.out.println("Project Manager Menu!\n1.Enter Personality of students\n2. Change Sign up status");
+				choice = Integer.parseInt(s.next());
+			} catch (NumberFormatException e) {
+				System.err.println("Please enter an integer");
+			}
+		} while (choice < 1 || choice > 3);
 
-        }
+		switch (choice) {
+		case 1:
+			enterStudentPersonality();
+			break;
+		case 2:
+			setSignUpStatus();
+			break;
 
-    }
+		}
 
+	}
 
-    public void enterStudentPersonality() {
-        // need to know name and ID of students here the only I can assign
+	public void enterStudentPersonality() {
+		boolean foundStudent = false, validPersonality = false;
+		String studID;
+		char studPersonality = '0';
 
-        Student stud = new Student();
-        ArrayList<String> studentPersonalities = new ArrayList<String>();
-        char[] validPersonalities = {'a', 'A', 'b', 'B', 'c', 'C', 'd', 'D', 'e', 'E', 'f', 'F'};
-        for (stud:
-             Student)
-            System.out.println("Please enter personality of + //stud.firstName + stud.ID");
-        String input = scan.nextLine();
-        char tempPersonality = input.charAt(0);
-        for (int i = 0; i < 12; i++) {
-            if (tempPersonality == validPersonalities[i]) {
-                stud.add(new Student(personality))   ///////going wrong here...how do I add it in arrayList
-            } else {
-            }
-        }
-    }
+		do {
+			System.out.println("\nEnter assigned student ID:");
+			studID = scan.next();
+			studID += scan.nextLine();
+			for (Student stud : Student.allStudents) {
 
+				if (((Student) stud).getId().compareTo(studID) == 0) {
+					foundStudent = true;
+					System.out.println("\nPlease enter personality of " + studID + " :");
+					studPersonality = scan.nextLine().toUpperCase().charAt(0);
 
-    public boolean setSignUpStatus()
-    {
-        // true = open && false = closed
+					char[] validPersonalities = { 'A', 'B', 'C', 'D', 'E', 'F' };
+					for (int i = 0; i < 6; i++) {
+						if (studPersonality == validPersonalities[i]) {
+							validPersonality = true;
+							stud.setStudentPersonality(studPersonality);
+						}
+					}
+					if (!validPersonality) {
+						System.out.println("Invalid personality type!");
+					}
 
-        int choice = 0;
-        do {
-            try
-            {
-                System.out.println("Set Sign Up Status" + "\n1. Open" + "\n2.Closed");
-                System.out.println("Please enter your Choice :");
-                choice = Integer.parseInt(s.next());
-            } catch (NumberFormatException e) {
-                System.err.println("Please enter an integer");
-            }
-        } while (choice < 1 || choice > 3);
+				}
 
-        switch (choice)
-        {
-            case 1:
-                return true;
-            break;
-            case 2:
-                return false;
-            break;
-        }
-    }
+			}
+			if (!foundStudent) {
+				System.out.println("Student not found!");
+			}
+		} while (foundStudent == false || studID.isEmpty() || studPersonality == '0');
+	}
+
+	public boolean setSignUpStatus() {
+//		// true = open && false = closed
+//		
+//		int choice = 0;
+//		do {
+//			try {
+//				System.out.println("Set Sign Up Status" + "\n1. Open" + "\n2.Closed");
+//				System.out.println("Please enter your Choice :");
+//				choice = Integer.parseInt(s.next());
+//			} catch (NumberFormatException e) {
+//				System.err.println("Please enter an integer");
+//			}
+//		} while (choice < 1 || choice > 3);
+//
+//		switch (choice) {
+//		case 1:
+//			return true;
+//			break;
+//		case 2:
+//			return false;
+//			break;
+		// }
+		return false;
+	}
 
 }
