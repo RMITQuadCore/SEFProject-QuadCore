@@ -1,7 +1,7 @@
 # SEFProject-QuadCore
 RMIT Assignment Software Engineering Fundamentals Sem 1 2020
 
-Project Team Formation\ 
+Project Team Formation
 
 Gajendra Singh Shekhawat(s3796520)\
 Haffaz Mohammad Sattar(s3773788)\
