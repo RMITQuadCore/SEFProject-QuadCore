@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
+//It's working
 public class ProjectManager extends User {
 
 	public ArrayList<String> studentPersonalities = new ArrayList<String>();
@@ -10,7 +11,7 @@ public class ProjectManager extends User {
 	}
 
 	public ProjectManager(String id, String firstName, String lastName, String emailID, String userName,
-			String password, String org) {
+						  String password, String org) {
 
 		super(id, firstName, lastName, emailID, userName, password, org);
 
@@ -28,12 +29,12 @@ public class ProjectManager extends User {
 		} while (choice < 1 || choice > 3);
 
 		switch (choice) {
-		case 1:
-			enterStudentPersonality();
-			break;
-		case 2:
-			setSignUpStatus();
-			break;
+			case 1:
+				enterStudentPersonality();
+				break;
+			case 2:
+				setSignUpStatus();
+				break;
 
 		}
 
