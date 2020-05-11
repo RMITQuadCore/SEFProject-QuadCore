@@ -8,13 +8,13 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class Project {
-	public static ArrayList<Project> pr = new ArrayList<Project>();
+	public static ArrayList<Project> pr = new ArrayList<>();
 	public String projectId = "PROJ100";
 	public String clientId;
 	public String projectTitle;
 	public String projectDetails;
 	public String[] studentId;
-	public String role;
+	public  ArrayList<Role> allRoles = new ArrayList<Role>(); // Made an ArrayList of all roles for that project
 	public String[] framework = new String[20];
 	public char status;
 	public static int projectCounter = 0;
@@ -25,29 +25,29 @@ public class Project {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Project(String clientId, String projectId, String projectTitle, String projectDetails, String role,
+	public Project(String clientId, String projectId, String projectTitle, String projectDetails,
 			String[] framework, int popularityCounter) {
 		this.clientId = clientId;
 		this.projectId = projectId;
 		this.projectTitle = projectTitle;
 		this.projectDetails = projectDetails;
 		this.studentId = null;
-		this.role = role;
 		this.framework = framework;
 		this.popularityCounter = popularityCounter;
 	}
 
-	public String getRole() {
-		return role;
+	public ArrayList<Role> getAllRoles() // ArrayList of Roles
+	{
+		return allRoles;
 	}
 
 	public String[] getFramework() {
 		return framework;
 	}
 
-	public void setRole(String role) {
-		this.role = role;
-	}
+//	public void setRole(String role) {
+//		this.role = role;
+//	} Adding Roles
 
 	public void setFramework(String[] framework) {
 		this.framework = framework;
@@ -127,33 +127,54 @@ public class Project {
 		System.out.println("Enter Project details: ");
 		projectDetails = sc.next();
 		projectDetails += sc.nextLine();
-		enterRole();
+		enterRoles();
 		return projectId;
 	}
 
-	public void enterRole() {
-		System.out.println("Specify required role: ");
-		role = sc.next();
-		role += sc.nextLine();
-		enterFramework();
+	public void enterRoles()
+	{
+		System.out.println("Specify required role name: ");
+		String name ;
+		name = sc.next();
+		name += sc.nextLine();
+		Role role  = new Role("","");
+		role.setRoleName(name);
+		String roleID = "ROLE" + allRoles.size() + 1 ;
+		role.setId(roleID);
+		allRoles.add(role);
+		int number =0;
+		do {
+			try {
+				System.out.println(" Please enter the number of frameworks you want to add for this role:");
+				number = Integer.parseInt(sc.next());
+			} catch (NumberFormatException e) {
+				System.err.println("Enter a valid Integer");
+			}
+		}while(number > 0);
+
+		for (int i = 0; i < number; i++)
+		{
+			allRoles.get(i).enterFrameworks();
+		}
+
 	}
 
-	public void enterFramework() {
-		String choice;
-		int i = 0;
-		String[] framework1 = new String[20];
-		do {
-			System.out.println("Specify one framework '" + role + "' should be familiar with:");
-			framework1[i] = sc.next();
-			framework1[i] += sc.nextLine();
-			i++;
-			System.out.println("Do you want to add more frameworks to '" + role + "' role? Y/N");
-			choice = sc.nextLine();
-		} while (choice.toUpperCase().compareTo("N") != 0);
-		this.setFramework(framework1);
-		this.popularityCounter++;
-		pr.add(new Project(clientId, projectId, projectTitle, projectDetails, role, framework, popularityCounter));
-	}
+//	public void enterFramework() {
+//		String choice;
+//		int i = 0;
+//		String[] framework1 = new String[20];
+//		do {
+//			System.out.println("Specify one framework '" + role + "' should be familiar with:");
+//			framework1[i] = sc.next();
+//			framework1[i] += sc.nextLine();
+//			i++;
+//			System.out.println("Do you want to add more frameworks to '" + role + "' role? Y/N");
+//			choice = sc.nextLine();
+//		} while (choice.toUpperCase().compareTo("N") != 0);
+//		this.setFramework(framework1);
+//		this.popularityCounter++;
+//		pr.add(new Project(clientId, projectId, projectTitle, projectDetails, role, framework, popularityCounter));
+//	}
 
 	public static void discardUnpopularProjects() {
 		int numStudents = Student.allStudents.size();
