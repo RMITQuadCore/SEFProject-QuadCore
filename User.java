@@ -5,7 +5,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class User {
-	private String id;
+	protected String id;
 	protected String firstName;
 	protected String lastName;
 	protected String org;
@@ -153,6 +153,14 @@ public class User {
 	}
 
 	public void signup() {
+
+		ProjectManager pm = new ProjectManager();
+		//If Project Manager disables signUp, no new sign ups are allowed
+		if (pm.getSignUpStatus() == false) {
+			System.out.println("Sign Up is disable by Project Manager." +
+					"Please Contact Project Manager.");
+			return;
+		}
 		boolean foundFirstName = false, foundLastName = false, foundOrg = false;
 		Pattern p = Pattern.compile("[^a-zA-Z\\d\\s]", Pattern.CASE_INSENSITIVE);
 		int ch = 0;
