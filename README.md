@@ -28,6 +28,3 @@ preference in consideration, while implementing University imposed constraints.
 Our system allows extensibility, maintainability and reusability as the tool may be made available to 
 other institutions.
 
-
-
-
