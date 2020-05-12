@@ -1,5 +1,6 @@
-#Project Team Formation
-####****Software Engineering Fundamentals**** 
+# Project Team Formation
+
+### ****Software Engineering Fundamentals**** 
 
 ISYS1117 | Semester 1 2020
 
@@ -11,7 +12,7 @@ ISYS1117 | Semester 1 2020
 
 
 
-##Description
+## Description
 University offers capstone projects to students with external industrial clients. 
 The project manager assigns a team of 4 students to work as part of a capstone project 
 team where external clients act as product owners. Students work for 16 weeks on such 
