@@ -95,7 +95,7 @@ public class ProjectManager extends User {
 				// ;
 				break;
 			case 7:
-				//displayTeams
+				//displayTeams();
 				break;
 
 			//Stage3 methods
@@ -108,9 +108,103 @@ public class ProjectManager extends User {
 	private void createTeams() {
 		ArrayList<Student> teamStudent = new ArrayList<Student>();
 		ArrayList<Student> tempStudent = new ArrayList<>();
+		overallTeamGPACheck();
+		GPACheck();
+	}
+	
+	// check overallGPA hard constraint
+	private void overallTeamGPACheck() {
 		tempStudent.addAll(Student.allStudents);
+			while (!tempStudent.isEmpty()) {
+
+			for (int i = 0; i < 4; i++) {
+				teamStudent.add(i, tempStudent.get(0));
+				tempStudent.remove(0);
+			}
+			double sumOfGPA = 0;
+			for (Student s : teamStudent) {
+				System.out.println("s before is: " + s);
+				sumOfGPA = sumOfGPA + s.getgPA();
+			}
+
+			if ((sumOfGPA / 4) > 3.5) {
+				for (int i = 0; i < tempStudent.size(); i++) {
+					if (tempStudent.get(i).getgender() == 'm' && tempStudent.get(i).getgPA() < 3.00) {
+						for (Student tm : teamStudent) {
+							if (tm.getgender() == 'm' && tm.getgPA() > 3.00) {
+								tempStudent.add(tm);
+								teamStudent.remove(tm);
+								teamStudent.add(tempStudent.get(i));
+								tempStudent.remove(tempStudent.get(i));
+								i--;
+								break;
+							}
+						}
+						double sumOfNewGPA = 0;
+						for (Student s : teamStudent) {
+							sumOfNewGPA = sumOfNewGPA + s.getgPA();
+						}
+						if ((sumOfNewGPA / 4) <= 3.5) {
+							break;
+						}
+					}
+
+				}
+			}
+			for (Student s : teamStudent) {
+				System.out.println("s after is: " + s);
+			}
+		}
 	}
 
+	// check GPA of individual team member
+	private void GPACheck() {
+			while (!tempStudent.isEmpty()) {
+
+			for (int i = 0; i < 4; i++) {
+				teamStudent.add(i, tempStudent.get(0));
+				tempStudent.remove(0);
+			}
+
+			for (Student s : teamStudent) {
+				System.out.println("s before is: " + s);
+			}
+
+			int GPAGreaterThanThreeCounter = 0;
+			for (int i = 0; i < 4; i++) {
+				if (teamStudent.get(i).getgPA() >= 3.00) {
+					GPAGreaterThanThreeCounter++;
+				}
+			}
+
+			while (GPAGreaterThanThreeCounter < 2) {
+				int i;
+				for (i = 0; i < tempStudent.size(); i++) {
+					if (tempStudent.get(i).getgender() == 'm' && tempStudent.get(i).getgPA() >= 3.00) {
+						for (Student tm : teamStudent) {
+							if (tempStudent.get(i).getgender() == 'm' && tm.getgPA() < 3.00) {
+								tempStudent.add(tm);
+								teamStudent.remove(tm);
+								teamStudent.add(tempStudent.get(i));
+								tempStudent.remove(tempStudent.get(i));
+								GPAGreaterThanThreeCounter++;
+								break;
+							}
+						}
+						System.out.println("GPAGreaterThanThreeCounter2: " + GPAGreaterThanThreeCounter);
+						break;
+					}
+				}
+				if (i == tempStudent.size()) {
+					break;
+				}
+			}
+			for (Student s : teamStudent) {
+				System.out.println("s after is: " + s);
+			}
+		}
+	}
+	
 	//Method to assign personality to all students
 	private void enterStudentPersonality() {
 		boolean foundStudent = false, validPersonality = false;
