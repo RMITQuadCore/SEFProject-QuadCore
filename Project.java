@@ -8,211 +8,203 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class Project {
-	public static ArrayList<Project> pr = new ArrayList<>();
-	public String projectId = "PROJ100";
-	public String clientId;
-	public String projectTitle;
-	public String projectDetails;
-	public String[] studentId;
-	public  ArrayList<Role> allRoles = new ArrayList<Role>(); // Made an ArrayList of all roles for that project
-	public String[] framework = new String[20];
-	public char status;
-	public static int projectCounter = 0;
-	public int popularityCounter;
-	Scanner sc = new Scanner(System.in);
+    public static ArrayList<Project> pr = new ArrayList<Project>();
+    public String projectId = "PROJ100";
+    public String clientId;
+    public String projectTitle;
+    public String projectDetails;
+    public String[] studentId;
+    public String role;
+    public String[] framework = new String[20];
+    public char status;
+    public static int projectCounter = 0;
+    public int popularityCounter;
+    Scanner sc = new Scanner(System.in);
 
-	public Project() {
-		// TODO Auto-generated constructor stub
-	}
+    public Project() {
+        // TODO Auto-generated constructor stub
+    }
 
-	public Project(String clientId, String projectId, String projectTitle, String projectDetails,
-			String[] framework, int popularityCounter) {
-		this.clientId = clientId;
-		this.projectId = projectId;
-		this.projectTitle = projectTitle;
-		this.projectDetails = projectDetails;
-		this.studentId = null;
-		this.framework = framework;
-		this.popularityCounter = popularityCounter;
-	}
+    public Project(String clientId, String projectId, String projectTitle, String projectDetails, String role,
+                   String[] framework, int popularityCounter) {
+        this.clientId = clientId;
+        this.projectId = projectId;
+        this.projectTitle = projectTitle;
+        this.projectDetails = projectDetails;
+        this.studentId = null;
+        this.role = role;
+        this.framework = framework;
+        this.popularityCounter = popularityCounter;
+    }
 
-	public ArrayList<Role> getAllRoles() // ArrayList of Roles
-	{
-		return allRoles;
-	}
+    public String getRole() {
+        return role;
+    }
 
-	public String[] getFramework() {
-		return framework;
-	}
+    public String[] getFramework() {
+        return framework;
+    }
 
-//	public void setRole(String role) {
-//		this.role = role;
-//	} Adding Roles
+    public void setRole(String role) {
+        this.role = role;
+    }
 
-	public void setFramework(String[] framework) {
-		this.framework = framework;
-	}
+    public void setFramework(String[] framework) {
+        this.framework = framework;
+    }
 
-	public String getProjectId() {
-		return projectId;
-	}
+    public String getProjectId() {
+        return projectId;
+    }
 
-	public void setProjectId(String projectId) {
-		this.projectId = projectId;
-	}
+    public void setProjectId(String projectId) {
+        this.projectId = projectId;
+    }
 
-	public String getClientId() {
-		return clientId;
-	}
+    public String getClientId() {
+        return clientId;
+    }
 
-	public void setClientId(String clientId) {
-		this.clientId = clientId;
-	}
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
+    }
 
-	public String getProjectTitle() {
-		return projectTitle;
-	}
+    public String getProjectTitle() {
+        return projectTitle;
+    }
 
-	public void setProjectTitle(String projectTitle) {
-		this.projectTitle = projectTitle;
-	}
+    public void setProjectTitle(String projectTitle) {
+        this.projectTitle = projectTitle;
+    }
 
-	public String getProjectDetails() {
-		return projectDetails;
-	}
+    public String getProjectDetails() {
+        return projectDetails;
+    }
 
-	public void setProjectDetails(String projectDetails) {
-		this.projectDetails = projectDetails;
-	}
+    public void setProjectDetails(String projectDetails) {
+        this.projectDetails = projectDetails;
+    }
 
-	public String[] getStudentId() {
-		return studentId;
-	}
+    public String[] getStudentId() {
+        return studentId;
+    }
 
-	public void setStudentId(String[] studentId) {
-		this.studentId = studentId;
-	}
+    public void setStudentId(String[] studentId) {
+        this.studentId = studentId;
+    }
 
-	public char getStatus() {
-		return status;
-	}
+    public char getStatus() {
+        return status;
+    }
 
-	public void setStatus(char status) {
-		this.status = status;
-	}
+    public void setStatus(char status) {
+        this.status = status;
+    }
 
-	public static int getProjectCounter() {
-		return projectCounter;
-	}
+    public static int getProjectCounter() {
+        return projectCounter;
+    }
 
-	public static void setProjectCounter(int projectCounter) {
-		Project.projectCounter = projectCounter;
-	}
+    public static void setProjectCounter(int projectCounter) {
+        Project.projectCounter = projectCounter;
+    }
 
-	public int getPopularityCounter() {
-		return popularityCounter;
-	}
+    public int getPopularityCounter() {
+        return popularityCounter;
+    }
 
-	public void setPopularityCounter(int popularityCounter) {
-		this.popularityCounter = popularityCounter;
-	}
+    public void setPopularityCounter(int popularityCounter) {
+        this.popularityCounter = popularityCounter;
+    }
 
-	public String createProject() {
-		projectId = "PROJ"
-				+ String.format("%03d", (Integer.parseInt(getProjectId().substring(4, getProjectId().length())) + 1));
+    public String createProject() {
+        projectId = "PROJ"
+                + String.format("%03d", (Integer.parseInt(getProjectId().substring(4, getProjectId().length())) + 1));
 
-		System.out.println("Enter Project Title: ");
-		projectTitle = sc.next();
-		projectTitle += sc.nextLine();
-		System.out.println("Enter Project details: ");
-		projectDetails = sc.next();
-		projectDetails += sc.nextLine();
-		enterRoles();
-		return projectId;
-	}
+        System.out.println("Enter Project Title: ");
+        projectTitle = sc.next();
+        projectTitle += sc.nextLine();
+        System.out.println("Enter Project details: ");
+        projectDetails = sc.next();
+        projectDetails += sc.nextLine();
+        enterRole();
+        return projectId;
+    }
 
-	public void enterRoles()
-	{
-		System.out.println("Specify required role name: ");
-		String name ;
-		name = sc.next();
-		name += sc.nextLine();
-		Role role  = new Role("","");
-		role.setRoleName(name);
-		String roleID = "ROLE" + allRoles.size() + 1 ;
-		role.setId(roleID);
-		allRoles.add(role);
-		int number =0;
-		do {
-			try {
-				System.out.println(" Please enter the number of frameworks you want to add for this role:");
-				number = Integer.parseInt(sc.next());
-			} catch (NumberFormatException e) {
-				System.err.println("Enter a valid Integer");
-			}
-		}while(number > 0);
+    public void enterRole() {
+        System.out.println("Specify required role: ");
+        role = sc.next();
+        role += sc.nextLine();
+        enterFramework();
+    }
 
-		for (int i = 0; i < number; i++)
-		{
-			allRoles.get(i).enterFrameworks();
-		}
+    public void enterFramework() {
+        String choice;
+        int i = 0;
+        String[] framework1 = new String[20];
+        do {
+            System.out.println("Specify one framework '" + role + "' should be familiar with:");
+            framework1[i] = sc.next();
+            framework1[i] += sc.nextLine();
+            i++;
+            System.out.println("Do you want to add more frameworks to '" + role + "' role? Y/N");
+            choice = sc.nextLine();
+        } while (choice.toUpperCase().compareTo("N") != 0);
+        this.setFramework(framework1);
+        this.popularityCounter++;
+        pr.add(new Project(clientId, projectId, projectTitle, projectDetails, role, framework, popularityCounter));
+    }
 
-	}
+    public static boolean discardUnpopularProjects() throws ProjectMismatchException {
+        int numProjectReqd = 0;
+        int numStudents = Student.allStudents.size();
+        System.out.println("Number of students: " + numStudents);
 
-//	public void enterFramework() {
-//		String choice;
-//		int i = 0;
-//		String[] framework1 = new String[20];
-//		do {
-//			System.out.println("Specify one framework '" + role + "' should be familiar with:");
-//			framework1[i] = sc.next();
-//			framework1[i] += sc.nextLine();
-//			i++;
-//			System.out.println("Do you want to add more frameworks to '" + role + "' role? Y/N");
-//			choice = sc.nextLine();
-//		} while (choice.toUpperCase().compareTo("N") != 0);
-//		this.setFramework(framework1);
-//		this.popularityCounter++;
-//		pr.add(new Project(clientId, projectId, projectTitle, projectDetails, role, framework, popularityCounter));
-//	}
+        int numProjects = pr.size();
+        System.out.println("Number of projects: " + numProjects);
 
-	public static void discardUnpopularProjects() {
-		int numStudents = Student.allStudents.size();
-		System.out.println("no of studs" + numStudents);
+        try {
+            numProjectReqd = (numStudents / 4);
+            System.out.println("Number of projects required: " + numProjectReqd);
 
-		int numProjects = pr.size();
-		System.out.println("no of projs" + numProjects);
+            if (numProjectReqd > numProjects) {
+                throw new ProjectMismatchException("Number of projects not enough!");
 
-		int numProjectReqd = (numStudents / 4);
-		System.out.println("no of projs reqd" + numProjectReqd);
+            }
+        } catch (ProjectMismatchException ex) {
+            System.err.println(ex.getMessage());
+            return false;
+        }
 
-		Project temp;
-		if (pr.size() > 1) // check if the number of orders is larger than 1
-		{
-			for (int x = 0; x < pr.size(); x++) // bubble sort outer loop
-			{
-				for (int i = 0; i < pr.size() - x - 1; i++) {
-					if (pr.get(i).getPopularityCounter() < (pr.get(i + 1).getPopularityCounter())) {
-						temp = pr.get(i);
-						pr.set(i, pr.get(i + 1));
-						pr.set(i + 1, temp);
-					}
-				}
-			}
-		}
-		for (Project p : pr) {
-			System.out.println(p.getPopularityCounter());
-		}
+        Project temp;
+        if (pr.size() > 1) // check if the number of orders is larger than 1
+        {
+            for (int x = 0; x < pr.size(); x++) // bubble sort outer loop
+            {
+                for (int i = 0; i < pr.size() - x - 1; i++) {
+                    if (pr.get(i).getPopularityCounter() < (pr.get(i + 1).getPopularityCounter())) {
+                        temp = pr.get(i);
+                        pr.set(i, pr.get(i + 1));
+                        pr.set(i + 1, temp);
+                    }
+                }
+            }
+        }
+//		for (Project p : pr) {
+//			System.out.println(p.getPopularityCounter());
+//		}
 
-		for (int i = numProjects - 1; i >= numProjectReqd; i--) {
-			System.out.println("i=" + i);
-			pr.remove(i);
-		}
+        for (int i = numProjects - 1; i >= numProjectReqd; i--) {
 
-		for (Project p : pr) {
-			System.out.println("Required Projects:\nProject ID: " + p.getProjectId() + "\nProject Details: "
-					+ p.getProjectDetails() + "\nProject Popularity Counter:" + p.getPopularityCounter());
-		}
-	}
+            pr.remove(i);
+        }
+        System.out.println("Required Projects:");
+        for (Project p : pr) {
+            System.out.println("\nProject ID: " + p.getProjectId() + "\nProject Details: " + p.getProjectDetails()
+                    + "\nProject Popularity Counter:" + p.getPopularityCounter());
+        }
+        // return true;
+        return true;
+    }
 
 }
