@@ -101,8 +101,12 @@ public class ProjectManager extends User {
 				setSignUpStatus();
 				break;
 			case 4:
-				//Project pro = new Project();
-				//pro.discardUnpopularProjects();
+				try {
+					discardUnpopularProjects();
+				} catch (ProjectMismatchException e) {
+					// TODO Auto-generated catch block
+					e.getMessage();
+				}
 				break;
 			case 5:
 				con.displayConstraints();
@@ -244,5 +248,54 @@ public class ProjectManager extends User {
 			teamStudent.clear();
 		}
 
+	}
+	public static boolean discardUnpopularProjects() throws ProjectMismatchException {
+		int numProjectReqd = 0;
+		int numStudents = Student.allStudents.size();
+		System.out.println("Number of students: " + numStudents);
+
+		int numProjects = Project.proj.size();
+		System.out.println("Number of projects: " + numProjects);
+
+		try {
+			numProjectReqd = (numStudents / 4);
+			System.out.println("Number of projects required: " + numProjectReqd);
+
+			if (numProjectReqd > numProjects) {
+				throw new ProjectMismatchException("Number of projects not enough!");
+
+			}
+		} catch (ProjectMismatchException ex) {
+			System.err.println(ex.getMessage());
+			return false;
+		}
+
+		Project temp;
+		if (Project.proj.size() > 1) // check if the number of orders is larger than 1
+		{
+			for (int x = 0; x < Project.proj.size(); x++) // bubble sort outer loop
+			{
+				for (int i = 0; i < Project.proj.size() - x - 1; i++) {
+					if (Project.proj.get(i).getPopularityCounter() < (Project.proj.get(i + 1).getPopularityCounter())) {
+						temp = Project.proj.get(i);
+						Project.proj.set(i, Project.proj.get(i + 1));
+						Project.proj.set(i + 1, temp);
+					}
+				}
+			}
+		}
+
+
+		for (int i = numProjects - 1; i >= numProjectReqd; i--) {
+
+			Project.proj.remove(i);
+		}
+		System.out.println("Required Projects:");
+		for (Project p : Project.proj) {
+			System.out.println("\nsrc.Project ID: " + p.getProjectId() + "\nsrc.Project Details: " + p.getProjectDetails()
+					+ "\nsrc.Project Popularity Counter:" + p.getPopularityCounter());
+		}
+
+		return true;
 	}
 }
