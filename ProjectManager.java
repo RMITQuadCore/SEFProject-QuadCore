@@ -4,6 +4,25 @@ import java.util.*;
 public class ProjectManager extends User {
 
 	public ArrayList<String> studentPersonalities = new ArrayList<String>();
+	public static ArrayList<Student> teamStudent = new ArrayList<Student>();
+	public static ArrayList<Student> tempStudent = new ArrayList<>();
+
+	public ArrayList<Student> getTempStudent() {
+		return tempStudent;
+	}
+
+	public void setTempStudent(ArrayList<Student> tempStudent) {
+		ProjectManager.tempStudent = tempStudent;
+	}
+
+	public static ArrayList<Student> getTeamStudent() {
+		return teamStudent;
+	}
+
+	public static void setTeamStudent(ArrayList<Student> teamStudent) {
+		ProjectManager.teamStudent = teamStudent;
+	}
+
 	Scanner scan = new Scanner(System.in);
 
 	private String id;
@@ -106,16 +125,20 @@ public class ProjectManager extends User {
 	}
 
 	private void createTeams() {
-		ArrayList<Student> teamStudent = new ArrayList<Student>();
-		ArrayList<Student> tempStudent = new ArrayList<>();
 		overallTeamGPACheck();
-		GPACheck();
+		teamMemberGPACheck();
 	}
-	
+
 	// check overallGPA hard constraint
-	private void overallTeamGPACheck() {
+	public static void overallTeamGPACheck() {
 		tempStudent.addAll(Student.allStudents);
-			while (!tempStudent.isEmpty()) {
+		teamStudent.clear();
+		for (Student tp : tempStudent) {
+			System.out.println("tempStudent is : " + tp.getId());
+		}
+		System.out.println();
+
+		while (!tempStudent.isEmpty()) {
 
 			for (int i = 0; i < 4; i++) {
 				teamStudent.add(i, tempStudent.get(0));
@@ -123,15 +146,14 @@ public class ProjectManager extends User {
 			}
 			double sumOfGPA = 0;
 			for (Student s : teamStudent) {
-				System.out.println("s before is: " + s);
-				sumOfGPA = sumOfGPA + s.getgPA();
+				sumOfGPA = sumOfGPA + s.getGPA();
 			}
 
 			if ((sumOfGPA / 4) > 3.5) {
 				for (int i = 0; i < tempStudent.size(); i++) {
-					if (tempStudent.get(i).getgender() == 'm' && tempStudent.get(i).getgPA() < 3.00) {
+					if (tempStudent.get(i).getGender() == 'm' && tempStudent.get(i).getGPA() < 3.00) {
 						for (Student tm : teamStudent) {
-							if (tm.getgender() == 'm' && tm.getgPA() > 3.00) {
+							if (tm.getGender() == 'm' && tm.getGPA() > 3.00) {
 								tempStudent.add(tm);
 								teamStudent.remove(tm);
 								teamStudent.add(tempStudent.get(i));
@@ -142,7 +164,7 @@ public class ProjectManager extends User {
 						}
 						double sumOfNewGPA = 0;
 						for (Student s : teamStudent) {
-							sumOfNewGPA = sumOfNewGPA + s.getgPA();
+							sumOfNewGPA = sumOfNewGPA + s.getGPA();
 						}
 						if ((sumOfNewGPA / 4) <= 3.5) {
 							break;
@@ -152,27 +174,44 @@ public class ProjectManager extends User {
 				}
 			}
 			for (Student s : teamStudent) {
-				System.out.println("s after is: " + s);
+				System.out.println("teamStudent is: " + s.getId());
 			}
+			double sumOfNewGPA = 0;
+			for (Student s : teamStudent) {
+				sumOfNewGPA = sumOfNewGPA + s.getGPA();
+			}
+//			if ((sumOfNewGPA / 4) > 3.5) {
+//				System.out.print("Project team: ");
+//				for (Student s : teamStudent) {
+//					System.out.print(s.getId() + ",");
+//				}
+//				System.out.println(
+//						" could not meet hard constraint of average GPA less than 3.5. So, Hard constraint turns into Soft constraint.");
+//			}
+			setTeamStudent(teamStudent);
+			// teamStudent.clear();
 		}
+		// setTeamStudent(teamStudent);
 	}
 
 	// check GPA of individual team member
-	private void GPACheck() {
-			while (!tempStudent.isEmpty()) {
+	private static void teamMemberGPACheck() {
+		tempStudent.addAll(Student.allStudents);
+		for (Student tp : tempStudent) {
+			System.out.println("tempStudent is : " + tp.getId());
+		}
+		System.out.println();
+
+		while (!tempStudent.isEmpty()) {
 
 			for (int i = 0; i < 4; i++) {
 				teamStudent.add(i, tempStudent.get(0));
 				tempStudent.remove(0);
 			}
 
-			for (Student s : teamStudent) {
-				System.out.println("s before is: " + s);
-			}
-
 			int GPAGreaterThanThreeCounter = 0;
 			for (int i = 0; i < 4; i++) {
-				if (teamStudent.get(i).getgPA() >= 3.00) {
+				if (teamStudent.get(i).getGPA() >= 3.00) {
 					GPAGreaterThanThreeCounter++;
 				}
 			}
@@ -180,9 +219,9 @@ public class ProjectManager extends User {
 			while (GPAGreaterThanThreeCounter < 2) {
 				int i;
 				for (i = 0; i < tempStudent.size(); i++) {
-					if (tempStudent.get(i).getgender() == 'm' && tempStudent.get(i).getgPA() >= 3.00) {
+					if (tempStudent.get(i).getGender() == 'm' && tempStudent.get(i).getGPA() >= 3.00) {
 						for (Student tm : teamStudent) {
-							if (tempStudent.get(i).getgender() == 'm' && tm.getgPA() < 3.00) {
+							if (tempStudent.get(i).getGender() == 'm' && tm.getGPA() < 3.00) {
 								tempStudent.add(tm);
 								teamStudent.remove(tm);
 								teamStudent.add(tempStudent.get(i));
@@ -200,68 +239,10 @@ public class ProjectManager extends User {
 				}
 			}
 			for (Student s : teamStudent) {
-				System.out.println("s after is: " + s);
+				System.out.println("teamStudent is: " + s.getId());
 			}
+			teamStudent.clear();
 		}
-	}
-	
-	//Method to assign personality to all students
-	private void enterStudentPersonality() {
-		boolean foundStudent = false, validPersonality = false;
-		String studID;
-		char studPersonality = '0';
 
-		do {
-			System.out.println("\nEnter assigned student ID:");
-			studID = scan.next();
-			studID += scan.nextLine();
-			for (Student stud : Student.allStudents) {
-
-				if (((Student) stud).getId().compareTo(studID) == 0) {
-					foundStudent = true;
-					System.out.println("\nPlease enter personality of " + studID + " :");
-					studPersonality = scan.nextLine().toUpperCase().charAt(0);
-
-					char[] validPersonalities = {'A', 'B', 'C', 'D', 'E', 'F'};
-					for (int i = 0; i < 6; i++) {
-						if (studPersonality == validPersonalities[i]) {
-							validPersonality = true;
-							stud.setStudentPersonality(studPersonality);
-						}
-					}
-					if (!validPersonality) {
-						System.out.println("Invalid personality type!");
-					}
-				}
-			}
-			if (!foundStudent) {
-				System.out.println("Student not found!");
-			}
-		} while (foundStudent == false || studID.isEmpty() || studPersonality == '0');
-	}
-
-
-	//Method to unable or disable Sign Up
-	public void setSignUpStatus() {
-		// true = open && false = closed
-
-		int choice = 0;
-		signUpStatus = true;
-		do {
-			try {
-				System.out.println("Set Sign Up Status" + "\n1. Open" + "\n2.Closed");
-				System.out.println("Please enter your Choice :");
-				choice = Integer.parseInt(s.next());
-			} catch (NumberFormatException e) {
-				System.err.println("Please enter an integer");
-			}
-		} while (choice < 1 || choice > 3);
-
-		switch (choice) {
-			case 1:
-				signUpStatus = true;
-			case 2:
-				signUpStatus = false;
-		}
 	}
 }
