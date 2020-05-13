@@ -82,14 +82,17 @@ public class ProjectManager extends User {
 				setSignUpStatus();
 				break;
 			case 4:
-				Project pro = new Project();
-				pro.discardUnpopularProjects();
+				//Project pro = new Project();
+				//pro.discardUnpopularProjects();
 				break;
 			case 5:
 				con.displayConstraints();
 				break;
 			case 6:
-				//createTeams();
+				createTeams();
+				// check gpa creating teamStudent temp student
+				// check female creating team Student
+				// ;
 				break;
 			case 7:
 				//displayTeams
@@ -100,6 +103,12 @@ public class ProjectManager extends User {
 			//swapMembers()
 			//changeStudentGpa()
 		}
+	}
+
+	private void createTeams() {
+		ArrayList<Student> teamStudent = new ArrayList<Student>();
+		ArrayList<Student> tempStudent = new ArrayList<>();
+		tempStudent.addAll(Student.allStudents);
 	}
 
 	//Method to assign personality to all students
