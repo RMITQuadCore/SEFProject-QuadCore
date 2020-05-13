@@ -8,10 +8,11 @@ public class Role {
     private ArrayList<String> frameworks = new ArrayList<>();
 
 
-    public Role (String id, String roleName)
+    public Role (String id, String roleName, ArrayList<String> frameworks)
     {
       this.id =id;
       this.roleName= roleName;
+      this.frameworks = frameworks;
     }
 
     public ArrayList<String> getFrameworks()
