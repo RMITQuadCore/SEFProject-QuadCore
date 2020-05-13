@@ -23,6 +23,8 @@ public class Student extends User {
 		this.studentPersonality = studentPersonality;
 	}
 
+	public Student(){}
+
 	public char getStudentPersonality()
 	{
 		return studentPersonality;
@@ -237,5 +239,13 @@ public class Student extends User {
 				System.out.println("Invalid choice!");
 				break;
 		}
+	}
+
+	public Project[] getPreferredProjects() {
+		return preferredProjects;
+	}
+
+	public void setPreferredProjects(Project[] preferredProjects) {
+		this.preferredProjects = preferredProjects;
 	}
 }

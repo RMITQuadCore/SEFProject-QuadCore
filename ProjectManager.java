@@ -4,6 +4,25 @@ import java.util.*;
 public class ProjectManager extends User {
 
 	public ArrayList<String> studentPersonalities = new ArrayList<String>();
+	public static ArrayList<Student> teamStudent = new ArrayList<Student>();
+	public static ArrayList<Student> tempStudent = new ArrayList<>();
+
+	public ArrayList<Student> getTempStudent() {
+		return tempStudent;
+	}
+
+	public void setTempStudent(ArrayList<Student> tempStudent) {
+		ProjectManager.tempStudent = tempStudent;
+	}
+
+	public static ArrayList<Student> getTeamStudent() {
+		return teamStudent;
+	}
+
+	public static void setTeamStudent(ArrayList<Student> teamStudent) {
+		ProjectManager.teamStudent = teamStudent;
+	}
+
 	Scanner scan = new Scanner(System.in);
 
 	private String id;
@@ -73,17 +92,21 @@ public class ProjectManager extends User {
 
 		switch (choice) {
 			case 1:
-				enterStudentPersonality();
+				//enterStudentPersonality();
 				break;
 			case 2:
 				con.setWeightage();
 				break;
 			case 3:
-				setSignUpStatus();
+				//setSignUpStatus();
 				break;
 			case 4:
-				//Project pro = new Project();
-				//pro.discardUnpopularProjects();
+				try {
+					discardUnpopularProjects();
+				} catch (ProjectMismatchException e) {
+					// TODO Auto-generated catch block
+					e.getMessage();
+				}
 				break;
 			case 5:
 				con.displayConstraints();
@@ -106,16 +129,21 @@ public class ProjectManager extends User {
 	}
 
 	private void createTeams() {
-		ArrayList<Student> teamStudent = new ArrayList<Student>();
-		ArrayList<Student> tempStudent = new ArrayList<>();
 		overallTeamGPACheck();
-		GPACheck();
+		teamMemberGPACheck();
+		ensureFemaleInATeamandExperience();
 	}
-	
+
 	// check overallGPA hard constraint
-	private void overallTeamGPACheck() {
+	public static void overallTeamGPACheck() {
 		tempStudent.addAll(Student.allStudents);
-			while (!tempStudent.isEmpty()) {
+		teamStudent.clear();
+		for (Student tp : tempStudent) {
+			System.out.println("tempStudent is : " + tp.getId());
+		}
+		System.out.println();
+
+		while (!tempStudent.isEmpty()) {
 
 			for (int i = 0; i < 4; i++) {
 				teamStudent.add(i, tempStudent.get(0));
@@ -123,15 +151,14 @@ public class ProjectManager extends User {
 			}
 			double sumOfGPA = 0;
 			for (Student s : teamStudent) {
-				System.out.println("s before is: " + s);
-				sumOfGPA = sumOfGPA + s.getgPA();
+				sumOfGPA = sumOfGPA + s.getGPA();
 			}
 
 			if ((sumOfGPA / 4) > 3.5) {
 				for (int i = 0; i < tempStudent.size(); i++) {
-					if (tempStudent.get(i).getgender() == 'm' && tempStudent.get(i).getgPA() < 3.00) {
+					if (tempStudent.get(i).getGender() == 'm' && tempStudent.get(i).getGPA() < 3.00) {
 						for (Student tm : teamStudent) {
-							if (tm.getgender() == 'm' && tm.getgPA() > 3.00) {
+							if (tm.getGender() == 'm' && tm.getGPA() > 3.00) {
 								tempStudent.add(tm);
 								teamStudent.remove(tm);
 								teamStudent.add(tempStudent.get(i));
@@ -142,7 +169,7 @@ public class ProjectManager extends User {
 						}
 						double sumOfNewGPA = 0;
 						for (Student s : teamStudent) {
-							sumOfNewGPA = sumOfNewGPA + s.getgPA();
+							sumOfNewGPA = sumOfNewGPA + s.getGPA();
 						}
 						if ((sumOfNewGPA / 4) <= 3.5) {
 							break;
@@ -152,27 +179,44 @@ public class ProjectManager extends User {
 				}
 			}
 			for (Student s : teamStudent) {
-				System.out.println("s after is: " + s);
+				System.out.println("teamStudent is: " + s.getId());
 			}
+			double sumOfNewGPA = 0;
+			for (Student s : teamStudent) {
+				sumOfNewGPA = sumOfNewGPA + s.getGPA();
+			}
+//			if ((sumOfNewGPA / 4) > 3.5) {
+//				System.out.print("Project team: ");
+//				for (Student s : teamStudent) {
+//					System.out.print(s.getId() + ",");
+//				}
+//				System.out.println(
+//						" could not meet hard constraint of average GPA less than 3.5. So, Hard constraint turns into Soft constraint.");
+//			}
+			setTeamStudent(teamStudent);
+			// teamStudent.clear();
 		}
+		// setTeamStudent(teamStudent);
 	}
 
 	// check GPA of individual team member
-	private void GPACheck() {
-			while (!tempStudent.isEmpty()) {
+	private static void teamMemberGPACheck() {
+		tempStudent.addAll(Student.allStudents);
+		for (Student tp : tempStudent) {
+			System.out.println("tempStudent is : " + tp.getId());
+		}
+		System.out.println();
+
+		while (!tempStudent.isEmpty()) {
 
 			for (int i = 0; i < 4; i++) {
 				teamStudent.add(i, tempStudent.get(0));
 				tempStudent.remove(0);
 			}
 
-			for (Student s : teamStudent) {
-				System.out.println("s before is: " + s);
-			}
-
 			int GPAGreaterThanThreeCounter = 0;
 			for (int i = 0; i < 4; i++) {
-				if (teamStudent.get(i).getgPA() >= 3.00) {
+				if (teamStudent.get(i).getGPA() >= 3.00) {
 					GPAGreaterThanThreeCounter++;
 				}
 			}
@@ -180,9 +224,9 @@ public class ProjectManager extends User {
 			while (GPAGreaterThanThreeCounter < 2) {
 				int i;
 				for (i = 0; i < tempStudent.size(); i++) {
-					if (tempStudent.get(i).getgender() == 'm' && tempStudent.get(i).getgPA() >= 3.00) {
+					if (tempStudent.get(i).getGender() == 'm' && tempStudent.get(i).getGPA() >= 3.00) {
 						for (Student tm : teamStudent) {
-							if (tempStudent.get(i).getgender() == 'm' && tm.getgPA() < 3.00) {
+							if (tempStudent.get(i).getGender() == 'm' && tm.getGPA() < 3.00) {
 								tempStudent.add(tm);
 								teamStudent.remove(tm);
 								teamStudent.add(tempStudent.get(i));
@@ -200,68 +244,213 @@ public class ProjectManager extends User {
 				}
 			}
 			for (Student s : teamStudent) {
-				System.out.println("s after is: " + s);
+				System.out.println("teamStudent is: " + s.getId());
 			}
+			teamStudent.clear();
 		}
+
 	}
-	
-	//Method to assign personality to all students
-	private void enterStudentPersonality() {
-		boolean foundStudent = false, validPersonality = false;
-		String studID;
-		char studPersonality = '0';
 
-		do {
-			System.out.println("\nEnter assigned student ID:");
-			studID = scan.next();
-			studID += scan.nextLine();
-			for (Student stud : Student.allStudents) {
+	public static boolean discardUnpopularProjects() throws ProjectMismatchException {
+		int numProjectReqd = 0;
+		int numStudents = Student.allStudents.size();
+		System.out.println("Number of students: " + numStudents);
 
-				if (((Student) stud).getId().compareTo(studID) == 0) {
-					foundStudent = true;
-					System.out.println("\nPlease enter personality of " + studID + " :");
-					studPersonality = scan.nextLine().toUpperCase().charAt(0);
+		int numProjects = Project.proj.size();
+		System.out.println("Number of projects: " + numProjects);
 
-					char[] validPersonalities = {'A', 'B', 'C', 'D', 'E', 'F'};
-					for (int i = 0; i < 6; i++) {
-						if (studPersonality == validPersonalities[i]) {
-							validPersonality = true;
-							stud.setStudentPersonality(studPersonality);
-						}
-					}
-					if (!validPersonality) {
-						System.out.println("Invalid personality type!");
+		try {
+			numProjectReqd = (numStudents / 4);
+			System.out.println("Number of projects required: " + numProjectReqd);
+
+			if (numProjectReqd > numProjects) {
+				throw new ProjectMismatchException("Number of projects not enough!");
+
+			}
+		} catch (ProjectMismatchException ex) {
+			System.err.println(ex.getMessage());
+			return false;
+		}
+
+		Project temp;
+		if (Project.proj.size() > 1) // check if the number of orders is larger than 1
+		{
+			for (int x = 0; x < Project.proj.size(); x++) // bubble sort outer loop
+			{
+				for (int i = 0; i < Project.proj.size() - x - 1; i++) {
+					if (Project.proj.get(i).getPopularityCounter() < (Project.proj.get(i + 1).getPopularityCounter())) {
+						temp = Project.proj.get(i);
+						Project.proj.set(i, Project.proj.get(i + 1));
+						Project.proj.set(i + 1, temp);
 					}
 				}
 			}
-			if (!foundStudent) {
-				System.out.println("Student not found!");
-			}
-		} while (foundStudent == false || studID.isEmpty() || studPersonality == '0');
+		}
+
+
+		for (int i = numProjects - 1; i >= numProjectReqd; i--) {
+
+			Project.proj.remove(i);
+		}
+		System.out.println("Required Projects:");
+		for (Project p : Project.proj) {
+			System.out.println("\nsrc.Project ID: " + p.getProjectId() + "\nsrc.Project Details: " + p.getProjectDetails()
+					+ "\nsrc.Project Popularity Counter:" + p.getPopularityCounter());
+		}
+
+		return true;
 	}
 
+	public static void ensureFemaleInATeamandExperience(){
+		tempStudent.addAll(Student.allStudents);
 
-	//Method to unable or disable Sign Up
-	public void setSignUpStatus() {
-		// true = open && false = closed
-
-		int choice = 0;
-		signUpStatus = true;
-		do {
-			try {
-				System.out.println("Set Sign Up Status" + "\n1. Open" + "\n2.Closed");
-				System.out.println("Please enter your Choice :");
-				choice = Integer.parseInt(s.next());
-			} catch (NumberFormatException e) {
-				System.err.println("Please enter an integer");
-			}
-		} while (choice < 1 || choice > 3);
-
-		switch (choice) {
-			case 1:
-				signUpStatus = true;
-			case 2:
-				signUpStatus = false;
+		Integer numOfStudentsInATeam[];
+		int femaleCount = 0, experienceCounter = 0,j=0;
+		int numOfStudents = Student.allStudents.size();
+		int numOfTempTeams = numOfStudents / 4;
+		int numOfextraStudents = numOfStudents % 4; // extra students
+		int i;
+		if (numOfextraStudents == 0) {
+			numOfStudentsInATeam = new Integer[numOfTempTeams];
+		} else {
+			numOfStudentsInATeam = new Integer[numOfTempTeams + 1];
 		}
+
+		if (numOfextraStudents == 3) {
+
+			for (i = 0; i < numOfTempTeams; i++) {
+				numOfStudentsInATeam[i] = 4;
+			}
+			numOfStudentsInATeam[i] = 3;
+		} else if (numOfextraStudents == 2) {
+
+			for (i = 0; i < numOfTempTeams; i++) {
+				numOfStudentsInATeam[i] = 4;
+			}
+			numOfStudentsInATeam[i] = 2;
+		} else if (numOfextraStudents == 1) {
+
+			for (i = 0; i < numOfTempTeams - 1; i++) {
+				numOfStudentsInATeam[i] = 4;
+			}
+			numOfStudentsInATeam[i] = 3;
+			numOfStudentsInATeam[i + 1] = 2;
+		} else {
+			for (i = 0; i < numOfTempTeams; i++) {
+				numOfStudentsInATeam[i] = 4;
+			}
+		}
+		for (int y = 0; y < numOfStudentsInATeam.length; y++) {
+			System.out.println(" " + numOfStudentsInATeam[y]);
+		}
+
+		for (Student t : tempStudent) {
+			if (t.getGender() == 'f') {
+				femaleCount++;
+			}
+		}
+		while (j < numOfStudentsInATeam.length) {
+			int k = 0;
+			boolean femaleFound = false;
+			while (k < numOfStudentsInATeam[j]) {
+				for (int z = 0; z < tempStudent.size(); z++) {
+					if (tempStudent.get(z).getGender() == 'f') {
+						System.out.println("j = " + j + "k = " + k + "z = " + z + "\tFemale found, assigning to team");
+						teamStudent.add(tempStudent.get(z));
+						femaleFound = true;
+						femaleCount--;
+						System.out.println("added to teamStudent, length of team student: " + teamStudent.size());
+						tempStudent.remove(tempStudent.get(z));
+						System.out.println("removed from tempStudent, length of team student: " + tempStudent.size());
+						k++;
+						break;
+					}
+
+					// for (int z = 0; z < tempStudent.size(); z++) {
+					if (tempStudent.get(z).getGender() == 'm' && femaleFound == true) {
+						System.out.println("j = " + j + "k = " + k + "z = " + z + "\tmale found, assigning to team");
+						teamStudent.add(tempStudent.get(z));
+						System.out.println("added to teamStudent, length of team student: " + teamStudent.size());
+						tempStudent.remove(tempStudent.get(z));
+						System.out.println("removed from tempStudent, length of team student: " + tempStudent.size());
+						k++;
+						break;
+
+					} else {
+						if (femaleCount == 0) {
+							teamStudent.add(tempStudent.get(z));
+							System.out.println("added to teamStudent, length of team student: " + teamStudent.size());
+							tempStudent.remove(tempStudent.get(z));
+							System.out
+									.println("removed from tempStudent, length of team student: " + tempStudent.size());
+							k++;
+							break;
+						}
+					}
+
+				}
+
+			}
+
+			for (Student t : tempStudent) {
+				System.out.println(t.getId());
+			}
+			experienceCounter = 0;
+			System.out.println("*************************\nTeam " + j);
+			for (Student tm : teamStudent) {
+				// System.out.println(tm.getId());
+				if (tm.getExperience() >= 5) {
+					experienceCounter++;
+				}
+				// System.out.println("experience counter: "+experienceCounter);
+			}
+			for (Student tm : teamStudent) {
+				if (experienceCounter == 0) {
+					if (tm.getGender() == 'm') {
+						for (int a = 0; a < tempStudent.size(); a++) {
+							if (tempStudent.get(a).getGender() == 'm' && tempStudent.get(a).getGPA() == tm.getGPA()
+									&& tempStudent.get(a).getExperience() >= 5) {
+
+								tempStudent.add(tm);
+								teamStudent.remove(tm);
+
+								teamStudent.add(tempStudent.get(a));
+								tempStudent.remove(tempStudent.get(a));
+								System.out.println(tm.getId() + " swapped with " + tempStudent.get(a).getId());
+								break;
+							}
+						}
+
+					} else {
+						if (tm.getGender() == 'f') {
+							for (int a = 0; a < tempStudent.size(); a++) {
+								if (tempStudent.get(a).getGender() == 'f' && tempStudent.get(a).getGPA() == tm.getGPA()
+										&& tempStudent.get(a).getExperience() >= 5) {
+
+									tempStudent.add(tm);
+									teamStudent.remove(tm);
+
+									teamStudent.add(tempStudent.get(a));
+									tempStudent.remove(tempStudent.get(a));
+									System.out.println(tm.getId() + " swapped");
+									break;
+								}
+							}
+						}
+
+					}
+				}
+				break;
+			}
+
+			for (Student newTeam : teamStudent) {
+
+				System.out.println(newTeam.getId());
+			}
+			j++;
+
+			teamStudent.clear();
+		}
+
 	}
 }

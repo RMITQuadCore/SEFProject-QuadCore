@@ -1,4 +1,8 @@
 
+
+
+
+
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -122,7 +126,7 @@ public class User {
         do {
             try {
                 System.out.println(
-                        "Project Team Formation System Menu!\n1.Signup\n2.Login\n3.Logout\n4.Exit\n5.Discard Projects");
+                        "Project Team Formation System Menu!\n1.Signup\n2.Login\n3.Logout\n4.Exit");
                 choice = Integer.parseInt(s.next());
             } catch (NumberFormatException e) {
                 System.err.println("enter an integer");
@@ -153,7 +157,7 @@ public class User {
                 System.out.println("System exited! Thanks for using Project Team Formation System");
                 System.exit(0);
                 break;
-            case 5:
+          /*  case 5:
                 // System.out.println("Discard projects selected!");
                 Project p = new Project();
 
@@ -163,7 +167,7 @@ public class User {
                     // TODO Auto-generated catch block
                     e.getMessage();
                 }
-                break;
+                break;*/
         }
 
     }
@@ -276,10 +280,10 @@ public class User {
                 setStudentID(studentID);
 
                 details.add(new Student(studentID, firstName, lastName, emailID, userName, password, org, gpa, experience,
-                        gender, null, null, null, null, null, '0'));
+                        gender, '0'));
 
                 Student.allStudents.add(new Student(studentID, firstName, lastName, emailID, userName, password, org, gpa,
-                        experience, gender, null, null, null, null, null, '0'));
+                        experience, gender, '0'));
 
                 System.out.println("You have successfully signed up with ID: " + studentID + "!\n");
 
@@ -293,7 +297,7 @@ public class User {
                 setClientID(clientID);
 
                 details.add(
-                        new ClientRepresentative(clientID, firstName, lastName, emailID, userName, password, org, null));
+                        new ClientRepresentative(clientID, firstName, lastName, emailID, userName, password, org));
                 System.out.println("You have successfully signed up with ID: " + clientID + "!\n");
 
                 break;
@@ -304,7 +308,7 @@ public class User {
                         (Integer.parseInt(getManagerID().substring(2, getManagerID().length())) + 1));
 
                 setManagerID(managerID);
-                details.add(new ProjectManager(managerID, firstName, lastName, emailID, userName, password, org));
+                details.add(new ProjectManager(managerID, firstName, lastName, emailID, userName, password, org,null));
                 System.out.println("You have successfully signed up with ID: " + managerID + "!\n");
                 break;
 
@@ -339,15 +343,19 @@ public class User {
                     if (loginName.compareTo(((ClientRepresentative) a).getUserName()) == 0) {
                         foundUsername = true;
                         setUserName(loginName);
+
                     }
+
                 } else if (a instanceof Student) {
 
                     if (loginName.compareTo(((Student) a).getUserName()) == 0) {
-                        foundUsername = true;
 
+                        foundUsername = true;
+                        System.out.println("Username found!" + foundUsername);
                         setUserName(loginName);
 
                     }
+
                 } else {
 
                     if (loginName.compareTo(((ProjectManager) a).getUserName()) == 0) {
@@ -356,6 +364,7 @@ public class User {
                     }
 
                 }
+
                 if (foundUsername) {
                     // System.out.println("Login name:" + a.getUserName());
                     System.out.println("\nEnter Password: ");
@@ -371,11 +380,14 @@ public class User {
                         System.out.println("You have successfully logged in!");
 
                         if (a instanceof ClientRepresentative) {
-                            ((ClientRepresentative) a).createProject();
+                            ((ClientRepresentative) a).start();
+                            break;
                         } else if (a instanceof Student) {
                             ((Student) a).start();
+                            break;
                         } else {
                             ((ProjectManager) a).pmMenu();
+                            break;
                         }
 
                         // What messages pop up when an invalid login is carried out?
@@ -384,12 +396,11 @@ public class User {
                         System.err.println("Incorrect password!");
                         break;
                     }
-                } else {
-                    foundUsername = false;
-                    System.err.println("Username not signed up!");
                 }
             }
-            if (foundUsername == false && foundPassword == false) {
+            if (foundUsername == false) {
+                System.err.println("Username not signed up!");
+            } else if (foundUsername == false && foundPassword == false) {
                 throw new IncorrectInputException("Incorrect username or password!");
             }
 
