@@ -69,6 +69,127 @@ public class ProjectManager extends User {
 	}
 
 
+	// Project Manager Menu
+	public void pmMenu() {
+		int choice = 0;
+		do {
+			try {
+				System.out.println("\n*** Project Manager Menu ***\n" +
+						"1. Enter Personality of students\n" +
+						"2. Enter Weightage for Soft-Constraints\n" +
+						"3. Change Sign up status\n" +
+						"4. Discard Unpopular projects\n" +
+						"5. Display Current Constraint\n" +
+						"6. Run Project Team formation\n" +
+						"7. Display Teams\n");
+				choice = Integer.parseInt(scan.next());
+			} catch (NumberFormatException e) {
+				System.err.println("Please enter an integer (1-6)");
+			}
+		} while (choice < 1 || choice > 7);
+
+		Constraint con = new Constraint();
+
+		switch (choice) {
+			case 1:
+				enterStudentPersonality();
+				break;
+			case 2:
+				con.setWeightage();
+				break;
+			case 3:
+				setSignUpStatus();
+				break;
+			case 4:
+				try {
+					discardUnpopularProjects();
+				} catch (ProjectMismatchException e) {
+					// TODO Auto-generated catch block
+					e.getMessage();
+				}
+				break;
+			case 5:
+				con.displayConstraints();
+				break;
+			case 6:
+				createTeams();
+				// check gpa creating teamStudent temp student
+				// check female creating team Student
+				// ;
+				break;
+			case 7:
+				//displayTeams();
+				break;
+
+			//Stage3 methods
+			//displayTeamFitness()
+			//swapMembers()
+			//changeStudentGpa()
+		}
+	}
+
+
+	//Method to assign personality to all students
+	private void enterStudentPersonality() {
+		boolean foundStudent = false, validPersonality = false;
+		String studID;
+		char studPersonality = '0';
+
+		do {
+			System.out.println("\nEnter assigned student ID:");
+			studID = scan.next();
+			studID += scan.nextLine();
+			for (Student stud : Student.allStudents) {
+
+				if (((Student) stud).getId().compareTo(studID) == 0) {
+					foundStudent = true;
+					System.out.println("\nPlease enter personality of " + studID + " :");
+					studPersonality = scan.nextLine().toUpperCase().charAt(0);
+
+					char[] validPersonalities = {'A', 'B', 'C', 'D', 'E', 'F'};
+					for (int i = 0; i < 6; i++) {
+						if (studPersonality == validPersonalities[i]) {
+							validPersonality = true;
+							stud.setStudentPersonality(studPersonality);
+						}
+					}
+					if (!validPersonality) {
+						System.out.println("Invalid personality type!");
+					}
+				}
+			}
+			if (!foundStudent) {
+				System.out.println("Student not found!");
+			}
+		} while (foundStudent == false || studID.isEmpty() || studPersonality == '0');
+	}
+
+
+	//Method to unable or disable Sign Up
+	public void setSignUpStatus() {
+		// true = open && false = closed
+
+		int choice = 0;
+		signUpStatus = true;
+		do {
+			try {
+				System.out.println("Set Sign Up Status" + "\n1. Open" + "\n2.Closed");
+				System.out.println("Please enter your Choice :");
+				choice = Integer.parseInt(s.next());
+			} catch (NumberFormatException e) {
+				System.err.println("Please enter an integer");
+			}
+		} while (choice < 1 || choice > 3);
+
+		switch (choice) {
+			case 1:
+				signUpStatus = true;
+			case 2:
+				signUpStatus = false;
+		}
+	}
+
+
 	//Method to discard unpopular projects
 	public static boolean discardUnpopularProjects() throws ProjectMismatchException {
 		int numProjectReqd = 0;
@@ -119,6 +240,19 @@ public class ProjectManager extends User {
 
 		return true;
 	}
+
+
+	//Method to form teams for projects
+	private void createTeams() {
+		overallTeamGPACheck();
+		teamMemberGPACheck();
+		ensureFemaleInATeamandExperience();
+		personalityConstraint();
+
+		Team team = setProjectForTeam(teamStudent);
+		Team.allTeams.add(team);
+	}
+
 
 	// 1. Check overallGPA hard constraint
 	public static void overallTeamGPACheck() {
@@ -544,133 +678,4 @@ public class ProjectManager extends User {
 		team01.setStudentsInTeam(teamStudent);
 		return team01;
 	}
-
-	// Project Manager Menu
-	public void pmMenu() {
-		int choice = 0;
-		do {
-			try {
-				System.out.println("\n*** Project Manager Menu ***\n" +
-						"1. Enter Personality of students\n" +
-						"2. Enter Weightage for Soft-Constraints\n" +
-						"3. Change Sign up status\n" +
-						"4. Discard Unpopular projects\n" +
-						"5. Display Current Constraint\n" +
-						"6. Run Project Team formation\n" +
-						"7. Display Teams\n");
-				choice = Integer.parseInt(scan.next());
-			} catch (NumberFormatException e) {
-				System.err.println("Please enter an integer (1-6)");
-			}
-		} while (choice < 1 || choice > 7);
-
-		Constraint con = new Constraint();
-
-		switch (choice) {
-			case 1:
-				enterStudentPersonality();
-				break;
-			case 2:
-				con.setWeightage();
-				break;
-			case 3:
-				setSignUpStatus();
-				break;
-			case 4:
-				try {
-					discardUnpopularProjects();
-				} catch (ProjectMismatchException e) {
-					// TODO Auto-generated catch block
-					e.getMessage();
-				}
-				break;
-			case 5:
-				con.displayConstraints();
-				break;
-			case 6:
-				createTeams();
-				// check gpa creating teamStudent temp student
-				// check female creating team Student
-				// ;
-				break;
-			case 7:
-				//displayTeams();
-				break;
-
-			//Stage3 methods
-			//displayTeamFitness()
-			//swapMembers()
-			//changeStudentGpa()
-		}
-	}
-
-	//Method to assign personality to all students
-	private void enterStudentPersonality() {
-		boolean foundStudent = false, validPersonality = false;
-		String studID;
-		char studPersonality = '0';
-
-		do {
-			System.out.println("\nEnter assigned student ID:");
-			studID = scan.next();
-			studID += scan.nextLine();
-			for (Student stud : Student.allStudents) {
-
-				if (((Student) stud).getId().compareTo(studID) == 0) {
-					foundStudent = true;
-					System.out.println("\nPlease enter personality of " + studID + " :");
-					studPersonality = scan.nextLine().toUpperCase().charAt(0);
-
-					char[] validPersonalities = {'A', 'B', 'C', 'D', 'E', 'F'};
-					for (int i = 0; i < 6; i++) {
-						if (studPersonality == validPersonalities[i]) {
-							validPersonality = true;
-							stud.setStudentPersonality(studPersonality);
-						}
-					}
-					if (!validPersonality) {
-						System.out.println("Invalid personality type!");
-					}
-				}
-			}
-			if (!foundStudent) {
-				System.out.println("Student not found!");
-			}
-		} while (foundStudent == false || studID.isEmpty() || studPersonality == '0');
-	}
-
-	//Method to unable or disable Sign Up
-	public void setSignUpStatus() {
-		// true = open && false = closed
-
-		int choice = 0;
-		signUpStatus = true;
-		do {
-			try {
-				System.out.println("Set Sign Up Status" + "\n1. Open" + "\n2.Closed");
-				System.out.println("Please enter your Choice :");
-				choice = Integer.parseInt(s.next());
-			} catch (NumberFormatException e) {
-				System.err.println("Please enter an integer");
-			}
-		} while (choice < 1 || choice > 3);
-
-		switch (choice) {
-			case 1:
-				signUpStatus = true;
-			case 2:
-				signUpStatus = false;
-		}
-	}
-
-	//Method to form teams
-	private void createTeams() {
-		overallTeamGPACheck();
-		teamMemberGPACheck();
-		ensureFemaleInATeamandExperience();
-		Team team = setProjectForTeam(teamStudent);
-		Team.allTeams.add(team);
-	}
-
-
 }
