@@ -11,6 +11,7 @@ public class Project {
     private ArrayList<Role> role = new ArrayList<Role>();
     public static int projectCounter = 0;
     public int popularityCounter;
+    public static ArrayList<Project> totalProjects = new ArrayList<>();
     Scanner sc = new Scanner(System.in);
 
     public Project() {
