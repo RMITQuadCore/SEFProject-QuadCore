@@ -248,4 +248,8 @@ public class Student extends User {
 	public void setPreferredProjects(Project[] preferredProjects) {
 		this.preferredProjects = preferredProjects;
 	}
+
+	public char getgender() {
+		return gender;
+	}
 }
