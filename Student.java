@@ -45,16 +45,6 @@ public class Student extends User {
 		this.gender = gender;
 	}
 
-	public double getGPA()
-	{
-		return gPA;
-	}
-
-	public void setGPA(double gPA)
-	{
-		this.gPA = gPA;
-	}
-
 	public double getExperience()
 	{
 		return experience;
@@ -63,6 +53,38 @@ public class Student extends User {
 	public void setExperience(double experience)
 	{
 		this.experience = experience;
+	}
+	public Project[] getPreferredProjects() {
+		return preferredProjects;
+	}
+
+	public double getgPA() {
+		return gPA;
+	}
+
+	public Role[] getPreferredRoles() {
+		return preferredRoles;
+	}
+
+	public void setPreferredRoles(Role[] preferredRoles) {
+		this.preferredRoles = preferredRoles;
+	}
+
+	public Student[] getDislikedMembers() {
+		return dislikedMembers;
+	}
+
+	public void setDislikedMembers(Student[] dislikedMembers) {
+		this.dislikedMembers = dislikedMembers;
+	}
+
+	public void setgPA(double gPA) {
+		this.gPA = gPA;
+	}
+
+	public void setPreferredProjects(Project[] preferredProjects)
+	{
+		this.preferredProjects = preferredProjects;
 	}
 
 	public void enterDislikedMembers()
@@ -126,11 +148,11 @@ public class Student extends User {
 						}
 					}
 					if (!existing) {
-						for (int j = 0; j < Project.pr.size(); j++) {
-							if (input.equals(Project.pr.get(j).getProjectId())) {
+						for (int j = 0; j < Project.totalProjects.size(); j++) {
+							if (input.equals(Project.totalProjects.get(j).getProjectId())) {
 								checkProject = true;
-								preferredProjects[i] = Project.pr.get(j);
-								Project.pr.get(j).setPopularityCounter(Project.pr.get(j).getPopularityCounter() + (4 - i));
+								preferredProjects[i] = Project.totalProjects.get(j);
+								Project.totalProjects.get(j).setPopularityCounter(Project.totalProjects.get(j).getPopularityCounter() + (4 - i));
 							}
 						}
 						if (!checkProject) {
@@ -143,7 +165,8 @@ public class Student extends User {
 		}
 	}
 
-	public void enterPreferredRoles(Project project) {
+	public void enterPreferredRoles(Project project)
+	{
 		String input;
 		System.out.println(" You are allowed to enter 2 Roles you would like to apply for.");
 		for (int i = 0; i < 2; i++)
@@ -161,18 +184,18 @@ public class Student extends User {
 				}
 				if (!existing)
 				{
-					for (int j = 0; j < project.allRoles.size(); j++)
+					for (int j = 0; j < project.getRole().size(); j++)
 					{
-						if (input.equals(project.allRoles.get(j).getId()))
+						if (input.equals(project.getRole().get(j).getId()))
 						{
 							checkRole = true;
-							preferredRoles[i].setId(project.allRoles.get(j).getId());
-							preferredRoles[i].setRoleName(project.allRoles.get(j).getRoleName());
+							preferredRoles[i].setId(project.getRole().get(j).getId());
+							preferredRoles[i].setRoleName(project.getRole().get(j).getRoleName());
 
 							System.out.println("These are the list of Frameworks required for that role");
-							for(int z = 0 ; z< project.allRoles.get(j).getFrameworks().size();z++)
+							for(int z = 0 ; z< project.getRole().get(j).getFrameworks().size();z++)
 							{
-								System.out.println(project.allRoles.get(j).getFrameworks().get(z));
+								System.out.println(project.getRole().get(j).getFrameworks().get(z));
 							}
 							int number =0;
 							do {
@@ -182,11 +205,11 @@ public class Student extends User {
 								} catch (NumberFormatException e) {
 									System.err.println("Enter a valid Integer");
 								}
-							}while(number < 0 || number > project.allRoles.get(j).getFrameworks().size());
+							}while(number < 0 || number > project.getRole().get(j).getFrameworks().size());
 
 							for (int l = 0; l < number ; l++)
 							{
-								preferredRoles[i].enterFrameworks(project.allRoles.get(j));
+								preferredRoles[i].enterFrameworks(project.getRole().get(j));
 							}
 						}
 					}
@@ -213,14 +236,15 @@ public class Student extends User {
 ////			allStudents.add(student);
 ////		}
 //	}
-	public void start() {
+	public void start()
+	{
 		int ch = 0;
 		do {
 			try {
 				System.out.println("\n1.Enter preferred projects\n2.Enter preferred roles\n3.Enter disliked members\n");
 				ch = Integer.parseInt(s.next());
 			} catch (NumberFormatException e) {
-				System.err.println("enter an integer");
+				System.err.println("Enter an integer");
 			}
 		} while (ch < 1 || ch > 4);
 
@@ -241,15 +265,5 @@ public class Student extends User {
 		}
 	}
 
-	public Project[] getPreferredProjects() {
-		return preferredProjects;
-	}
 
-	public void setPreferredProjects(Project[] preferredProjects) {
-		this.preferredProjects = preferredProjects;
-	}
-
-	public char getgender() {
-		return gender;
-	}
 }
