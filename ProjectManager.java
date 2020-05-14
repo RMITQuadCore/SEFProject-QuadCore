@@ -132,6 +132,8 @@ public class ProjectManager extends User {
 		overallTeamGPACheck();
 		teamMemberGPACheck();
 		ensureFemaleInATeamandExperience();
+		Team team = setProjectForTeam(teamStudent);
+		Team.allTeams.add(team);
 	}
 
 	// check overallGPA hard constraint
@@ -452,5 +454,37 @@ public class ProjectManager extends User {
 			teamStudent.clear();
 		}
 
+	}
+	public static Team setProjectForTeam(ArrayList<Student> teamStudent)
+	{
+		HashMap<Project , Integer> projectPopularity = new HashMap<>();
+		for (int i = 0; i < Project.totalProjects.size() ; i++)
+		{
+			projectPopularity.put(Project.totalProjects.get(i),0);
+		}
+
+		for (int i = 0; i <teamStudent.size(); i++)
+		{
+			Project [] preference = new Project[4];
+			preference = teamStudent.get(i).getPreferredProjects();
+			for (int j = 0; j < 4; j++)
+			{
+				if(projectPopularity.containsKey(preference[j]))
+				{
+					projectPopularity.put(preference[j], projectPopularity.get(preference[j]) + (4-j));
+				}
+			}
+		}
+		Team team01 = new Team("TEAM01");
+
+		int maxValueInMap=(Collections.max(projectPopularity.values()));
+		for (HashMap.Entry<Project, Integer> entry : projectPopularity.entrySet())
+		{
+			if (entry.getValue()==maxValueInMap) {
+				team01.setProjectAssigned(entry.getKey());
+			}
+		}
+		team01.setStudentsInTeam(teamStudent);
+		return team01;
 	}
 }
