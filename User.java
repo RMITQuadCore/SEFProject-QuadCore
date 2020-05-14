@@ -173,6 +173,16 @@ public class User {
     }
 
     public void signup() throws IncorrectInputException {
+
+        ProjectManager pm = new ProjectManager();
+        //If Project Manager disables signUp, no new sign ups are allowed
+        if (pm.getSignUpStatus() == false) {
+            System.out.println("Sign Up is disable by Project Manager." +
+                    "Please Contact Project Manager.");
+            return;
+        }
+
+
         boolean foundFirstName = false, foundLastName = false, foundOrg = false;
 
         int ch = 0;
