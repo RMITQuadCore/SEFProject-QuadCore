@@ -46,10 +46,14 @@ public class Temp {
         Student s2 = new Student("S2", "Karan", "Thapar", "karan.234@gmail.com", "karan234", "12345", "RMIT", 3.4, 2.2, 'F', 'A');
         Student s3 = new Student("S3", "Karan", "Thapar", "karan.234@gmail.com", "karan234", "12345", "RMIT", 3.4, 2.2, 'M', 'A');
         Student s4 = new Student("S4", "Karan", "Thapar", "karan.234@gmail.com", "karan234", "12345", "RMIT", 3.4, 2.2, 'M', 'A');
-        Project proj1 = new Project("Client1", "PROJ001", "ProjectTitle", "Details");
-        Project proj2 = new Project("Client2", "PROJ002", "ProjectTitle", "Details");
-        Project proj3 = new Project("Client3", "PROJ003", "ProjectTitle", "Details");
-        Project proj4 = new Project("Client4", "PROJ004", "ProjectTitle", "Details");
+        Project proj1 = new Project();
+        Project proj2 = new Project();
+        Project proj3 = new Project();
+        Project proj4 = new Project();
+        proj1.setProjectId("PROJ001");
+        proj2.setProjectId("PROJ002");
+        proj3.setProjectId("PROJ003");
+        proj4.setProjectId("PROJ004");
         totalProjects.add(proj1);
         totalProjects.add(proj2);
         totalProjects.add(proj3);
@@ -73,11 +77,11 @@ public class Temp {
         teamStudent.add(s1);
         teamStudent.add(s2);
         teamStudent.add(s3);
-        //teamStudent.add(s4);
+        teamStudent.add(s4);
 
         Team t1 = setProjectForTeam(teamStudent);
 
-        System.out.println(t1.getProjectAssigned().projectId);
+        System.out.println(t1.getProjectAssigned().getProjectId());
         System.out.println(t1.getStudentsInTeam().size());
     }
 }

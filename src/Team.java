@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -5,10 +6,11 @@ public class Team {
   
 
         private String teamID;
-        private Set<Student> studentsInTeam = new HashSet<>();
+        private ArrayList<Student> studentsInTeam = new ArrayList<>();
         private int teamFitness;
-        private Set<Constraint> constraintsMet = new HashSet<>();
+        private ArrayList<Constraint> constraintsMet = new ArrayList<>();
         private Project projectAssigned;
+        public static Set<Team>allTeams = new HashSet<>(); // Stores all the teams formed
 
         public Team(String teamID)
         {
@@ -23,11 +25,11 @@ public class Team {
             this.teamID = teamID;
         }
 
-        public Set<Student> getStudentsInTeam() {
+        public ArrayList<Student> getStudentsInTeam() {
             return studentsInTeam;
         }
 
-        public void setStudentsInTeam(Set<Student> studentsInTeam) {
+        public void setStudentsInTeam(ArrayList<Student> studentsInTeam) {
             this.studentsInTeam = studentsInTeam;
         }
 
@@ -39,11 +41,11 @@ public class Team {
             this.teamFitness = teamFitness;
         }
 
-        public Set<Constraint> getConstraintsMet() {
+        public ArrayList<Constraint> getConstraintsMet() {
             return constraintsMet;
         }
 
-        public void setConstraintsMet(Set<Constraint> constraintsMet) {
+        public void setConstraintsMet(ArrayList<Constraint> constraintsMet) {
             this.constraintsMet = constraintsMet;
         }
 
