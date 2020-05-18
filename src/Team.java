@@ -3,14 +3,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Team {
-  
-
         private String teamID;
         private ArrayList<Student> studentsInTeam = new ArrayList<>();
         private int teamFitness;
         private ArrayList<Constraint> constraintsMet = new ArrayList<>();
         private Project projectAssigned;
-        public static Set<Team>allTeams = new HashSet<>(); // Stores all the teams formed
+        public static Set<Team>allTeams = new HashSet<>();
+        // TODO displayTeam Method should be added
 
         public Team(String teamID)
         {

@@ -30,7 +30,7 @@ class ProjectTest {
         input[0] = pr.getProjectTitle();
         input[1] = pr.getProjectDetails();
 
-        pr.getRole();
+        pr.getRolesInProject();
         int check = 0;
         int i = 0;
         for (i = 0; i < 2; i++) {
@@ -38,7 +38,7 @@ class ProjectTest {
                 check++;
             }
         }
-        for (Role r : pr.getRole()) {
+        for (Role r : pr.getRolesInProject()) {
             if (r.getRoleName().equalsIgnoreCase(testPr[i])) {
                 check++;
             }

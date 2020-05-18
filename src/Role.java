@@ -2,17 +2,16 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Role {
-    static Scanner scan = new Scanner(System.in);
-    private String id;
+    static Scanner scan = new Scanner(System.in);// TODO Remove Scanner
+    private String id;// ID can be both for student or Project
     private String roleName;
     private ArrayList<String> frameworks = new ArrayList<>();
 
 
-    public Role (String id, String roleName, ArrayList<String> frameworks)
+    public Role (String id, String roleName) // Removed frameworks from constructor
     {
       this.id =id;
       this.roleName= roleName;
-      this.frameworks = frameworks;
     }
 
     public ArrayList<String> getFrameworks()

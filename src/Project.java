@@ -2,39 +2,38 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Project {
-    public static ArrayList<Project> proj = new ArrayList<Project>();
+    public static ArrayList<Project> proj = new ArrayList<Project>(); // TODO use total projects as the name
     private String projectId = "PROJ100";
-    private String clientId;
+    private String clientId; //TODO Check if needed to change to ClientRep Type
     private String projectTitle;
     private String projectDetails;
-    private String[] studentId;
-    private ArrayList<Role> role = new ArrayList<Role>();
+    private String[] studentId; // TODO Sunil Maybe replace ?
+    private ArrayList<Role> rolesInProject = new ArrayList<Role>();
     public static int projectCounter = 0;
     public int popularityCounter;
     public static ArrayList<Project> totalProjects = new ArrayList<>();
-    Scanner sc = new Scanner(System.in);
+    Scanner sc = new Scanner(System.in); // TODO Remove Scanner
 
     public Project() {
         // TODO Auto-generated constructor stub
     }
 
-    public Project(String clientId, String projectId, String projectTitle, String projectDetails, ArrayList<Role> role,
-                   int popularityCounter) {
+    public Project(String clientId, String projectId, String projectTitle, String projectDetails) {
         this.clientId = clientId;
         this.projectId = projectId;
         this.projectTitle = projectTitle;
         this.projectDetails = projectDetails;
-        this.studentId = null;
-        this.role = role;
-        this.popularityCounter = popularityCounter;
+//        this.studentId = null; //TODO Confirm with Sunil
+//        this.rolesInProject = rolesInProject;
+//        this.popularityCounter = popularityCounter;
     }
 
-    public ArrayList<Role> getRole() {
-        return role;
+    public ArrayList<Role> getRolesInProject() {
+        return rolesInProject;
     }
 
-    public void setRole(ArrayList<Role> role) {
-        this.role = role;
+    public void setRolesInProject(ArrayList<Role> rolesInProject) {
+        this.rolesInProject = rolesInProject;
     }
 
     public String getProjectId() {
@@ -104,11 +103,11 @@ public class Project {
         System.out.println("Enter Project details: ");
         projectDetails = sc.next();
         projectDetails += sc.nextLine();
-        System.out.println("Specify required role: ");
-        String role1 = sc.next();
+        System.out.println("Specify required role: "); //TODO Add multiple Roles
+        String role1 = sc.next(); //TODO change Role1 to roleName
         role1 += sc.nextLine();
         int length = 0;
-        boolean lError = true;
+        boolean lError = true;// TODO Rename
         do {
             try {
                 System.out.println("How many frameworks do you want to add for role '" + role1 + "' ?");
@@ -118,15 +117,15 @@ public class Project {
                 System.out.println("Please enter an integer");
             }
         } while (lError || length < 0);
-        ArrayList<String> frameworks = new ArrayList<String>();
+        ArrayList<String> frameworks = new ArrayList<String>(); // TODO Use the method in Role Class
         for (int i = 0; i < length; i++) {
             System.out.println("Specify one framework '" + role1 + "' should be familiar with:");
             String framework = sc.next();
             framework += sc.nextLine();
             frameworks.add(framework);
         }
-        role.add(new Role(projectId, role1, frameworks));
-        proj.add(new Project(clientId, projectId, projectTitle, projectDetails, role, 0));
+        rolesInProject.add(new Role(projectId, role1));
+        proj.add(new Project(clientId, projectId, projectTitle, projectDetails)); // TODO use totalProjects as the name
         System.out.println("Success! Project is created with Id : " + projectId);
     }
 
@@ -137,7 +136,7 @@ public class Project {
             System.out.println("project Title: " + p.getProjectTitle());
             System.out.println("projectDetails: " + p.getProjectDetails());
 
-            for (Role r : p.getRole()) {
+            for (Role r : p.getRolesInProject()) {
                 System.out.println("Role: " + r.getRoleName());
                 System.out.println("Frameworks are: ");
                 for (String f : r.getFrameworks()) {

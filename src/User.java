@@ -10,21 +10,21 @@ import java.util.regex.Pattern;
 
 public class User {
     private String id;
-    protected String firstName;
+    protected String firstName; // TODO Make Private maybe
     protected String lastName;
-    protected String org;
+    protected String org; //TODO Rename to organisation
     protected String emailID;
-    protected String userName;
-    protected String password;
-    private String studentID = "ST000";
-    protected String clientID = "CL000";
-    private String managerID = "PM000";
+    protected String userName;// TODO Make Private maybe
+    protected String password;// TODO Make Private maybe
+    private String studentID = "ST000"; // TODO Do it more efficiently
+    protected String clientID = "CL000"; // TODO Do it more efficiently
+    private String managerID = "PM000"; // TODO Do it more efficiently
     // private String confirmPassword;
-    Scanner s = new Scanner(System.in);
+    Scanner s = new Scanner(System.in); // TODO Remove
     Student student;
     ClientRepresentative cr;
-    ProjectManager pm;
-    public ArrayList<User> details = new ArrayList<User>();
+    ProjectManager pm; // TODO Do it Efficiently
+    public ArrayList<User> details = new ArrayList<User>(); // TODO Rename to all users details
 
     public User() {
     }
@@ -121,7 +121,7 @@ public class User {
         this.id = id;
     }
 
-    public void start() {
+    public void start() {  // TODO Rename to Method to Menu // Option to use static
         int choice = 0;
         do {
             try {
@@ -273,7 +273,7 @@ public class User {
         switch (ch) {
             case 1:
 
-                char gender;
+                char gender; // TODO Add input validation for M/F, try catch ?
                 Float gpa, experience;
                 System.out.println("\nEnter your gender: F/M");
                 gender = s.next().charAt(0);
@@ -290,7 +290,7 @@ public class User {
                 setStudentID(studentID);
 
                 details.add(new Student(studentID, firstName, lastName, emailID, userName, password, org, gpa, experience,
-                        gender, '0'));
+                        gender, '0')); // TODO Doubt To Juilee Double Save
 
                 Student.allStudents.add(new Student(studentID, firstName, lastName, emailID, userName, password, org, gpa,
                         experience, gender, '0'));
@@ -309,7 +309,7 @@ public class User {
                 details.add(
                         new ClientRepresentative(clientID, firstName, lastName, emailID, userName, password, org));
                 System.out.println("You have successfully signed up with ID: " + clientID + "!\n");
-
+                // TODO Doubt To Juilee No Double Save here
                 break;
 
             case 3:
@@ -318,8 +318,9 @@ public class User {
                         (Integer.parseInt(getManagerID().substring(2, getManagerID().length())) + 1));
 
                 setManagerID(managerID);
-                details.add(new ProjectManager(managerID, firstName, lastName, emailID, userName, password, org,null));
+                details.add(new ProjectManager(managerID, firstName, lastName, emailID, userName, password, org));
                 System.out.println("You have successfully signed up with ID: " + managerID + "!\n");
+                // TODO Doubt To Juilee No Double Save here
                 break;
 
             default:
@@ -346,8 +347,7 @@ public class User {
             loginName = s.next();
             loginName += s.nextLine();
 
-            for (User a : details) {
-
+            for (User a : details) { // TODO refactor a to user
                 if (a instanceof ClientRepresentative) {
 
                     if (loginName.compareTo(((ClientRepresentative) a).getUserName()) == 0) {

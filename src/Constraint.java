@@ -1,7 +1,8 @@
 import java.util.Scanner;
 
 public class Constraint {
-    Scanner scan = new Scanner(System.in);
+    Scanner scan = new Scanner(System.in); // TODO remove Scanner
+
 
 
     // Method to set weightage for soft constraints
@@ -13,6 +14,7 @@ public class Constraint {
             try {
                 System.out.println("Personality Soft-Constraint :");
                 personalityWeightage = Integer.parseInt(scan.next());
+
                 if (personalityWeightage < 1 || personalityWeightage > 4) {
                     System.out.println("Please enter weighatge in range 1 to 4");
                     continue;

@@ -1,17 +1,16 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Student extends User {
-	static Scanner scan = new Scanner(System.in);
+	static Scanner scan = new Scanner(System.in); // TODO remove scanner
 	private double gPA;
 	private double experience;
 	private char gender;
-	protected char studentPersonality; // Changes made according to Class diagram
-	private Role[] preferredRoles = new Role[2];// This should be deleted ?
-	private Project[] preferredProjects = new Project[4]; // Storing preferred project as collection
-	private Student[] dislikedMembers = new Student[3]; // Storing student as a collection
-	public static ArrayList<Student> allStudents = new ArrayList<>();
+	private char studentPersonality; // Changes made according to Class diagram
+	private Role[] preferredRoles = new Role[2];// TODO Change to arraylist
+	private Project[] preferredProjects = new Project[4]; // TODO Change to arraylist
+	private Student[] dislikedMembers = new Student[3]; // TODO Change to arraylist
+	public static ArrayList<Student> allStudents = new ArrayList<>(); // TODO Maybe remove
 
 	public Student(String id, String firstName, String lastName, String emailID, String userName,
 			String password, String org, double gPA, double experience, char gender, char studentPersonality)
@@ -91,18 +90,18 @@ public class Student extends User {
 	{
 		System.out.println(getId() + "! You are allowed to enter 3 members you do not wish to team up with.");
 		for (int i = 0; i < 3; i++) {
-			boolean checkStudent = false;
+			boolean studentExists = false;
 			do {
 				System.out.print(" \nPlease enter the student ID of member number " + (i + 1) + ":");
 				String input = scan.next();
-				boolean existing = false;
+				boolean dislikedStudExists = false;
 				for (Student dislikedMember : dislikedMembers) {
 					if (input.equals(dislikedMember.getId())) {
-						existing = true;
+						dislikedStudExists = true;
 					}
 				}
-				if (!existing)
-				{
+
+				if (!dislikedStudExists){
 					if (input.equals(getId()))
 					{
 						System.out.println("\nYou cannot enter your own ID!!");
@@ -113,20 +112,20 @@ public class Student extends User {
 						{
 							if (input.equals(allStudents.get(j).getId()))
 							{
-								checkStudent = true;
+								studentExists = true;
 								dislikedMembers[i] = allStudents.get(j);
 							}
 						}
-						if (!checkStudent)
+						if (!studentExists)
 						{
-							System.out.println("\nNo student found. Please enter an existing student's ID");
+							System.out.println("\nNo student found. Please enter an dislikedStudExists student's ID");
 						}
 					}
 				} else {
 
 					System.out.println("You have already registered this student ID as disliked Member!!");
 				}
-			} while (!checkStudent);
+			} while (!studentExists);
 		}
 
 	}
@@ -136,32 +135,32 @@ public class Student extends User {
 		String input;
 		System.out.println(" You are allowed to enter 4 projects you would like to work for.");
 		for (int i = 0; i < 4; i++) {
-			boolean checkProject = false;
+			boolean projectExists = false;
 				do {
 					System.out.print("\n Please enter your preferred project number " + (i + 1) + ":");
 					input = scan.next();
 					input += scan.nextLine();
-					boolean existing = false;
+					boolean preferredProjExists = false;
 					for (int k = 0; k < preferredProjects.length; k++) {
 						if (input.equals(preferredProjects[k].getProjectId())) {
-							existing = true;
+							preferredProjExists = true;
 						}
 					}
-					if (!existing) {
+					if (!preferredProjExists) {
 						for (int j = 0; j < Project.totalProjects.size(); j++) {
 							if (input.equals(Project.totalProjects.get(j).getProjectId())) {
-								checkProject = true;
+								projectExists = true;
 								preferredProjects[i] = Project.totalProjects.get(j);
 								Project.totalProjects.get(j).setPopularityCounter(Project.totalProjects.get(j).getPopularityCounter() + (4 - i));
 							}
 						}
-						if (!checkProject) {
-							System.out.println("\n No Project found. Please enter an existing Project's ID");
+						if (!projectExists) {
+							System.out.println("\n No Project found. Please enter an preferredProjExists Project's ID");
 						}
 					} else {
 						System.out.println("You have already registered this Project as a Preference!!");
 					}
-				}while(!checkProject);
+				}while(!projectExists);
 		}
 	}
 
@@ -171,31 +170,31 @@ public class Student extends User {
 		System.out.println(" You are allowed to enter 2 Roles you would like to apply for.");
 		for (int i = 0; i < 2; i++)
 		{
-			boolean checkRole = false;
+			boolean roleExists = false;
 			do {
 				System.out.print("\n Please enter your preferred Roles number " + (i + 1) + ":");
 				input = scan.next();
 				input += scan.nextLine();
-				boolean existing = false;
+				boolean preferredRoleExists = false;
 				for (int k = 0; k < preferredRoles.length; k++) {
 					if (input.equals(preferredRoles[k].getId())) {
-						existing = true;
+						preferredRoleExists = true;
 					}
 				}
-				if (!existing)
+				if (!preferredRoleExists)
 				{
-					for (int j = 0; j < project.getRole().size(); j++)
+					for (int j = 0; j < project.getRolesInProject().size(); j++)
 					{
-						if (input.equals(project.getRole().get(j).getId()))
+						if (input.equals(project.getRolesInProject().get(j).getId()))
 						{
-							checkRole = true;
-							preferredRoles[i].setId(project.getRole().get(j).getId());
-							preferredRoles[i].setRoleName(project.getRole().get(j).getRoleName());
+							roleExists = true;
+							preferredRoles[i].setId(project.getRolesInProject().get(j).getId());
+							preferredRoles[i].setRoleName(project.getRolesInProject().get(j).getRoleName());
 
 							System.out.println("These are the list of Frameworks required for that role");
-							for(int z = 0 ; z< project.getRole().get(j).getFrameworks().size();z++)
+							for(int z = 0; z< project.getRolesInProject().get(j).getFrameworks().size(); z++)
 							{
-								System.out.println(project.getRole().get(j).getFrameworks().get(z));
+								System.out.println(project.getRolesInProject().get(j).getFrameworks().get(z));
 							}
 							int number =0;
 							do {
@@ -205,37 +204,24 @@ public class Student extends User {
 								} catch (NumberFormatException e) {
 									System.err.println("Enter a valid Integer");
 								}
-							}while(number < 0 || number > project.getRole().get(j).getFrameworks().size());
+							}while(number < 0 || number > project.getRolesInProject().get(j).getFrameworks().size());
 
 							for (int l = 0; l < number ; l++)
 							{
-								preferredRoles[i].enterFrameworks(project.getRole().get(j));
+								preferredRoles[i].enterFrameworks(project.getRolesInProject().get(j));
 							}
 						}
 					}
-					if (!checkRole) {
-						System.out.println("\n No Role found. Please enter an existing Project's ID");
+					if (!roleExists) {
+						System.out.println("\n No Role found. Please enter an preferredRoleExists Project's ID");
 					}
 				} else {
 					System.out.println("You have already registered this Role as a Preference!!");
 				}
-			}while(!checkRole);
+			}while(!roleExists);
 		}
 	}
 
-
-//	public static void addStudent(Student student) {
-////		boolean studentpresent = false;
-////		for (int j = 0; j < allStudents.size(); j++) {
-////			if (student.getstudentID().equals(allStudents.get(j).getstudentID())) {
-////				System.out.println("Student Already exists");
-////				studentpresent = true;
-////			}
-////		}
-////		if (!studentpresent) {
-////			allStudents.add(student);
-////		}
-//	}
 	public void start()
 	{
 		int ch = 0;

@@ -32,16 +32,14 @@ public class ProjectManager extends User {
 	private String emailID;
 	private String userName;
 	private String password;
-	private boolean signUpStatus;
+	private boolean signUpStatus = true;
 
 	public ProjectManager() {
 	}
 
 	public ProjectManager(String id, String firstName, String lastName, String emailID, String userName,
-						  String password, String org, ArrayList<String> studentPersonalities) {
+						  String password, String org) {
 		super(id, firstName, lastName, emailID, userName, password, org);
-		this.studentPersonalities = studentPersonalities;
-		signUpStatus = true;
 	}
 
 	public ArrayList<String> getStudentPersonalities() {
@@ -150,7 +148,7 @@ public class ProjectManager extends User {
 					for (int i = 0; i < 6; i++) {
 						if (studPersonality == validPersonalities[i]) {
 							validPersonality = true;
-							stud.setStudentPersonality(studPersonality);
+							stud.setStudentPersonality(studPersonality); // TODO setStudent Personality to Student Class Object
 						}
 					}
 					if (!validPersonality) {
@@ -190,7 +188,7 @@ public class ProjectManager extends User {
 	}
 
 
-	//Method to discard unpopular projects
+	//Method to discard unpopular projects //TODO This will be in Project
 	public static boolean discardUnpopularProjects() throws ProjectMismatchException {
 		int numProjectReqd = 0;
 		int numStudents = Student.allStudents.size();
@@ -271,14 +269,14 @@ public class ProjectManager extends User {
 			}
 			double sumOfGPA = 0;
 			for (Student s : teamStudent) {
-				sumOfGPA = sumOfGPA + s.getGPA();
+				sumOfGPA = sumOfGPA + s.getgPA();
 			}
 
 			if ((sumOfGPA / 4) > 3.5) {
 				for (int i = 0; i < tempStudent.size(); i++) {
-					if (tempStudent.get(i).getGender() == 'm' && tempStudent.get(i).getGPA() < 3.00) {
+					if (tempStudent.get(i).getGender() == 'm' && tempStudent.get(i).getgPA() < 3.00) {
 						for (Student tm : teamStudent) {
-							if (tm.getGender() == 'm' && tm.getGPA() > 3.00) {
+							if (tm.getGender() == 'm' && tm.getgPA() > 3.00) {
 								tempStudent.add(tm);
 								teamStudent.remove(tm);
 								teamStudent.add(tempStudent.get(i));
@@ -289,7 +287,7 @@ public class ProjectManager extends User {
 						}
 						double sumOfNewGPA = 0;
 						for (Student s : teamStudent) {
-							sumOfNewGPA = sumOfNewGPA + s.getGPA();
+							sumOfNewGPA = sumOfNewGPA + s.getgPA();
 						}
 						if ((sumOfNewGPA / 4) <= 3.5) {
 							break;
@@ -303,7 +301,7 @@ public class ProjectManager extends User {
 			}
 			double sumOfNewGPA = 0;
 			for (Student s : teamStudent) {
-				sumOfNewGPA = sumOfNewGPA + s.getGPA();
+				sumOfNewGPA = sumOfNewGPA + s.getgPA();
 			}
 //			if ((sumOfNewGPA / 4) > 3.5) {
 //				System.out.print("Project team: ");
@@ -336,7 +334,7 @@ public class ProjectManager extends User {
 
 			int GPAGreaterThanThreeCounter = 0;
 			for (int i = 0; i < 4; i++) {
-				if (teamStudent.get(i).getGPA() >= 3.00) {
+				if (teamStudent.get(i).getgPA() >= 3.00) {
 					GPAGreaterThanThreeCounter++;
 				}
 			}
@@ -344,9 +342,9 @@ public class ProjectManager extends User {
 			while (GPAGreaterThanThreeCounter < 2) {
 				int i;
 				for (i = 0; i < tempStudent.size(); i++) {
-					if (tempStudent.get(i).getGender() == 'm' && tempStudent.get(i).getGPA() >= 3.00) {
+					if (tempStudent.get(i).getGender() == 'm' && tempStudent.get(i).getgPA() >= 3.00) {
 						for (Student tm : teamStudent) {
-							if (tempStudent.get(i).getGender() == 'm' && tm.getGPA() < 3.00) {
+							if (tempStudent.get(i).getGender() == 'm' && tm.getgPA() < 3.00) {
 								tempStudent.add(tm);
 								teamStudent.remove(tm);
 								teamStudent.add(tempStudent.get(i));
@@ -479,7 +477,7 @@ public class ProjectManager extends User {
 				if (experienceCounter == 0) {
 					if (tm.getGender() == 'm') {
 						for (int a = 0; a < tempStudent.size(); a++) {
-							if (tempStudent.get(a).getGender() == 'm' && tempStudent.get(a).getGPA() == tm.getGPA()
+							if (tempStudent.get(a).getGender() == 'm' && tempStudent.get(a).getgPA() == tm.getgPA()
 									&& tempStudent.get(a).getExperience() >= 5) {
 
 								tempStudent.add(tm);
@@ -495,7 +493,7 @@ public class ProjectManager extends User {
 					} else {
 						if (tm.getGender() == 'f') {
 							for (int a = 0; a < tempStudent.size(); a++) {
-								if (tempStudent.get(a).getGender() == 'f' && tempStudent.get(a).getGPA() == tm.getGPA()
+								if (tempStudent.get(a).getGender() == 'f' && tempStudent.get(a).getgPA() == tm.getgPA()
 										&& tempStudent.get(a).getExperience() >= 5) {
 
 									tempStudent.add(tm);
@@ -579,13 +577,13 @@ public class ProjectManager extends User {
 			while (nosOfDuplicatePerso != 0) {
 				int i = 0;
 				for (i = 0; i < tempStudent.size(); i++) {
-					if (tempStudent.get(i).getgender() == 'm'
+					if (tempStudent.get(i).getGender() == 'm'
 							&& tempStudent.get(i).getStudentPersonality() != duplicatePersonality[1]
 							&& tempStudent.get(i).getStudentPersonality() != duplicatePersonality[2]
 							&& tempStudent.get(i).getStudentPersonality() != duplicatePersonality[3]) {
 
 						for (Student tm : teamStudent) {
-							if (tempStudent.get(i).getgender() == 'm'
+							if (tempStudent.get(i).getGender() == 'm'
 									&& (tm.getStudentPersonality() == duplicatePersonality[1]
 									|| tm.getStudentPersonality() == duplicatePersonality[2]
 									|| tm.getStudentPersonality() == duplicatePersonality[3])) {
@@ -621,12 +619,12 @@ public class ProjectManager extends User {
 					while (persoAOrBPresent == false) {
 						int i = 0;
 						for (i = 0; i < tempStudent.size(); i++) {
-							if (tempStudent.get(i).getgender() == 'm'
+							if (tempStudent.get(i).getGender() == 'm'
 									&& (tempStudent.get(i).getStudentPersonality() == persoA
 									|| tempStudent.get(i).getStudentPersonality() == persoB)) {
 
 								for (Student tm : teamStudent) {
-									if (tempStudent.get(i).getgender() == 'm'
+									if (tempStudent.get(i).getGender() == 'm'
 											&& (tempStudent.get(i).getStudentPersonality() != persoA
 											|| tempStudent.get(i).getStudentPersonality() != persoB)) {
 
