@@ -121,7 +121,7 @@ public class User {
         this.id = id;
     }
 
-    public void start() {  // TODO Rename to Method to Menu // Option to use static
+    public void mainMenu() {   // Option to use static
         int choice = 0;
         do {
             try {
@@ -151,7 +151,7 @@ public class User {
                 }
                 break;
             case 3:
-                start();
+                mainMenu();
                 break;
             case 4:
                 System.out.println("System exited! Thanks for using Project Team Formation System");
@@ -330,7 +330,7 @@ public class User {
         }
         setUserName(userName);
         setPassword(password);
-        start();
+        mainMenu();
 
     }
 
@@ -390,10 +390,10 @@ public class User {
                         System.out.println("You have successfully logged in!");
 
                         if (a instanceof ClientRepresentative) {
-                            ((ClientRepresentative) a).start();
+                            ((ClientRepresentative) a).clientMenu();
                             break;
                         } else if (a instanceof Student) {
-                            ((Student) a).start();
+                            ((Student) a).studentMenu();
                             break;
                         } else {
                             ((ProjectManager) a).pmMenu();
@@ -415,7 +415,7 @@ public class User {
             }
 
         } while (foundUsername == false || foundPassword == false);
-        start();
+        mainMenu();
     }
 
     public boolean inputValidations(String input) {
