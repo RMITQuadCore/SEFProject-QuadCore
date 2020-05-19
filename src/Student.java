@@ -93,7 +93,7 @@ public class Student extends User {
 			boolean studentExists = false;
 			do {
 				System.out.print(" \nPlease enter the student ID of member number " + (i + 1) + ":");
-				String input = scan.next();
+				String input = scan.nextLine();
 				boolean dislikedStudExists = false;
 				for (Student dislikedMember : dislikedMembers) {
 					if (input.equals(dislikedMember.getId())) {
@@ -143,20 +143,19 @@ public class Student extends User {
 		System.out.println(" You are allowed to enter 4 projects you would like to work for.");
 		for (int i = 0; i < 4; i++) {
 			boolean projectExists = false;
-				do {
-					System.out.print("\n Please enter the ID of your preferred project number " + (i + 1) + ":");
-					input = scan.next();
-					input += scan.nextLine();
-					boolean preferredProjExists = false;
-					for (int k = 0; k < preferredProjects.length; k++) {
-						if (input.equals(preferredProjects[k].getProjectId())) {
-							preferredProjExists = true;
-						}
+			do {
+				System.out.print("\n Please enter the ID of your preferred project number " + (i + 1) + ":");
+				input = scan.nextLine();
+				boolean preferredProjExists = false;
+				for (int k = 0; k < preferredProjects.length; k++) {
+					if (input.equals(preferredProjects[k].getProjectId())) {
+						preferredProjExists = true;
 					}
-					if (!preferredProjExists) {
-						for (int j = 0; j < Project.totalProjects.size(); j++) {
-							if (input.equals(Project.totalProjects.get(j).getProjectId())) {
-								projectExists = true;
+				}
+				if (!preferredProjExists) {
+					for (int j = 0; j < Project.totalProjects.size(); j++) {
+						if (input.equals(Project.totalProjects.get(j).getProjectId())) {
+							projectExists = true;
 								preferredProjects[i] = Project.totalProjects.get(j);
 								Project.totalProjects.get(j).setPopularityCounter(Project.totalProjects.get(j).getPopularityCounter() + (4 - i));
 							}
@@ -180,8 +179,7 @@ public class Student extends User {
 			boolean roleExists = false;
 			do {
 				System.out.print("\n Please enter your preferred Roles number " + (i + 1) + ":");
-				input = scan.next();
-				input += scan.nextLine();
+				input = scan.nextLine();
 				boolean preferredRoleExists = false;
 				for (int k = 0; k < preferredRoles.length; k++) {
 					if (input.equals(preferredRoles[k].getId())) {
