@@ -218,12 +218,11 @@ public class Student extends User {
 				} else {
 					System.out.println("You have already registered this Role as a Preference!!");
 				}
-			}while(!roleExists);
+			} while (!roleExists);
 		}
 	}
 
-	public void start()
-	{
+	public void mainMenu() {
 		int ch = 0;
 		do {
 			try {

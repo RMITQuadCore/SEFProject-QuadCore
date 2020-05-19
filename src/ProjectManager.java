@@ -79,51 +79,56 @@ public class ProjectManager extends User {
 						"4. Discard Unpopular projects\n" +
 						"5. Display Current Constraint\n" +
 						"6. Run Project Team formation\n" +
-						"7. Display Teams\n");
+						"7. Display Teams\n" +
+						"8. Logout\n");
 				choice = Integer.parseInt(scan.next());
 			} catch (NumberFormatException e) {
 				System.err.println("Please enter an integer (1-6)");
 			}
-		} while (choice < 1 || choice > 7);
 
-		Constraint con = new Constraint();
 
-		switch (choice) {
-			case 1:
-				enterStudentPersonality();
-				break;
-			case 2:
-				con.setWeightage();
-				break;
-			case 3:
-				setSignUpStatus();
-				break;
-			case 4:
-				try {
-					discardUnpopularProjects();
-				} catch (ProjectMismatchException e) {
-					// TODO Auto-generated catch block
-					e.getMessage();
-				}
-				break;
-			case 5:
-				con.displayConstraints();
-				break;
-			case 6:
-				createTeams();
-				// check gpa creating teamStudent temp student
-				// check female creating team Student
-				// ;
-				break;
-			case 7:
-				//displayTeams();
-				break;
+			Constraint con = new Constraint();
 
-			//Stage3 methods
-			//displayTeamFitness()
-			//swapMembers()
-			//changeStudentGpa()
-		}
+			switch (choice) {
+				case 1:
+					enterStudentPersonality();
+					break;
+				case 2:
+					con.setWeightage();
+					break;
+				case 3:
+					setSignUpStatus();
+					break;
+				case 4:
+					try {
+						discardUnpopularProjects();
+					} catch (ProjectMismatchException e) {
+						// TODO Auto-generated catch block
+						e.getMessage();
+					}
+					break;
+				case 5:
+					con.displayConstraints();
+					break;
+				case 6:
+					createTeams();
+					// check gpa creating teamStudent temp student
+					// check female creating team Student
+					// ;
+					break;
+				case 7:
+					//displayTeams();
+					break;
+				case 8:
+					mainMenu();
+					break;
+
+				//Stage3 methods
+				//displayTeamFitness()
+				//swapMembers()
+				//changeStudentGpa()
+			}
+		} while (choice != 8);
 	}
 
 
