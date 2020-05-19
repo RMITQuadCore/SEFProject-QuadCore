@@ -390,10 +390,10 @@ public class User {
                         System.out.println("You have successfully logged in!");
 
                         if (a instanceof ClientRepresentative) {
-                            ((ClientRepresentative) a).mainMenu();
+                            ((ClientRepresentative) a).clientMenu();
                             break;
                         } else if (a instanceof Student) {
-                            ((Student) a).mainMenu();
+                            ((Student) a).studentMenu();
                             break;
                         } else {
                             ((ProjectManager) a).pmMenu();

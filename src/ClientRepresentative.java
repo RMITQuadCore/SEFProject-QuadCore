@@ -19,7 +19,7 @@ public class ClientRepresentative extends User {
     }
 
 
-    public void mainMenu() { // TODO Rename Method to Menu
+    public void clientMenu() { // TODO Rename Method to Menu
         // TODO Menu Options to be shown
         // TODO Menu This needs to be changed , void method, not taking any argument
         // Menu Option

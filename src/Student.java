@@ -222,7 +222,7 @@ public class Student extends User {
 		}
 	}
 
-	public void mainMenu() {
+	public void studentMenu() {
 		int ch = 0;
 		do {
 			try {
