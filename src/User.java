@@ -170,8 +170,7 @@ public class User {
         do {
             try {
                 System.out.println("First Name: ");
-                firstName = scan.next();
-                firstName += scan.nextLine();
+                firstName = scan.nextLine();
 
                 foundFirstName = inputValidations(firstName);
 
@@ -186,8 +185,7 @@ public class User {
         do {
             try {
                 System.out.println("\nLast Name: ");
-                lastName = scan.next();
-                lastName += scan.nextLine();
+                lastName = scan.nextLine();
                 foundLastName = inputValidations(lastName);
 
                 if (foundLastName) {
@@ -202,8 +200,7 @@ public class User {
         do {
             try {
                 System.out.println("\nOrganisation: ");
-                organisation = scan.next();
-                organisation += scan.nextLine();
+                organisation = scan.nextLine();
 
                 foundOrg = inputValidations(organisation);
 
@@ -218,8 +215,7 @@ public class User {
         // First/ Last name field should not contain special characters.
 
         System.out.println("\nEmail id: ");
-        emailID = scan.next();
-        emailID += scan.nextLine();
+        emailID = scan.nextLine();
 
         for (User u : allUserDetails) {
             if (u.getEmailID().compareTo(emailID) == 0) {
@@ -230,12 +226,10 @@ public class User {
         // Whether the given email id has been used earlier.
         do {
             System.out.println("\nUsername: ");
-            userName = scan.next();
-            userName += scan.nextLine();
+            userName = scan.nextLine();
 
             System.out.println("\nPassword: ");
-            password = scan.next();
-            password += scan.nextLine();
+            password = scan.nextLine();
         } while (userName.isEmpty() || password.isEmpty());
 
         // ID generation
@@ -320,8 +314,7 @@ public class User {
         do {
 
             System.out.println("\n***********Login***********\nEnter username: ");
-            loginName = scan.next();
-            loginName += scan.nextLine();
+            loginName = scan.nextLine();
 
             for (User user : allUserDetails) {
                 if (user instanceof ClientRepresentative) {
@@ -354,8 +347,7 @@ public class User {
                 if (foundUsername) {
                     // System.out.println("Login name:" + user.getUserName());
                     System.out.println("\nEnter Password: ");
-                    pass = scan.next();
-                    pass += scan.nextLine();
+                    pass = scan.nextLine();
 
                     if (pass.compareTo(user.getPassword()) == 0) {
                         foundPassword = true;

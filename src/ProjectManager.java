@@ -126,8 +126,7 @@ public class ProjectManager extends User {
 
 		do {
 			System.out.println("\nEnter assigned student ID:");
-			studID = scan.next();
-			studID += scan.nextLine();
+			studID = scan.nextLine();
 			for (Student stud : Student.allStudents) {
 
 				if (((Student) stud).getId().compareTo(studID) == 0) {

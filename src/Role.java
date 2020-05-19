@@ -44,7 +44,7 @@ public class Role {
         boolean frameWorkFound = false;
         do {
             System.out.println("Enter the framework : ");
-            String input = scan.next();
+            String input = scan.nextLine();
 
             for (int i = 0; i < role.getFrameworks().size(); i++)
             {
@@ -66,7 +66,7 @@ public class Role {
     public void enterFrameworks()
     {
         System.out.println("Enter the framework : ");
-        String input = scan.next();
+        String input = scan.nextLine();
         frameworks.add(input);
     }
 
