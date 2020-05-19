@@ -125,7 +125,7 @@ public class User {
         int choice = 0;
         do {
             try {
-                System.out.println("Project Team Formation System Menu!\n1.Signup\n2.Login\n3.Logout\n4.Exit");
+                System.out.println("Project Team Formation System Menu!\n1.Signup\n2.Login\n3.Exit");
                 System.out.println("Enter your choice : ");//TODO Added a enter choice
                 choice = Integer.parseInt(s.next());
             } catch (NumberFormatException e) {
@@ -151,23 +151,9 @@ public class User {
                 }
                 break;
             case 3:
-                mainMenu();
-                break;
-            case 4:
                 System.out.println("System exited! Thanks for using Project Team Formation System");
                 System.exit(0);
                 break;
-          /*  case 5:
-                // System.out.println("Discard projects selected!");
-                Project p = new Project();
-
-                try {
-                    p.discardUnpopularProjects();
-                } catch (ProjectMismatchException e) {
-                    // TODO Auto-generated catch block
-                    e.getMessage();
-                }
-                break;*/
         }
 
     }
