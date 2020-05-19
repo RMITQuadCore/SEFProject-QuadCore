@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Student extends User {
-	static Scanner scan = new Scanner(System.in); // TODO remove scanner
+	Scanner scan = SingletonScanner.getInstance();
 	private double gPA;
 	private double experience;
 	private char gender;
@@ -130,6 +130,7 @@ public class Student extends User {
 
 	}
 
+
 	public void enterPreferredProjects()
 	{
 		System.out.println(" The List of available projects are ");
@@ -235,7 +236,7 @@ public class Student extends User {
 			do {
 				try {
 					System.out.println("\n1.Enter preferred projects\n2.Enter preferred roles\n3.Enter disliked members\n4.Logout\nEnter you choice : ");
-					ch = Integer.parseInt(s.next());
+					ch = Integer.parseInt(scan.next());
 				} catch (NumberFormatException e) {
 					System.err.println("Enter an integer");
 				}

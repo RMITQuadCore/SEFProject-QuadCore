@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Role {
-    static Scanner scan = new Scanner(System.in);// TODO Remove Scanner
+    Scanner scan = SingletonScanner.getInstance();
     private String id;// ID can be both for student or Project
     private String roleName;
     private ArrayList<String> frameworks = new ArrayList<>();

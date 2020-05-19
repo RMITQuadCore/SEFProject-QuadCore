@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class Constraint {
-    Scanner scan = new Scanner(System.in); // TODO remove Scanner
+    Scanner scan = SingletonScanner.getInstance();
 
 
 
