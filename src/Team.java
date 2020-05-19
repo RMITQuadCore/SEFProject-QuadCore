@@ -55,6 +55,5 @@ public class Team {
         public void setProjectAssigned(Project projectAssigned) {
             this.projectAssigned = projectAssigned;
         }
-    
 
 }

@@ -1,8 +1,3 @@
-
-
-
-
-
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -10,34 +5,31 @@ import java.util.regex.Pattern;
 
 public class User {
     private String id;
-    protected String firstName; // TODO Make Private maybe
-    protected String lastName;
-    protected String org; //TODO Rename to organisation
-    protected String emailID;
-    protected String userName;// TODO Make Private maybe
-    protected String password;// TODO Make Private maybe
-    private String studentID = "ST000"; // TODO Do it more efficiently
-    protected String clientID = "CL000"; // TODO Do it more efficiently
-    private String managerID = "PM000"; // TODO Do it more efficiently
+    public ArrayList<User> allUserDetails = new ArrayList<User>();
+    private String firstName;
+    private String lastName;
+    private String organisation;
+    private String emailID;
+    private String userName;
+    private String password;
+    private String studentID = "ST000";
+    private String clientID = "CL000";
     // private String confirmPassword;
     Scanner s = new Scanner(System.in); // TODO Remove
-    Student student;
-    ClientRepresentative cr;
-    ProjectManager pm; // TODO Do it Efficiently
-    public ArrayList<User> details = new ArrayList<User>(); // TODO Rename to all users details
+    private String managerID = "PM000";
 
     public User() {
     }
 
     public User(String id, String firstName, String lastName, String emailID, String userName, String password,
-                String org) {
+                String organisation) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.emailID = emailID;
         this.userName = userName;
         this.password = password;
-        this.org = org;
+        this.organisation = organisation;
 
     }
 
@@ -105,12 +97,12 @@ public class User {
         this.managerID = managerID;
     }
 
-    public String getOrg() {
-        return org;
+    public String getOrganisation() {
+        return organisation;
     }
 
-    public void setOrg(String org) {
-        this.org = org;
+    public void setOrganisation(String organisation) {
+        this.organisation = organisation;
     }
 
     public String getId() {
@@ -121,7 +113,7 @@ public class User {
         this.id = id;
     }
 
-    public void mainMenu() {   // Option to use static
+    public void mainMenu() {
         int choice = 0;
         do {
             try {
@@ -210,10 +202,10 @@ public class User {
         do {
             try {
                 System.out.println("\nOrganisation: ");
-                org = s.next();
-                org += s.nextLine();
+                organisation = s.next();
+                organisation += s.nextLine();
 
-                foundOrg = inputValidations(org);
+                foundOrg = inputValidations(organisation);
 
                 if (foundOrg) {
                     throw new IncorrectInputException("Organisation cannot contain special characters! Try again.");
@@ -221,7 +213,7 @@ public class User {
             } catch (IncorrectInputException ex) {
                 System.err.println(ex.getMessage());
             }
-        } while (foundOrg == true || org.isEmpty());
+        } while (foundOrg == true || organisation.isEmpty());
 
         // First/ Last name field should not contain special characters.
 
@@ -229,7 +221,7 @@ public class User {
         emailID = s.next();
         emailID += s.nextLine();
 
-        for (User u : details) {
+        for (User u : allUserDetails) {
             if (u.getEmailID().compareTo(emailID) == 0) {
                 System.err.println("Signup already performed by this email id. Use a different email id!");
             }
@@ -275,10 +267,10 @@ public class User {
 
                 setStudentID(studentID);
 
-                details.add(new Student(studentID, firstName, lastName, emailID, userName, password, org, gpa, experience,
-                        gender, '0')); // TODO Doubt To Juilee Double Save
+                allUserDetails.add(new Student(studentID, firstName, lastName, emailID, userName, password, organisation, gpa, experience,
+                        gender, '0'));
 
-                Student.allStudents.add(new Student(studentID, firstName, lastName, emailID, userName, password, org, gpa,
+                Student.allStudents.add(new Student(studentID, firstName, lastName, emailID, userName, password, organisation, gpa,
                         experience, gender, '0'));
 
                 System.out.println("You have successfully signed up with ID: " + studentID + "!\n");
@@ -292,10 +284,9 @@ public class User {
 
                 setClientID(clientID);
 
-                details.add(
-                        new ClientRepresentative(clientID, firstName, lastName, emailID, userName, password, org));
+                allUserDetails.add(
+                        new ClientRepresentative(clientID, firstName, lastName, emailID, userName, password, organisation));
                 System.out.println("You have successfully signed up with ID: " + clientID + "!\n");
-                // TODO Doubt To Juilee No Double Save here
                 break;
 
             case 3:
@@ -304,9 +295,8 @@ public class User {
                         (Integer.parseInt(getManagerID().substring(2, getManagerID().length())) + 1));
 
                 setManagerID(managerID);
-                details.add(new ProjectManager(managerID, firstName, lastName, emailID, userName, password, org));
+                allUserDetails.add(new ProjectManager(managerID, firstName, lastName, emailID, userName, password, organisation));
                 System.out.println("You have successfully signed up with ID: " + managerID + "!\n");
-                // TODO Doubt To Juilee No Double Save here
                 break;
 
             default:
@@ -333,18 +323,18 @@ public class User {
             loginName = s.next();
             loginName += s.nextLine();
 
-            for (User a : details) { // TODO refactor a to user
-                if (a instanceof ClientRepresentative) {
+            for (User user : allUserDetails) {
+                if (user instanceof ClientRepresentative) {
 
-                    if (loginName.compareTo(((ClientRepresentative) a).getUserName()) == 0) {
+                    if (loginName.compareTo(((ClientRepresentative) user).getUserName()) == 0) {
                         foundUsername = true;
                         setUserName(loginName);
 
                     }
 
-                } else if (a instanceof Student) {
+                } else if (user instanceof Student) {
 
-                    if (loginName.compareTo(((Student) a).getUserName()) == 0) {
+                    if (loginName.compareTo(((Student) user).getUserName()) == 0) {
 
                         foundUsername = true;
                         System.out.println("Username found!" + foundUsername);
@@ -354,7 +344,7 @@ public class User {
 
                 } else {
 
-                    if (loginName.compareTo(((ProjectManager) a).getUserName()) == 0) {
+                    if (loginName.compareTo(((ProjectManager) user).getUserName()) == 0) {
                         foundUsername = true;
                         setUserName(loginName);
                     }
@@ -362,12 +352,12 @@ public class User {
                 }
 
                 if (foundUsername) {
-                    // System.out.println("Login name:" + a.getUserName());
+                    // System.out.println("Login name:" + user.getUserName());
                     System.out.println("\nEnter Password: ");
                     pass = s.next();
                     pass += s.nextLine();
 
-                    if (pass.compareTo(a.getPassword()) == 0) {
+                    if (pass.compareTo(user.getPassword()) == 0) {
                         foundPassword = true;
                         setPassword(pass);
                         // Verify whether the user has entered corresponding username/email id and
@@ -375,14 +365,14 @@ public class User {
 
                         System.out.println("You have successfully logged in!");
 
-                        if (a instanceof ClientRepresentative) {
-                            ((ClientRepresentative) a).clientMenu();
+                        if (user instanceof ClientRepresentative) {
+                            ((ClientRepresentative) user).clientMenu();
                             break;
-                        } else if (a instanceof Student) {
-                            ((Student) a).studentMenu();
+                        } else if (user instanceof Student) {
+                            ((Student) user).studentMenu();
                             break;
                         } else {
-                            ((ProjectManager) a).pmMenu();
+                            ((ProjectManager) user).pmMenu();
                             break;
                         }
 
@@ -411,9 +401,6 @@ public class User {
         result = m.find();
         return result;
     }
-//	public static void main(String args[]) {
-//		User u = new User();
-//		u.start();
-//	}
+
 
 }

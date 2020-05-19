@@ -54,8 +54,55 @@ public class ProjectManager extends User {
 		return this.firstName;
 	}
 
-	public String getOrg() {
-		return this.org;
+	//Method to discard unpopular projects //TODO This will be in Project
+	public static boolean discardUnpopularProjects() throws ProjectMismatchException {
+		int numProjectReqd = 0;
+		int numStudents = Student.allStudents.size();
+		System.out.println("Number of students: " + numStudents);
+
+		int numProjects = Project.totalProjects.size();
+		System.out.println("Number of projects: " + numProjects);
+
+		try {
+			numProjectReqd = (numStudents / 4);
+			System.out.println("Number of projects required: " + numProjectReqd);
+
+			if (numProjectReqd > numProjects) {
+				throw new ProjectMismatchException("Number of projects not enough!");
+
+			}
+		} catch (ProjectMismatchException ex) {
+			System.err.println(ex.getMessage());
+			return false;
+		}
+
+		Project temp;
+		if (Project.totalProjects.size() > 1) // check if the number of orders is larger than 1
+		{
+			for (int x = 0; x < Project.totalProjects.size(); x++) // bubble sort outer loop
+			{
+				for (int i = 0; i < Project.totalProjects.size() - x - 1; i++) {
+					if (Project.totalProjects.get(i).getPopularityCounter() < (Project.totalProjects.get(i + 1).getPopularityCounter())) {
+						temp = Project.totalProjects.get(i);
+						Project.totalProjects.set(i, Project.totalProjects.get(i + 1));
+						Project.totalProjects.set(i + 1, temp);
+					}
+				}
+			}
+		}
+
+
+		for (int i = numProjects - 1; i >= numProjectReqd; i--) {
+
+			Project.totalProjects.remove(i);
+		}
+		System.out.println("Required Projects:");
+		for (Project p : Project.totalProjects) {
+			System.out.println("\nsrc.Project ID: " + p.getProjectId() + "\nsrc.Project Details: " + p.getProjectDetails()
+					+ "\nsrc.Project Popularity Counter:" + p.getPopularityCounter());
+		}
+
+		return true;
 	}
 
 	public String getEmailID() {
@@ -66,69 +113,8 @@ public class ProjectManager extends User {
 		return signUpStatus;
 	}
 
-
-	// Project Manager Menu
-	public void pmMenu() {
-		int choice = 0;
-		do {
-			try {
-				System.out.println("\n*** Project Manager Menu ***\n" +
-						"1. Enter Personality of students\n" +
-						"2. Enter Weightage for Soft-Constraints\n" +
-						"3. Change Sign up status\n" +
-						"4. Discard Unpopular projects\n" +
-						"5. Display Current Constraint\n" +
-						"6. Run Project Team formation\n" +
-						"7. Display Teams\n" +
-						"8. Logout\n");
-				choice = Integer.parseInt(scan.next());
-			} catch (NumberFormatException e) {
-				System.err.println("Please enter an integer (1-6)");
-			}
-
-
-			Constraint con = new Constraint();
-
-			switch (choice) {
-				case 1:
-					enterStudentPersonality();
-					break;
-				case 2:
-					con.setWeightage();
-					break;
-				case 3:
-					setSignUpStatus();
-					break;
-				case 4:
-					try {
-						discardUnpopularProjects();
-					} catch (ProjectMismatchException e) {
-						// TODO Auto-generated catch block
-						e.getMessage();
-					}
-					break;
-				case 5:
-					con.displayConstraints();
-					break;
-				case 6:
-					createTeams();
-					// check gpa creating teamStudent temp student
-					// check female creating team Student
-					// ;
-					break;
-				case 7:
-					//displayTeams();
-					break;
-				case 8:
-					mainMenu();
-					break;
-
-				//Stage3 methods
-				//displayTeamFitness()
-				//swapMembers()
-				//changeStudentGpa()
-			}
-		} while (choice != 8);
+	public String getOrganisation() {
+		return this.org;
 	}
 
 
@@ -192,56 +178,68 @@ public class ProjectManager extends User {
 		}
 	}
 
-
-	//Method to discard unpopular projects //TODO This will be in Project
-	public static boolean discardUnpopularProjects() throws ProjectMismatchException {
-		int numProjectReqd = 0;
-		int numStudents = Student.allStudents.size();
-		System.out.println("Number of students: " + numStudents);
-
-		int numProjects = Project.proj.size();
-		System.out.println("Number of projects: " + numProjects);
-
-		try {
-			numProjectReqd = (numStudents / 4);
-			System.out.println("Number of projects required: " + numProjectReqd);
-
-			if (numProjectReqd > numProjects) {
-				throw new ProjectMismatchException("Number of projects not enough!");
-
+	// Project Manager Menu
+	public void pmMenu() {
+		int choice = 0;
+		do {
+			try {
+				System.out.println("\n*** Project Manager Menu ***\n" +
+						"1. Enter Personality of students\n" +
+						"2. Enter Weightage for Soft-Constraints\n" +
+						"3. Change Sign up status\n" +
+						"4. Discard Unpopular projects\n" +
+						"5. Display Current Constraint\n" +
+						"6. Run Project Team formation\n" +
+						"7. Display Teams\n" +
+						"8. Logout\n");
+				choice = Integer.parseInt(scan.next());
+			} catch (NumberFormatException e) {
+				System.err.println("Please enter an integer (1-6)");
 			}
-		} catch (ProjectMismatchException ex) {
-			System.err.println(ex.getMessage());
-			return false;
-		}
 
-		Project temp;
-		if (Project.proj.size() > 1) // check if the number of orders is larger than 1
-		{
-			for (int x = 0; x < Project.proj.size(); x++) // bubble sort outer loop
-			{
-				for (int i = 0; i < Project.proj.size() - x - 1; i++) {
-					if (Project.proj.get(i).getPopularityCounter() < (Project.proj.get(i + 1).getPopularityCounter())) {
-						temp = Project.proj.get(i);
-						Project.proj.set(i, Project.proj.get(i + 1));
-						Project.proj.set(i + 1, temp);
+
+			Constraint constraint = new Constraint();
+
+			switch (choice) {
+				case 1:
+					enterStudentPersonality();
+					break;
+				case 2:
+					constraint.setWeightage();
+					break;
+				case 3:
+					setSignUpStatus();
+					break;
+				case 4:
+					try {
+						discardUnpopularProjects();
+					} catch (ProjectMismatchException e) {
+						// TODO Auto-generated catch block
+						e.getMessage();
 					}
-				}
+					break;
+				case 5:
+					constraint.displayConstraints();
+					break;
+				case 6:
+					createTeams();
+					// check gpa creating teamStudent temp student
+					// check female creating team Student
+					// ;
+					break;
+				case 7:
+					//displayTeams();
+					break;
+				case 8:
+					mainMenu();
+					break;
+
+				//Stage3 methods
+				//displayTeamFitness()
+				//swapMembers()
+				//changeStudentGpa()
 			}
-		}
-
-
-		for (int i = numProjects - 1; i >= numProjectReqd; i--) {
-
-			Project.proj.remove(i);
-		}
-		System.out.println("Required Projects:");
-		for (Project p : Project.proj) {
-			System.out.println("\nsrc.Project ID: " + p.getProjectId() + "\nsrc.Project Details: " + p.getProjectDetails()
-					+ "\nsrc.Project Popularity Counter:" + p.getPopularityCounter());
-		}
-
-		return true;
+		} while (choice != 8);
 	}
 
 
