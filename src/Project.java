@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class Project {
     public static ArrayList<Project> totalProjects = new ArrayList<Project>();
     private String projectId = "PROJ100";
-    private String clientId; //TODO Check if needed to change to ClientRep Type
+    private ClientRepresentative client; //TODO Check if needed to change to ClientRep Type
     private String projectTitle;
     private String projectDetails;
     private ArrayList<Role> rolesInProject = new ArrayList<Role>();
@@ -16,8 +16,8 @@ public class Project {
 
     }
 
-    public Project(String clientId, String projectId, String projectTitle, String projectDetails) {
-        this.clientId = clientId;
+    public Project(ClientRepresentative client, String projectId, String projectTitle, String projectDetails) {
+        this.client = client;
         this.projectId = projectId;
         this.projectTitle = projectTitle;
         this.projectDetails = projectDetails;
@@ -39,12 +39,12 @@ public class Project {
         this.projectId = projectId;
     }
 
-    public String getClientId() {
-        return clientId;
+    public ClientRepresentative getClient() {
+        return client;
     }
 
-    public void setClientId(String clientId) {
-        this.clientId = clientId;
+    public void setClient(ClientRepresentative client) {
+        this.client = client;
     }
 
     public String getProjectTitle() {
@@ -123,8 +123,8 @@ public class Project {
         }
     }
 
-    public void createProject(String clientId) {
-        this.clientId = clientId;
+    public void createProject(ClientRepresentative client) {
+        this.client = client;
         projectId = "PROJ"
                 + String.format("%03d", (Integer.parseInt(getProjectId().substring(4, getProjectId().length())) + 1));
 
@@ -156,13 +156,13 @@ public class Project {
             frameworks.add(framework);
         }
         rolesInProject.add(new Role(projectId, role1));
-        totalProjects.add(new Project(clientId, projectId, projectTitle, projectDetails));
+        totalProjects.add(new Project(client, projectId, projectTitle, projectDetails));
         System.out.println("Success! Project is created with Id : " + projectId);
     }
 
     public void displayProject() {
         for (Project p : totalProjects) {
-            System.out.println("\nClient Id: " + p.getClientId());
+            System.out.println("\nClient Id: " + p.getClient().getId());
             System.out.println("project Id: " + p.getProjectId());
             System.out.println("project Title: " + p.getProjectTitle());
             System.out.println("projectDetails: " + p.getProjectDetails());

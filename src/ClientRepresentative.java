@@ -32,7 +32,7 @@ public class ClientRepresentative extends User {
                 case 1:
                     String input;
                     do {
-                        project.createProject(this.getId());
+                        project.createProject(this);
                         System.out.println("Do you want to add more projects? Y/N");
                         input = sc.nextLine();
                     } while (input.toUpperCase().compareTo("N") != 0);
