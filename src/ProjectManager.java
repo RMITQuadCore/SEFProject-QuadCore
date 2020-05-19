@@ -23,7 +23,7 @@ public class ProjectManager extends User {
 		ProjectManager.teamStudent = teamStudent;
 	}
 
-	Scanner scan = new Scanner(System.in);
+	Scanner scan = SingletonScanner.getInstance();
 
 	private String id;
 	private String firstName;
@@ -164,7 +164,7 @@ public class ProjectManager extends User {
 			try {
 				System.out.println("Set Sign Up Status" + "\n1. Open" + "\n2.Closed");
 				System.out.println("Please enter your Choice :");
-				choice = Integer.parseInt(s.next());
+				choice = Integer.parseInt(scan.next());
 			} catch (NumberFormatException e) {
 				System.err.println("Please enter an integer");
 			}

@@ -15,7 +15,7 @@ public class User {
     private String studentID = "ST000";
     private String clientID = "CL000";
     // private String confirmPassword;
-    Scanner s = new Scanner(System.in); // TODO Remove
+    Scanner scan = SingletonScanner.getInstance();
     private String managerID = "PM000";
 
     public User() {
@@ -119,7 +119,7 @@ public class User {
             try {
                 System.out.println("Project Team Formation System Menu!\n1.Signup\n2.Login\n3.Exit");
                 System.out.println("Enter your choice : ");//TODO Added a enter choice
-                choice = Integer.parseInt(s.next());
+                choice = Integer.parseInt(scan.nextLine());
             } catch (NumberFormatException e) {
                 System.err.println("enter an integer");
             }
@@ -170,8 +170,8 @@ public class User {
         do {
             try {
                 System.out.println("First Name: ");
-                firstName = s.next();
-                firstName += s.nextLine();
+                firstName = scan.next();
+                firstName += scan.nextLine();
 
                 foundFirstName = inputValidations(firstName);
 
@@ -186,8 +186,8 @@ public class User {
         do {
             try {
                 System.out.println("\nLast Name: ");
-                lastName = s.next();
-                lastName += s.nextLine();
+                lastName = scan.next();
+                lastName += scan.nextLine();
                 foundLastName = inputValidations(lastName);
 
                 if (foundLastName) {
@@ -202,8 +202,8 @@ public class User {
         do {
             try {
                 System.out.println("\nOrganisation: ");
-                organisation = s.next();
-                organisation += s.nextLine();
+                organisation = scan.next();
+                organisation += scan.nextLine();
 
                 foundOrg = inputValidations(organisation);
 
@@ -218,8 +218,8 @@ public class User {
         // First/ Last name field should not contain special characters.
 
         System.out.println("\nEmail id: ");
-        emailID = s.next();
-        emailID += s.nextLine();
+        emailID = scan.next();
+        emailID += scan.nextLine();
 
         for (User u : allUserDetails) {
             if (u.getEmailID().compareTo(emailID) == 0) {
@@ -230,19 +230,19 @@ public class User {
         // Whether the given email id has been used earlier.
         do {
             System.out.println("\nUsername: ");
-            userName = s.next();
-            userName += s.nextLine();
+            userName = scan.next();
+            userName += scan.nextLine();
 
             System.out.println("\nPassword: ");
-            password = s.next();
-            password += s.nextLine();
+            password = scan.next();
+            password += scan.nextLine();
         } while (userName.isEmpty() || password.isEmpty());
 
         // ID generation
         do {
             try {
                 System.out.println("\nAre you a: \n1.Student\n2.Client Representative\n3.Project Manager\n");
-                ch = Integer.parseInt(s.next());
+                ch = Integer.parseInt(scan.next());
             } catch (NumberFormatException e) {
                 System.err.println("enter an integer");
             }
@@ -254,13 +254,13 @@ public class User {
                 char gender; // TODO Add input validation for M/F, try catch ?
                 Float gpa, experience;
                 System.out.println("\nEnter your gender: F/M");
-                gender = s.next().charAt(0);
+                gender = scan.next().charAt(0);
 
                 System.out.println("\nEnter your GPA:");
-                gpa = s.nextFloat();
+                gpa = scan.nextFloat();
 
                 System.out.println("\nEnter your experience:");
-                experience = s.nextFloat();
+                experience = scan.nextFloat();
 
                 studentID = "ST" + String.format("%03d",
                         (Integer.parseInt(getStudentID().substring(2, getStudentID().length())) + 1));
@@ -320,8 +320,8 @@ public class User {
         do {
 
             System.out.println("\n***********Login***********\nEnter username: ");
-            loginName = s.next();
-            loginName += s.nextLine();
+            loginName = scan.next();
+            loginName += scan.nextLine();
 
             for (User user : allUserDetails) {
                 if (user instanceof ClientRepresentative) {
@@ -354,8 +354,8 @@ public class User {
                 if (foundUsername) {
                     // System.out.println("Login name:" + user.getUserName());
                     System.out.println("\nEnter Password: ");
-                    pass = s.next();
-                    pass += s.nextLine();
+                    pass = scan.next();
+                    pass += scan.nextLine();
 
                     if (pass.compareTo(user.getPassword()) == 0) {
                         foundPassword = true;

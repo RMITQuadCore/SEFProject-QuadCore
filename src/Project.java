@@ -10,7 +10,7 @@ public class Project {
     private ArrayList<Role> rolesInProject = new ArrayList<Role>();
     public static int projectCounter = 0;
     public int popularityCounter;
-    Scanner sc = new Scanner(System.in); // TODO Remove Scanner
+    Scanner scan = SingletonScanner.getInstance(); // TODO Remove Scanner
 
     public Project() {
 
@@ -129,20 +129,20 @@ public class Project {
                 + String.format("%03d", (Integer.parseInt(getProjectId().substring(4, getProjectId().length())) + 1));
 
         System.out.println("Enter Project Title: ");
-        projectTitle = sc.next();
-        projectTitle += sc.nextLine();
+        projectTitle = scan.next();
+        projectTitle += scan.nextLine();
         System.out.println("Enter Project details: ");
-        projectDetails = sc.next();
-        projectDetails += sc.nextLine();
+        projectDetails = scan.next();
+        projectDetails += scan.nextLine();
         System.out.println("Specify required role: "); //TODO Add multiple Roles
-        String role1 = sc.next(); //TODO change Role1 to roleName
-        role1 += sc.nextLine();
+        String role1 = scan.next(); //TODO change Role1 to roleName
+        role1 += scan.nextLine();
         int length = 0;
         boolean lError = true;// TODO Rename
         do {
             try {
                 System.out.println("How many frameworks do you want to add for role '" + role1 + "' ?");
-                length = Integer.parseInt(sc.next());
+                length = Integer.parseInt(scan.next());
                 lError = false;
             } catch (NumberFormatException e) {
                 System.out.println("Please enter an integer");
@@ -151,8 +151,8 @@ public class Project {
         ArrayList<String> frameworks = new ArrayList<String>(); // TODO Use the method in Role Class
         for (int i = 0; i < length; i++) {
             System.out.println("Specify one framework '" + role1 + "' should be familiar with:");
-            String framework = sc.next();
-            framework += sc.nextLine();
+            String framework = scan.next();
+            framework += scan.nextLine();
             frameworks.add(framework);
         }
         rolesInProject.add(new Role(projectId, role1));
