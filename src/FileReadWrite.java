@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 public class FileReadWrite {
     private static File f;
+
     //This Class aids in writing and reading data from a text file
     public static void saveUserDetails(String fileName, ArrayList<? extends User> userList) throws IOException {
         FileOutputStream file = new FileOutputStream(fileName);

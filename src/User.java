@@ -117,31 +117,34 @@ public class User {
         int choice = 0;
         do {
             try {
-                System.out.println("Project Team Formation System Menu!\n1.Signup\n2.Login\n3.Exit");
-                System.out.println("Enter your choice : ");//TODO Added a enter choice
+                System.out.println("**** Main Menu ****\n" +
+                        "1.Sign Up\n" +
+                        "2.Login\n" +
+                        "3.Exit");
+                System.out.println("Enter your choice : ");
                 choice = Integer.parseInt(scan.nextLine());
             } catch (NumberFormatException e) {
-                System.err.println("enter an integer");
+                System.err.println("Enter an integer (1-3)");
             }
-        } while (choice < 1 || choice > 5);
+        } while (choice < 1 || choice > 4);
 
         switch (choice) {
             case 1:
                 try {
                     signup();
                 } catch (IncorrectInputException e) {
-                    // TODO Auto-generated catch block
                     e.getMessage();
                 }
                 break;
+
             case 2:
                 try {
                     login();
                 } catch (IncorrectInputException e) {
-                    // TODO Auto-generated catch block
                     e.getMessage();
                 }
                 break;
+
             case 3:
                 System.out.println("System exited! Thanks for using Project Team Formation System");
                 System.exit(0);
@@ -163,10 +166,11 @@ public class User {
 
         boolean foundFirstName = false, foundLastName = false, foundOrg = false;
 
-        int ch = 0;
+        int choice = 0;
 
-        System.out.print("***********Signup***********\n");
+        System.out.print("***********Sign Up***********\n");
 
+        // First/ Last name field should not contain special characters.
         do {
             try {
                 System.out.println("First Name: ");
@@ -184,7 +188,7 @@ public class User {
 
         do {
             try {
-                System.out.println("\nLast Name: ");
+                System.out.println("Last Name: ");
                 lastName = scan.nextLine();
                 foundLastName = inputValidations(lastName);
 
@@ -199,7 +203,7 @@ public class User {
 
         do {
             try {
-                System.out.println("\nOrganisation: ");
+                System.out.println("Organisation: ");
                 organisation = scan.nextLine();
 
                 foundOrg = inputValidations(organisation);
@@ -212,14 +216,17 @@ public class User {
             }
         } while (foundOrg == true || organisation.isEmpty());
 
-        // First/ Last name field should not contain special characters.
 
-        System.out.println("\nEmail id: ");
-        emailID = scan.nextLine();
+        // regex expression to validate email ID
+        String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
+        do {
+            System.out.println("Email id: ");
+            emailID = scan.nextLine();
+        }while(!(emailID.matches(regex)));
 
         for (User u : allUserDetails) {
             if (u.getEmailID().compareTo(emailID) == 0) {
-                System.err.println("Signup already performed by this email id. Use a different email id!");
+                System.err.println("Username already present. Use a different email id!");
             }
         }
 
@@ -236,25 +243,49 @@ public class User {
         do {
             try {
                 System.out.println("\nAre you a: \n1.Student\n2.Client Representative\n3.Project Manager\n");
-                ch = Integer.parseInt(scan.next());
+                choice = Integer.parseInt(scan.next());
             } catch (NumberFormatException e) {
-                System.err.println("enter an integer");
+                System.err.println("Enter an integer (1-3)");
             }
-        } while (ch < 1 || ch > 4);
+        } while (choice < 1 || choice > 4);
 
-        switch (ch) {
+        switch (choice) {
             case 1:
 
-                char gender; // TODO Add input validation for M/F, try catch ?
+                char gender;
                 Float gpa, experience;
-                System.out.println("\nEnter your gender: F/M");
-                gender = scan.next().charAt(0);
+                do {
+                    System.out.println("\nEnter your gender: F/M");
+                    gender = scan.next().toUpperCase().charAt(0);
+                    if (gender != 'F' || gender != 'M') {
+                        continue;
+                    }
+                } while ((gender != 'F' || gender != 'M'));
 
-                System.out.println("\nEnter your GPA:");
-                gpa = scan.nextFloat();
+                float input = 0;
+                do{
+                    try{
+                        System.out.println("\nEnter your GPA:");
+                        gpa = Float.parseFloat(scan.next());
+                        input = gpa;
+                    }
+                    catch (NumberFormatException e) {
+                        System.err.println("Please enter a number (0 - 4)");
+                    }
+                }while(input < 0 || input > 5);
 
-                System.out.println("\nEnter your experience:");
-                experience = scan.nextFloat();
+                input = 0;
+                do{
+                    try{
+                        System.out.println("\nEnter your experience:");
+                        experience = Float.parseFloat(scan.next());
+                        input = experience;
+                    }
+                    catch (NumberFormatException e) {
+                        System.err.println("Please enter a number");
+                    }
+                } while(input < 0 || input > 60);
+
 
                 studentID = "ST" + String.format("%03d",
                         (Integer.parseInt(getStudentID().substring(2, getStudentID().length())) + 1));
@@ -364,7 +395,7 @@ public class User {
                             ((Student) user).studentMenu();
                             break;
                         } else {
-                            ((ProjectManager) user).pmMenu();
+                            ((ProjectManager) user).projectManagerMenu();
                             break;
                         }
 

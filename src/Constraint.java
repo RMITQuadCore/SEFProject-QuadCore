@@ -4,7 +4,6 @@ public class Constraint {
     Scanner scan = SingletonScanner.getInstance();
 
 
-
     // Method to set weightage for soft constraints
     public void setWeightage() {
         int personalityWeightage = 0;

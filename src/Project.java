@@ -79,48 +79,55 @@ public class Project {
         this.popularityCounter = popularityCounter;
     }
 
-    public static void discardUnpopularProjects() {
+    //Method to discard unpopular projects //TODO This will be in Project
+    public static boolean discardUnpopularProjects() throws ProjectMismatchException {
+        int numProjectReqd = 0;
         int numStudents = Student.allStudents.size();
-        System.out.println("no of studs" + numStudents);
+        System.out.println("Number of students: " + numStudents);
 
-        int numProjects = totalProjects.size();
-        System.out.println("no of projs" + numProjects);
+        int numProjects = Project.totalProjects.size();
+        System.out.println("Number of projects: " + numProjects);
 
-        int numProjectReqd = (numStudents / 4);
-        System.out.println("no of projs reqd" + numProjectReqd);
+        try {
+            numProjectReqd = (numStudents / 4);
+            System.out.println("Number of projects required: " + numProjectReqd);
 
-        // bubble sort for arranging project ArrayList in descending order of
-        // popularityCounter
+            if (numProjectReqd > numProjects) {
+                throw new ProjectMismatchException("Number of projects not enough!");
+
+            }
+        } catch (ProjectMismatchException ex) {
+            System.err.println(ex.getMessage());
+            return false;
+        }
+
         Project temp;
-        if (totalProjects.size() > 1) // check if the number of orders is larger than 1
+        if (Project.totalProjects.size() > 1) // check if the number of orders is larger than 1
         {
-            for (int x = 0; x < totalProjects.size(); x++) // bubble sort outer loop
+            for (int x = 0; x < Project.totalProjects.size(); x++) // bubble sort outer loop
             {
-                for (int i = 0; i < totalProjects.size() - x - 1; i++) {
-                    if (totalProjects.get(i).getPopularityCounter() < (totalProjects.get(i + 1).getPopularityCounter())) {
-                        temp = totalProjects.get(i);
-                        totalProjects.set(i, totalProjects.get(i + 1));
-                        totalProjects.set(i + 1, temp);
+                for (int i = 0; i < Project.totalProjects.size() - x - 1; i++) {
+                    if (Project.totalProjects.get(i).getPopularityCounter() < (Project.totalProjects.get(i + 1).getPopularityCounter())) {
+                        temp = Project.totalProjects.get(i);
+                        Project.totalProjects.set(i, Project.totalProjects.get(i + 1));
+                        Project.totalProjects.set(i + 1, temp);
                     }
                 }
             }
         }
 
-        for (Project p : totalProjects) {
-            System.out.println(p.getPopularityCounter());
-        }
 
-        // removing unpopular projects from Project ArrayList
         for (int i = numProjects - 1; i >= numProjectReqd; i--) {
-            System.out.println("i=" + i);
-            totalProjects.remove(i);
+
+            Project.totalProjects.remove(i);
+        }
+        System.out.println("Required Projects:");
+        for (Project p : Project.totalProjects) {
+            System.out.println("\nsrc.Project ID: " + p.getProjectId() + "\nsrc.Project Details: " + p.getProjectDetails()
+                    + "\nsrc.Project Popularity Counter:" + p.getPopularityCounter());
         }
 
-        // display required projects
-        for (Project p : totalProjects) {
-            System.out.println("Required Projects:\nProject ID: " + p.getProjectId() + "\nProject Details: "
-                    + p.getProjectDetails() + "\nProject Popularity Counter:" + p.getPopularityCounter());
-        }
+        return true;
     }
 
     public void createProject(ClientRepresentative client) {
