@@ -125,8 +125,8 @@ public class User {
         int choice = 0;
         do {
             try {
-                System.out.println(
-                        "Project Team Formation System Menu!\n1.Signup\n2.Login\n3.Logout\n4.Exit");
+                System.out.println("Project Team Formation System Menu!\n1.Signup\n2.Login\n3.Logout\n4.Exit");
+                System.out.println("Enter your choice : ");//TODO Added a enter choice
                 choice = Integer.parseInt(s.next());
             } catch (NumberFormatException e) {
                 System.err.println("enter an integer");

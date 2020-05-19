@@ -132,12 +132,18 @@ public class Student extends User {
 
 	public void enterPreferredProjects()
 	{
+		System.out.println(" The List of available projects are ");
+		for (Project a : Project.totalProjects)
+		{
+			System.out.println(a.getProjectId() + " " + a.getProjectTitle() + " Client -" + a.getClientId());
+		}
+
 		String input;
 		System.out.println(" You are allowed to enter 4 projects you would like to work for.");
 		for (int i = 0; i < 4; i++) {
 			boolean projectExists = false;
 				do {
-					System.out.print("\n Please enter your preferred project number " + (i + 1) + ":");
+					System.out.print("\n Please enter the ID of your preferred project number " + (i + 1) + ":");
 					input = scan.next();
 					input += scan.nextLine();
 					boolean preferredProjExists = false;
@@ -225,30 +231,43 @@ public class Student extends User {
 	public void start()
 	{
 		int ch = 0;
+		boolean quit = false;
 		do {
-			try {
-				System.out.println("\n1.Enter preferred projects\n2.Enter preferred roles\n3.Enter disliked members\n");
-				ch = Integer.parseInt(s.next());
-			} catch (NumberFormatException e) {
-				System.err.println("Enter an integer");
-			}
-		} while (ch < 1 || ch > 4);
+			do {
+				try {
+					System.out.println("\n1.Enter preferred projects\n2.Enter preferred roles\n3.Enter disliked members\n4.Logout\nEnter you choice : ");
+					ch = Integer.parseInt(s.next());
+				} catch (NumberFormatException e) {
+					System.err.println("Enter an integer");
+				}
+			} while (ch < 1 || ch > 4);
 
-		switch (ch) {
-			case 1:
-				enterPreferredProjects();
-				// super.start();
-				break;
-			case 2:
-				//enterPreferredRoles();
-				break;
-			case 3:
-				enterDislikedMembers();
-				break;
-			default:
-				System.out.println("Invalid choice!");
-				break;
-		}
+			switch (ch) {
+				case 1:
+					if(Project.totalProjects.size()==0)
+					{
+						System.out.println(" Sorry no projects have been registered at the moment. Please come back later");
+					}
+					else
+						{
+						enterPreferredProjects();
+						}
+					// super.start();
+					break;
+				case 2:
+					//enterPreferredRoles();
+					break;
+				case 3:
+					enterDislikedMembers();
+					break;
+				case 4:
+					quit = true;
+					break;
+				default:
+					System.out.println("Invalid choice!");
+					break;
+			}
+		} while (!quit);
 	}
 
 
