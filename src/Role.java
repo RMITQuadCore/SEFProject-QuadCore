@@ -8,10 +8,11 @@ public class Role {
     private ArrayList<String> frameworks = new ArrayList<>();
 
 
-    public Role(String id, String roleName) // Removed frameworks from constructor
+    public Role(String id, String roleName, ArrayList<String> frameworks) //  frameworks are needed in constructor
     {
         this.id = id;
         this.roleName = roleName;
+        this.frameworks=frameworks;
     }
 
     public ArrayList<String> getFrameworks() {

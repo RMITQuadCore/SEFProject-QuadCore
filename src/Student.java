@@ -121,7 +121,7 @@ public class Student extends User {
     public void enterPreferredProjects() {
         System.out.println(" The List of available projects are ");
         for (Project a : Project.totalProjects) {
-            System.out.println(a.getProjectId() + " " + a.getProjectTitle() + " Client -" + a.getClientId());
+            System.out.println(a.getProjectId() + " " + a.getProjectTitle() + " Client -" + a.getClient().getId());
         }
 
         String input;

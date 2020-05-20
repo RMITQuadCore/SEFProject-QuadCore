@@ -253,7 +253,8 @@ public class User {
             case 1:
 
                 char gender;
-                Float gpa, experience;
+                float gpa = 0;
+                float experience=0;
                 do {
                     System.out.println("\nEnter your gender: F/M");
                     gender = scan.next().toUpperCase().charAt(0);
