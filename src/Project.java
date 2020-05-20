@@ -85,7 +85,8 @@ public class Project {
                 + String.format("%03d", (Integer.parseInt(getProjectId().substring(4, getProjectId().length())) + 1));
 
         System.out.println("Enter Project Title: ");
-        projectTitle = scan.nextLine(); //TODO singletonScanner
+        projectTitle = scan.next(); //TODO singletonScanner
+        projectTitle+=scan.nextLine();
 
         System.out.println("Enter Project details: ");
         projectDetails = scan.nextLine();

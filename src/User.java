@@ -202,18 +202,18 @@ public class User {
         } while (foundLastName == true || lastName.isEmpty());
 
         do {
-            try {
+           // try {
                 System.out.println("Organisation: ");
                 organisation = scan.nextLine();
 
-                foundOrg = inputValidations(organisation);
+                //foundOrg = inputValidations(organisation);
 
-                if (foundOrg) {
-                    throw new IncorrectInputException("Organisation cannot contain special characters! Try again.");
-                }
-            } catch (IncorrectInputException ex) {
-                System.err.println(ex.getMessage());
-            }
+                //if (foundOrg) {
+                   // throw new IncorrectInputException("Organisation cannot contain special characters! Try again.");
+                //}
+           // } catch (IncorrectInputException ex) {
+             //   System.err.println(ex.getMessage());
+            //}
         } while (foundOrg == true || organisation.isEmpty());
 
 
@@ -258,10 +258,11 @@ public class User {
                 do {
                     System.out.println("\nEnter your gender: F/M");
                     gender = scan.next().toUpperCase().charAt(0);
-                    if (gender != 'F' || gender != 'M') {
+                   /* if (gender != 'F' || gender != 'M') {
                         continue;
-                    }
-                } while ((gender != 'F' || gender != 'M'));
+                    }*/
+                    System.out.println("gender"+gender);
+                } while ((gender != 'F' && gender != 'M'));
 
                 float input = 0;
                 do{
@@ -420,7 +421,7 @@ public class User {
 
     public boolean inputValidations(String input) {
         boolean result;
-        Pattern p = Pattern.compile("[^[a-zA-Z]+$]", Pattern.CASE_INSENSITIVE);
+        Pattern p = Pattern.compile("[^[a-zA-Z\\s]+$]", Pattern.CASE_INSENSITIVE);
         Matcher m = p.matcher(input);
         result = m.find();
         return result;

@@ -130,7 +130,8 @@ public class Student extends User {
             boolean projectExists = false;
             do {
                 System.out.print("\n Please enter the ID of your preferred project number " + (i + 1) + ":");
-                input = scan.nextLine();
+                input = scan.next();
+                input+=scan.nextLine();
                 boolean preferredProjExists = false;
                 for (int k = 0; k < preferredProjects.length; k++) {
                     if (input.equals(preferredProjects[k].getProjectId())) {
