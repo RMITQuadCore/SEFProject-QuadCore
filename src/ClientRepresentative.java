@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.Scanner;
 
 public class ClientRepresentative extends User {
@@ -15,7 +16,7 @@ public class ClientRepresentative extends User {
     }
 
 
-    public void clientMenu() {
+    public void clientMenu() throws IOException, ClassNotFoundException {
         int choice = 0;
         do {
             try {

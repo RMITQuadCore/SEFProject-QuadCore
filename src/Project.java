@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -79,17 +80,17 @@ public class Project {
         this.popularityCounter = popularityCounter;
     }
 
-    public void createProject(ClientRepresentative client) {
+    public void createProject(ClientRepresentative client) throws IOException {
         this.client = client;
         projectId = "PROJ"
                 + String.format("%03d", (Integer.parseInt(getProjectId().substring(4, getProjectId().length())) + 1));
-
+        this.setProjectId(projectId);
         System.out.println("Enter Project Title: ");
         projectTitle = Global.scan.nextLine();
-
+        this.projectTitle = projectTitle;
         System.out.println("Enter Project details: ");
         projectDetails = Global.scan.nextLine();
-
+        this.projectDetails = projectDetails;
         String choice;
         do {
             System.out.println("Specify one required role: ");
@@ -107,7 +108,8 @@ public class Project {
             System.out.println("Do you want to add more roles? Y/N");
             choice = Global.scan.nextLine();
         } while (choice.toUpperCase().compareTo("N") != 0);
-        totalProjects.add(new Project(client, projectId, projectTitle, projectDetails));
+        totalProjects.add(this);
+        FileReadWrite.saveProjectDetails(Main.projectsFileName,Project.totalProjects);
         System.out.println("Success! Project is created with Id : " + projectId);
     }
 

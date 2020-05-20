@@ -2,11 +2,10 @@ import java.io.IOException;
 
 public class Main {
 
-    private static String userFileName = "Users.txt";
-    private static String studentsFileName = "Students.txt";
-    private static String projectsFileName = "Projects.txt";
-    private static String rolesFileName = "Roles.txt";
-    private static String teamsFileName = "Teams.txt";
+    public static String userFileName = "Users.txt";
+    public static String studentsFileName = "Students.txt";
+    public static String projectsFileName = "Projects.txt";
+    public static String teamsFileName = "Teams.txt";
 
    public static void updateArrays() throws IOException, ClassNotFoundException {
        User.allUserDetails = FileReadWrite.readUserDetails(userFileName);//Updating User Array List

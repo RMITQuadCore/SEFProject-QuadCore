@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -118,7 +119,7 @@ public class Student extends User {
     }
 
 
-    public void enterPreferredProjects() {
+    public void enterPreferredProjects() throws IOException {
         System.out.println(" The List of available projects are ");
         for (Project a : Project.totalProjects) {
             System.out.println(a.getProjectId() + " " + a.getProjectTitle() + " Client -" + a.getClient().getId());
@@ -142,6 +143,7 @@ public class Student extends User {
                         if (input.equals(Project.totalProjects.get(j).getProjectId())) {
                             projectExists = true;
                             preferredProjects[i] = Project.totalProjects.get(j);
+                            FileReadWrite.saveStudentDetails(Main.studentsFileName,Student.allStudents);
                             Project.totalProjects.get(j).setPopularityCounter(Project.totalProjects.get(j).getPopularityCounter() + (4 - i));
                         }
                     }
@@ -205,7 +207,7 @@ public class Student extends User {
         }
     }
 
-    public void studentMenu() {
+    public void studentMenu() throws IOException {
         int ch = 0;
         boolean quit = false;
         do {

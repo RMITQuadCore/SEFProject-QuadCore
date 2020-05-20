@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -114,7 +115,7 @@ public class User {
         this.id = id;
     }
 
-    public void mainMenu() {
+    public void mainMenu() throws IOException, ClassNotFoundException {
         int choice = 0;
         int i = 0;
         do {
@@ -156,7 +157,7 @@ public class User {
 
     }
 
-    public void signup() throws IncorrectInputException {
+    public void signup() throws IncorrectInputException, IOException, ClassNotFoundException {
 
         ProjectManager pm = new ProjectManager();
         //If Project Manager disables signUp, no new sign ups are allowed
@@ -300,6 +301,8 @@ public class User {
 
                 Student.allStudents.add(new Student(studentID, firstName, lastName, emailID, userName, password, organisation, gpa,
                         experience, gender, '0'));
+                FileReadWrite.saveUserDetails(Main.userFileName,allUserDetails);
+                FileReadWrite.saveStudentDetails(Main.studentsFileName,Student.allStudents);
 
                 System.out.println("You have successfully signed up with ID: " + studentID + "!\n");
 
@@ -314,6 +317,7 @@ public class User {
 
                 allUserDetails.add(
                         new ClientRepresentative(clientID, firstName, lastName, emailID, userName, password, organisation));
+                FileReadWrite.saveUserDetails(Main.userFileName,allUserDetails);
                 System.out.println("You have successfully signed up with ID: " + clientID + "!\n");
                 break;
 
@@ -324,6 +328,7 @@ public class User {
 
                 setManagerID(managerID);
                 allUserDetails.add(new ProjectManager(managerID, firstName, lastName, emailID, userName, password, organisation));
+                FileReadWrite.saveUserDetails(Main.userFileName,allUserDetails);
                 System.out.println("You have successfully signed up with ID: " + managerID + "!\n");
                 break;
 
@@ -340,7 +345,7 @@ public class User {
 
     }
 
-    public void login() throws IncorrectInputException {
+    public void login() throws IncorrectInputException, IOException, ClassNotFoundException {
 
         // Verify the login for both, when the field is blank and the Submit button is
         // clicked.
