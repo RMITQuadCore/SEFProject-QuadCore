@@ -30,12 +30,7 @@ public class ClientRepresentative extends User {
 
             switch (choice) {
                 case 1:
-                    String input;
-                    do {
-                        project.createProject(this);
-                        System.out.println("Do you want to add more projects? Y/N");
-                        input = scan.nextLine();
-                    } while (input.toUpperCase().compareTo("N") != 0);
+                    project.createProject(this);
                     break;
                 case 2:
                     mainMenu();
