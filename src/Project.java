@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class Project {
     public static ArrayList<Project> totalProjects = new ArrayList<Project>();
     private String projectId = "PROJ100";
-    private ClientRepresentative client; //TODO Check if needed to change to ClientRep Type
+    private ClientRepresentative client;
     private String projectTitle;
     private String projectDetails;
     private ArrayList<Role> rolesInProject = new ArrayList<Role>();

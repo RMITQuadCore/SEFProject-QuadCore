@@ -8,7 +8,7 @@ public class Team {
     private int teamFitness;
     private ArrayList<Constraint> constraintsMet = new ArrayList<>();
     private Project projectAssigned;
-    public static Set<Team> allTeams = new HashSet<>();
+    public static ArrayList<Team> allTeams = new ArrayList<>();
     // TODO displayTeam Method should be added
 
     public Team(String teamID) {

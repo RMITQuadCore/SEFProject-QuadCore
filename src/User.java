@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 
 public class User {
     private String id;
-    public ArrayList<User> allUserDetails = new ArrayList<User>();
+    public static ArrayList<User> allUserDetails = new ArrayList<User>();
     private String firstName;
     private String lastName;
     private String organisation;
