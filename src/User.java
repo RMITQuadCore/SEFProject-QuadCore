@@ -4,8 +4,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class User {
+    public ArrayList<User> allUserDetails = new ArrayList<User>();
+    // private String confirmPassword;
+    Scanner scan = Global.scan;
     private String id;
-    public static ArrayList<User> allUserDetails = new ArrayList<User>();
     private String firstName;
     private String lastName;
     private String organisation;
@@ -14,9 +16,8 @@ public class User {
     private String password;
     private String studentID = "ST000";
     private String clientID = "CL000";
-    // private String confirmPassword;
-    Scanner scan = SingletonScanner.getInstance();
     private String managerID = "PM000";
+
 
     public User() {
     }
@@ -115,8 +116,10 @@ public class User {
 
     public void mainMenu() {
         int choice = 0;
+        int i = 0;
         do {
             try {
+                System.out.println(i++);
                 System.out.println("**** Main Menu ****\n" +
                         "1.Sign Up\n" +
                         "2.Login\n" +
@@ -202,17 +205,17 @@ public class User {
         } while (foundLastName == true || lastName.isEmpty());
 
         do {
-           // try {
-                System.out.println("Organisation: ");
-                organisation = scan.nextLine();
+            // try {
+            System.out.println("Organisation: ");
+            organisation = scan.nextLine();
 
-                //foundOrg = inputValidations(organisation);
+            //foundOrg = inputValidations(organisation);
 
-                //if (foundOrg) {
-                   // throw new IncorrectInputException("Organisation cannot contain special characters! Try again.");
-                //}
-           // } catch (IncorrectInputException ex) {
-             //   System.err.println(ex.getMessage());
+            //if (foundOrg) {
+            // throw new IncorrectInputException("Organisation cannot contain special characters! Try again.");
+            //}
+            // } catch (IncorrectInputException ex) {
+            //   System.err.println(ex.getMessage());
             //}
         } while (foundOrg == true || organisation.isEmpty());
 
@@ -220,9 +223,9 @@ public class User {
         // regex expression to validate email ID
         String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
         do {
-            System.out.println("Email id: ");
+            System.out.println("Email id: (example@xyz.com)");
             emailID = scan.nextLine();
-        }while(!(emailID.matches(regex)));
+        } while (!(emailID.matches(regex)));
 
         for (User u : allUserDetails) {
             if (u.getEmailID().compareTo(emailID) == 0) {
@@ -254,43 +257,41 @@ public class User {
 
                 char gender;
                 float gpa = 0;
-                float experience=0;
+                float experience = 0;
                 do {
                     System.out.println("\nEnter your gender: F/M");
                     gender = scan.next().toUpperCase().charAt(0);
                    /* if (gender != 'F' || gender != 'M') {
                         continue;
                     }*/
-                    System.out.println("gender"+gender);
+                    System.out.println("gender" + gender);
                 } while ((gender != 'F' && gender != 'M'));
 
                 float input = 0;
-                do{
-                    try{
+                do {
+                    try {
                         System.out.println("\nEnter your GPA:");
                         gpa = Float.parseFloat(scan.next());
                         input = gpa;
-                    }
-                    catch (NumberFormatException e) {
+                    } catch (NumberFormatException e) {
                         System.err.println("Please enter a number (0 - 4)");
                     }
-                }while(input < 0 || input > 5);
+                } while (input < 0 || input > 5);
 
                 input = 0;
-                do{
-                    try{
+                do {
+                    try {
                         System.out.println("\nEnter your experience:");
                         experience = Float.parseFloat(scan.next());
                         input = experience;
-                    }
-                    catch (NumberFormatException e) {
+                    } catch (NumberFormatException e) {
                         System.err.println("Please enter a number");
                     }
-                } while(input < 0 || input > 60);
+                } while (input < 0 || input > 60);
 
 
                 studentID = "ST" + String.format("%03d",
-                        (Integer.parseInt(getStudentID().substring(2, getStudentID().length())) + 1));
+                        (Integer.parseInt(getStudentID().substring(2)) + 1));
 
                 setStudentID(studentID);
 
@@ -307,7 +308,7 @@ public class User {
             case 2:
 
                 clientID = "CL"
-                        + String.format("%03d", (Integer.parseInt(getClientID().substring(2, getClientID().length())) + 1));
+                        + String.format("%03d", (Integer.parseInt(getClientID().substring(2)) + 1));
 
                 setClientID(clientID);
 
@@ -319,7 +320,7 @@ public class User {
             case 3:
 
                 managerID = "PM" + String.format("%03d",
-                        (Integer.parseInt(getManagerID().substring(2, getManagerID().length())) + 1));
+                        (Integer.parseInt(getManagerID().substring(2)) + 1));
 
                 setManagerID(managerID);
                 allUserDetails.add(new ProjectManager(managerID, firstName, lastName, emailID, userName, password, organisation));
@@ -333,7 +334,9 @@ public class User {
         }
         setUserName(userName);
         setPassword(password);
+        System.out.println("11111");
         mainMenu();
+        System.out.println("22322");
 
     }
 
@@ -352,7 +355,7 @@ public class User {
             for (User user : allUserDetails) {
                 if (user instanceof ClientRepresentative) {
 
-                    if (loginName.compareTo(((ClientRepresentative) user).getUserName()) == 0) {
+                    if (loginName.compareTo(user.getUserName()) == 0) {
                         foundUsername = true;
                         setUserName(loginName);
 
@@ -360,7 +363,7 @@ public class User {
 
                 } else if (user instanceof Student) {
 
-                    if (loginName.compareTo(((Student) user).getUserName()) == 0) {
+                    if (loginName.compareTo(user.getUserName()) == 0) {
 
                         foundUsername = true;
                         System.out.println("Username found!" + foundUsername);
@@ -370,7 +373,7 @@ public class User {
 
                 } else {
 
-                    if (loginName.compareTo(((ProjectManager) user).getUserName()) == 0) {
+                    if (loginName.compareTo(user.getUserName()) == 0) {
                         foundUsername = true;
                         setUserName(loginName);
                     }

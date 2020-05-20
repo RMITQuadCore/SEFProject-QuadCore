@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class ClientRepresentative extends User {
     Project project = new Project();
-    Scanner scan = SingletonScanner.getInstance();
+    //Scanner scan = SingletonScanner.getInstance();
 
     public ClientRepresentative() {
 
@@ -23,7 +23,7 @@ public class ClientRepresentative extends User {
                 System.out.println("1. Add new project\n" +
                         "2. Logout\n");
 
-                choice = Integer.parseInt(scan.next());
+                choice = Integer.parseInt(Global.scan.next());
             } catch (NumberFormatException e) {
                 System.err.println("Please enter an integer (1-2)");
             }
