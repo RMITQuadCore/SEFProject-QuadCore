@@ -10,7 +10,7 @@ public class Project {
     private ArrayList<Role> rolesInProject = new ArrayList<Role>();
     public static int projectCounter = 0;
     public int popularityCounter;
-    Scanner scan = SingletonScanner.getInstance(); // TODO Remove Scanner
+    //Scanner scan = SingletonScanner.getInstance(); // TODO Remove Scanner
 
     public Project() {
 
@@ -85,28 +85,27 @@ public class Project {
                 + String.format("%03d", (Integer.parseInt(getProjectId().substring(4, getProjectId().length())) + 1));
 
         System.out.println("Enter Project Title: ");
-        projectTitle = scan.next(); //TODO singletonScanner
-        projectTitle+=scan.nextLine();
+        projectTitle = Global.scan.nextLine();
 
         System.out.println("Enter Project details: ");
-        projectDetails = scan.nextLine();
+        projectDetails = Global.scan.nextLine();
 
         String choice;
         do {
             System.out.println("Specify one required role: ");
-            String roleName = scan.nextLine();
+            String roleName = Global.scan.nextLine();
             ArrayList<String> frameworks = new ArrayList<String>();
             String input;
             do {
                 System.out.println("Specify one framework '" + roleName + "' should be familiar with:");
-                String framework = scan.nextLine();
+                String framework = Global.scan.nextLine();
                 frameworks.add(framework);
                 System.out.println("Do you want to add more frameworks? Y/N");
-                input = scan.nextLine();
+                input = Global.scan.nextLine();
             } while (input.toUpperCase().compareTo("N") != 0);
             rolesInProject.add(new Role(projectId, roleName, frameworks));
             System.out.println("Do you want to add more roles? Y/N");
-            choice = scan.nextLine();
+            choice = Global.scan.nextLine();
         } while (choice.toUpperCase().compareTo("N") != 0);
         totalProjects.add(new Project(client, projectId, projectTitle, projectDetails));
         System.out.println("Success! Project is created with Id : " + projectId);

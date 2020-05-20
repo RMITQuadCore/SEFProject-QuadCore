@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Role {
-    Scanner scan = SingletonScanner.getInstance();
+   // Scanner scan = SingletonScanner.getInstance();
     private String id;// ID can be both for student or Project
     private String roleName;
     private ArrayList<String> frameworks = new ArrayList<>();
@@ -39,7 +39,7 @@ public class Role {
         boolean frameWorkFound = false;
         do {
             System.out.println("Enter the framework : ");
-            String input = scan.nextLine();
+            String input = Global.scan.nextLine();
 
             for (int i = 0; i < role.getFrameworks().size(); i++) {
                 if (input.equalsIgnoreCase(role.getFrameworks().get(i))) {
@@ -57,7 +57,7 @@ public class Role {
 
     public void enterFrameworks() {
         System.out.println("Enter the framework : ");
-        String input = scan.nextLine();
+        String input = Global.scan.nextLine();
         frameworks.add(input);
     }
 

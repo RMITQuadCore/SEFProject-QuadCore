@@ -23,7 +23,7 @@ public class ProjectManager extends User {
         ProjectManager.teamStudent = teamStudent;
     }
 
-    Scanner scan = SingletonScanner.getInstance();
+    //Scanner scan = SingletonScanner.getInstance();
 
     private String id;
     private String firstName;
@@ -85,7 +85,7 @@ public class ProjectManager extends User {
                         "9. Swap team members\n" +
                         "10. Display team fitness\n" +
                         "11. Logout\n");
-                choice = Integer.parseInt(scan.next());
+                choice = Integer.parseInt(Global.scan.next());
             } catch (NumberFormatException e) {
                 System.err.println("Please enter an integer (1-11)");
             }
@@ -147,13 +147,13 @@ public class ProjectManager extends User {
 
         do {
             System.out.println("\nEnter assigned student ID:");
-            studID = scan.nextLine();
+            studID = Global.scan.nextLine();
             for (Student stud : Student.allStudents) {
 
                 if (((Student) stud).getId().compareTo(studID) == 0) {
                     foundStudent = true;
                     System.out.println("\nPlease enter personality of " + studID + " :");
-                    studPersonality = scan.nextLine().toUpperCase().charAt(0);
+                    studPersonality = Global.scan.nextLine().toUpperCase().charAt(0);
 
                     char[] validPersonalities = {'A', 'B', 'C', 'D', 'E', 'F'};
                     for (int i = 0; i < 6; i++) {
@@ -184,7 +184,7 @@ public class ProjectManager extends User {
             try {
                 System.out.println("Set Sign Up Status" + "\n1. Open" + "\n2.Closed");
                 System.out.println("Please enter your Choice :");
-                choice = Integer.parseInt(scan.next());
+                choice = Integer.parseInt(Global.scan.next());
             } catch (NumberFormatException e) {
                 System.err.println("Please enter an integer");
             }

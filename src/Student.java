@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Student extends User {
-    Scanner scan = SingletonScanner.getInstance();
+    //Scanner scan = SingletonScanner.getInstance();
     private double gPA;
     private double experience;
     private char gender;
@@ -86,7 +86,7 @@ public class Student extends User {
             boolean studentExists = false;
             do {
                 System.out.print(" \nPlease enter the student ID of member number " + (i + 1) + ":");
-                String input = scan.nextLine();
+                String input = Global.scan.nextLine();
                 boolean dislikedStudExists = false;
                 for (Student dislikedMember : dislikedMembers) {
                     if (input.equals(dislikedMember.getId())) {
@@ -130,8 +130,7 @@ public class Student extends User {
             boolean projectExists = false;
             do {
                 System.out.print("\n Please enter the ID of your preferred project number " + (i + 1) + ":");
-                input = scan.next();
-                input+=scan.nextLine();
+                input = Global.scan.nextLine();
                 boolean preferredProjExists = false;
                 for (int k = 0; k < preferredProjects.length; k++) {
                     if (input.equals(preferredProjects[k].getProjectId())) {
@@ -163,7 +162,7 @@ public class Student extends User {
             boolean roleExists = false;
             do {
                 System.out.print("\n Please enter your preferred Roles number " + (i + 1) + ":");
-                input = scan.nextLine();
+                input = Global.scan.nextLine();
                 boolean preferredRoleExists = false;
                 for (int k = 0; k < preferredRoles.length; k++) {
                     if (input.equals(preferredRoles[k].getId())) {
@@ -185,7 +184,7 @@ public class Student extends User {
                             do {
                                 try {
                                     System.out.println(" Please enter the number of frameworks you know from the list above :");
-                                    number = Integer.parseInt(scan.next());
+                                    number = Integer.parseInt(Global.scan.next());
                                 } catch (NumberFormatException e) {
                                     System.err.println("Enter a valid Integer");
                                 }
@@ -213,7 +212,7 @@ public class Student extends User {
             do {
                 try {
                     System.out.println("\n1.Enter preferred projects\n2.Enter preferred roles\n3.Enter disliked members\n4.Logout\nEnter you choice : ");
-                    ch = Integer.parseInt(scan.next());
+                    ch = Integer.parseInt(Global.scan.next());
                 } catch (NumberFormatException e) {
                     System.err.println("Enter an integer");
                 }
