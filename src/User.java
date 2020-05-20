@@ -4,7 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class User {
-    public ArrayList<User> allUserDetails = new ArrayList<User>();
+    public static ArrayList<User> allUserDetails = new ArrayList<User>();
     // private String confirmPassword;
     Scanner scan = Global.scan;
     private String id;
