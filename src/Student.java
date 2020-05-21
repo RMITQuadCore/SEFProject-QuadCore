@@ -1,8 +1,10 @@
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Student extends User {
+public class Student extends User implements Serializable  {
+    private static final long serialVersionUID = -1640510881420655396L;
     //Scanner scan = SingletonScanner.getInstance();
     private double gPA;
     private double experience;

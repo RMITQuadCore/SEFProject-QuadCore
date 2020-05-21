@@ -1,7 +1,9 @@
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.Scanner;
 
-public class ClientRepresentative extends User {
+public class ClientRepresentative extends User implements Serializable {
+    private static final long serialVersionUID = -7506201449608946074L;
     Project project = new Project();
     //Scanner scan = SingletonScanner.getInstance();
 

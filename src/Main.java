@@ -1,6 +1,7 @@
 import java.io.IOException;
+import java.io.Serializable;
 
-public class Main {
+public class Main implements Serializable {
 
     public static String userFileName = "Users.txt";
     public static String studentsFileName = "Students.txt";

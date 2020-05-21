@@ -1,7 +1,9 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Role {
+public class Role implements Serializable {
+    private static final long serialVersionUID = -8977434449646607064L;
    // Scanner scan = SingletonScanner.getInstance();
     private String id;// ID can be both for student or Project
     private String roleName;

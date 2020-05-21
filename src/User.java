@@ -1,13 +1,14 @@
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class User {
+public class User implements Serializable {
+    private static final long serialVersionUID =1L;
     public static ArrayList<User> allUserDetails = new ArrayList<User>();
     // private String confirmPassword;
-    Scanner scan = Global.scan;
+
     private String id;
     private String firstName;
     private String lastName;
@@ -126,7 +127,7 @@ public class User {
                         "2.Login\n" +
                         "3.Exit");
                 System.out.println("Enter your choice : ");
-                choice = Integer.parseInt(scan.nextLine());
+                choice = Integer.parseInt(Global.scan.nextLine());
             } catch (NumberFormatException e) {
                 System.err.println("Enter an integer (1-3)");
             }
@@ -178,7 +179,7 @@ public class User {
         do {
             try {
                 System.out.println("First Name: ");
-                firstName = scan.nextLine();
+                firstName = Global.scan.nextLine();
 
                 foundFirstName = inputValidations(firstName);
 
@@ -193,7 +194,7 @@ public class User {
         do {
             try {
                 System.out.println("Last Name: ");
-                lastName = scan.nextLine();
+                lastName = Global.scan.nextLine();
                 foundLastName = inputValidations(lastName);
 
                 if (foundLastName) {
@@ -208,7 +209,7 @@ public class User {
         do {
             // try {
             System.out.println("Organisation: ");
-            organisation = scan.nextLine();
+            organisation = Global.scan.nextLine();
 
             //foundOrg = inputValidations(organisation);
 
@@ -225,7 +226,7 @@ public class User {
         String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
         do {
             System.out.println("Email id: (example@xyz.com)");
-            emailID = scan.nextLine();
+            emailID = Global.scan.nextLine();
         } while (!(emailID.matches(regex)));
 
         for (User u : allUserDetails) {
@@ -237,17 +238,17 @@ public class User {
         // Whether the given email id has been used earlier.
         do {
             System.out.println("\nUsername: ");
-            userName = scan.nextLine();
+            userName = Global.scan.nextLine();
 
             System.out.println("\nPassword: ");
-            password = scan.nextLine();
+            password = Global.scan.nextLine();
         } while (userName.isEmpty() || password.isEmpty());
 
         // ID generation
         do {
             try {
                 System.out.println("\nAre you a: \n1.Student\n2.Client Representative\n3.Project Manager\n");
-                choice = Integer.parseInt(scan.next());
+                choice = Integer.parseInt(Global.scan.next());
             } catch (NumberFormatException e) {
                 System.err.println("Enter an integer (1-3)");
             }
@@ -261,7 +262,7 @@ public class User {
                 float experience = 0;
                 do {
                     System.out.println("\nEnter your gender: F/M");
-                    gender = scan.next().toUpperCase().charAt(0);
+                    gender = Global.scan.next().toUpperCase().charAt(0);
                    /* if (gender != 'F' || gender != 'M') {
                         continue;
                     }*/
@@ -272,7 +273,7 @@ public class User {
                 do {
                     try {
                         System.out.println("\nEnter your GPA:");
-                        gpa = Float.parseFloat(scan.next());
+                        gpa = Float.parseFloat(Global.scan.next());
                         input = gpa;
                     } catch (NumberFormatException e) {
                         System.err.println("Please enter a number (0 - 4)");
@@ -283,7 +284,7 @@ public class User {
                 do {
                     try {
                         System.out.println("\nEnter your experience:");
-                        experience = Float.parseFloat(scan.next());
+                        experience = Float.parseFloat(Global.scan.next());
                         input = experience;
                     } catch (NumberFormatException e) {
                         System.err.println("Please enter a number");
@@ -355,7 +356,7 @@ public class User {
         do {
 
             System.out.println("\n***********Login***********\nEnter username: ");
-            loginName = scan.nextLine();
+            loginName = Global.scan.nextLine();
 
             for (User user : allUserDetails) {
                 if (user instanceof ClientRepresentative) {
@@ -388,7 +389,7 @@ public class User {
                 if (foundUsername) {
                     // System.out.println("Login name:" + user.getUserName());
                     System.out.println("\nEnter Password: ");
-                    pass = scan.nextLine();
+                    pass = Global.scan.nextLine();
 
                     if (pass.compareTo(user.getPassword()) == 0) {
                         foundPassword = true;

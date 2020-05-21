@@ -1,8 +1,10 @@
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Project {
+public class Project implements Serializable {
+    private static final long serialVersionUID = 7351202416537420904L;
     public static ArrayList<Project> totalProjects = new ArrayList<Project>();
     private String projectId = "PROJ100";
     private ClientRepresentative client;

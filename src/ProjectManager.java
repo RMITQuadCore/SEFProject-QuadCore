@@ -1,7 +1,10 @@
+import java.io.IOException;
+import java.io.Serializable;
 import java.util.*;
 
 
-public class ProjectManager extends User {
+public class ProjectManager extends User implements Serializable {
+    private static final long serialVersionUID = 2437934725196379683L;
 
     public ArrayList<String> studentPersonalities = new ArrayList<String>();
     public static ArrayList<Student> teamStudent = new ArrayList<Student>();
@@ -69,7 +72,7 @@ public class ProjectManager extends User {
 
 
     // Project Manager Menu
-    public void projectManagerMenu() {
+    public void projectManagerMenu() throws IOException, ClassNotFoundException {
         int choice = 0;
         do {
             try {
