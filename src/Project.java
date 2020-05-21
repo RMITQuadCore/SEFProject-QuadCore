@@ -88,7 +88,7 @@ public class Project implements Serializable {
                 + String.format("%03d", (Integer.parseInt(getProjectId().substring(4, getProjectId().length())) + 1));
         this.setProjectId(projectId);
         System.out.println("Enter Project Title: ");
-        projectTitle = Global.scan.nextLine();
+        projectTitle = Global.scan.next() + Global.scan.nextLine();
         this.projectTitle = projectTitle;
         System.out.println("Enter Project details: ");
         projectDetails = Global.scan.nextLine();

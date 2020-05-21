@@ -9,6 +9,7 @@ public class User implements Serializable {
     public static ArrayList<User> allUserDetails = new ArrayList<User>();
     // private String confirmPassword;
 
+
     private String id;
     private String firstName;
     private String lastName;
@@ -118,16 +119,14 @@ public class User implements Serializable {
 
     public void mainMenu() throws IOException, ClassNotFoundException {
         int choice = 0;
-        int i = 0;
         do {
             try {
-                System.out.println(i++);
                 System.out.println("**** Main Menu ****\n" +
                         "1.Sign Up\n" +
                         "2.Login\n" +
                         "3.Exit");
                 System.out.println("Enter your choice : ");
-                choice = Integer.parseInt(Global.scan.nextLine());
+                choice = Integer.parseInt(Global.scan.next() + Global.scan.nextLine());
             } catch (NumberFormatException e) {
                 System.err.println("Enter an integer (1-3)");
             }
@@ -340,10 +339,7 @@ public class User implements Serializable {
         }
         setUserName(userName);
         setPassword(password);
-        System.out.println("11111");
         mainMenu();
-        System.out.println("22322");
-
     }
 
     public void login() throws IncorrectInputException, IOException, ClassNotFoundException {

@@ -10,6 +10,8 @@ public class ProjectManager extends User implements Serializable {
     public static ArrayList<Student> teamStudent = new ArrayList<Student>();
     public static ArrayList<Student> tempStudent = new ArrayList<>();
 
+
+
     public ArrayList<Student> getTempStudent() {
         return tempStudent;
     }
@@ -76,69 +78,72 @@ public class ProjectManager extends User implements Serializable {
         int choice = 0;
         do {
             try {
-                System.out.println("\n*** Project Manager Menu ***\n" +
-                        "1. Enter Personality of students\n" +
-                        "2. Set Hard & Soft constraints\n" +
-                        "3. Enter Weightage for Soft-Constraints\n" +
-                        "4. Change Sign up status\n" +
-                        "5. Discard Unpopular projects\n" +
-                        "6. Display Current Constraint\n" +
-                        "7. Run Project Team formation\n" +
-                        "8. Display Teams\n" +
-                        "9. Swap team members\n" +
-                        "10. Display team fitness\n" +
-                        "11. Logout\n");
+                System.out.println(Constraint.ANSI_RED+ "\n*** Project Manager Menu ***\n" + Constraint.ANSI_RESET+
+                        "1. Set all Constraints\n" +
+                        "2. Enter Personality of students\n" +
+                        "3. Set Hard & Soft constraints\n" +
+                        "4. Enter Weight age for Soft-Constraints\n" +
+                        "5. Change Sign up status\n" +
+                        "6. Discard Unpopular projects\n" +
+                        "7. Display Current Constraint\n" +
+                        "8. Run Project Team formation\n" +
+                        "9. Display Teams\n" +
+                        "10. Swap team members\n" +
+                        "11. Display team fitness\n" +
+                        "12. Logout\n");
                 choice = Integer.parseInt(Global.scan.next());
             } catch (NumberFormatException e) {
-                System.err.println("Please enter an integer (1-11)");
+                System.err.println("Please enter an integer (1-12)");
             }
 
             Constraint constraint = new Constraint();
 
             switch (choice) {
-                case 1:
+                case 1: constraint.setAllConstraints();
+                        break;
+                case 2:
                     enterStudentPersonality();
                     break;
-                case 2:
-                    System.out.println("Set Constraints");
                 case 3:
+                    System.out.println("Set Constraints");
+                case 4:
                     constraint.setWeightage();
                     break;
-                case 4:
+                case 5:
                     setSignUpStatus();
                     break;
-                case 5:
+                case 6:
                     try {
                         Project.discardUnpopularProjects();
                     } catch (ProjectMismatchException e) {
                         e.getMessage();
                     }
                     break;
-                case 6:
+                case 7:
                     constraint.displayConstraints();
                     break;
-                case 7:
+                case 8:
                     createTeams();
                     break;
 
-                case 8:
+                case 9:
                     //displayTeams();
                     System.out.println("Display Teams");
                     break;
 
-                case 9:
+                case 10:
                     System.out.println("Swap Team members");
                     break;
 
-                case 10:
+                case 11:
                     System.out.println("Display Team Fitness");
                     break;
 
-                case 11:
+                case 12:
                     mainMenu();
                     break;
             }
-        } while (choice != 11);
+        } while (choice != 12);
     }
 
 
