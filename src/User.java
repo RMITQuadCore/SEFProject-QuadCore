@@ -5,7 +5,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class User implements Serializable {
-    private static final long serialVersionUID =1L;
+    private static final long serialVersionUID = 1L;
     public static ArrayList<User> allUserDetails = new ArrayList<User>();
     // private String confirmPassword;
 
@@ -37,28 +37,9 @@ public class User implements Serializable {
 
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
 
     public String getEmailID() {
         return emailID;
-    }
-
-    public void setEmailID(String emailID) {
-        this.emailID = emailID;
     }
 
     public String getUserName() {
@@ -101,21 +82,10 @@ public class User implements Serializable {
         this.managerID = managerID;
     }
 
-    public String getOrganisation() {
-        return organisation;
-    }
-
-    public void setOrganisation(String organisation) {
-        this.organisation = organisation;
-    }
-
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public void mainMenu() throws IOException, ClassNotFoundException {
         int choice = 0;
@@ -301,8 +271,8 @@ public class User implements Serializable {
 
                 Student.allStudents.add(new Student(studentID, firstName, lastName, emailID, userName, password, organisation, gpa,
                         experience, gender, '0'));
-                FileReadWrite.saveUserDetails(Main.userFileName,allUserDetails);
-                FileReadWrite.saveStudentDetails(Main.studentsFileName,Student.allStudents);
+                FileReadWrite.saveUserDetails(Main.userFileName, allUserDetails);
+                FileReadWrite.saveStudentDetails(Main.studentsFileName, Student.allStudents);
 
                 System.out.println("You have successfully signed up with ID: " + studentID + "!\n");
 
@@ -317,7 +287,7 @@ public class User implements Serializable {
 
                 allUserDetails.add(
                         new ClientRepresentative(clientID, firstName, lastName, emailID, userName, password, organisation));
-                FileReadWrite.saveUserDetails(Main.userFileName,allUserDetails);
+                FileReadWrite.saveUserDetails(Main.userFileName, allUserDetails);
                 System.out.println("You have successfully signed up with ID: " + clientID + "!\n");
                 break;
 
@@ -328,7 +298,7 @@ public class User implements Serializable {
 
                 setManagerID(managerID);
                 allUserDetails.add(new ProjectManager(managerID, firstName, lastName, emailID, userName, password, organisation));
-                FileReadWrite.saveUserDetails(Main.userFileName,allUserDetails);
+                FileReadWrite.saveUserDetails(Main.userFileName, allUserDetails);
                 System.out.println("You have successfully signed up with ID: " + managerID + "!\n");
                 break;
 

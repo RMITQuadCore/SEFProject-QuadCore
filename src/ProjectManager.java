@@ -5,19 +5,22 @@ import java.util.*;
 
 public class ProjectManager extends User implements Serializable {
     private static final long serialVersionUID = 2437934725196379683L;
-
-    public ArrayList<String> studentPersonalities = new ArrayList<String>();
     public static ArrayList<Student> teamStudent = new ArrayList<Student>();
     public static ArrayList<Student> tempStudent = new ArrayList<>();
-
-
-
-    public ArrayList<Student> getTempStudent() {
-        return tempStudent;
+    public ArrayList<String> studentPersonalities = new ArrayList<String>();
+    private String id;
+    private String firstName;
+    private String lastName;
+    private String org;
+    private String emailID;
+    private String userName;
+    private String password;
+    private boolean signUpStatus = true;
+    public ProjectManager() {
     }
-
-    public void setTempStudent(ArrayList<Student> tempStudent) {
-        ProjectManager.tempStudent = tempStudent;
+    public ProjectManager(String id, String firstName, String lastName, String emailID, String userName,
+                          String password, String org) {
+        super(id, firstName, lastName, emailID, userName, password, org);
     }
 
     public static ArrayList<Student> getTeamStudent() {
@@ -27,201 +30,6 @@ public class ProjectManager extends User implements Serializable {
     public static void setTeamStudent(ArrayList<Student> teamStudent) {
         ProjectManager.teamStudent = teamStudent;
     }
-
-    //Scanner scan = SingletonScanner.getInstance();
-
-    private String id;
-    private String firstName;
-    private String lastName;
-    private String org;
-    private String emailID;
-    private String userName;
-    private String password;
-    private boolean signUpStatus = true;
-
-    public ProjectManager() {
-    }
-
-    public ProjectManager(String id, String firstName, String lastName, String emailID, String userName,
-                          String password, String org) {
-        super(id, firstName, lastName, emailID, userName, password, org);
-    }
-
-    public ArrayList<String> getStudentPersonalities() {
-        return this.studentPersonalities;
-    }
-
-    public String getId() {
-        return this.id;
-    }
-
-    public String getFirstName() {
-        return this.firstName;
-    }
-
-
-    public String getEmailID() {
-        return this.emailID;
-    }
-
-    public boolean getSignUpStatus() {
-        return signUpStatus;
-    }
-
-    public String getOrganisation() {
-        return this.org;
-    }
-
-
-    // Project Manager Menu
-    public void projectManagerMenu() throws IOException, ClassNotFoundException {
-        int choice = 0;
-        do {
-            try {
-                System.out.println(Constraint.ANSI_RED+ "\n*** Project Manager Menu ***\n" + Constraint.ANSI_RESET+
-                        "1. Set all Constraints\n" +
-                        "2. Enter Personality of students\n" +
-                        "3. Set Hard & Soft constraints\n" +
-                        "4. Enter Weight age for Soft-Constraints\n" +
-                        "5. Change Sign up status\n" +
-                        "6. Discard Unpopular projects\n" +
-                        "7. Display Current Constraint\n" +
-                        "8. Run Project Team formation\n" +
-                        "9. Display Teams\n" +
-                        "10. Swap team members\n" +
-                        "11. Display team fitness\n" +
-                        "12. Logout\n");
-                choice = Integer.parseInt(Global.scan.next());
-            } catch (NumberFormatException e) {
-                System.err.println("Please enter an integer (1-12)");
-            }
-
-            Constraint constraint = new Constraint();
-
-            switch (choice) {
-                case 1: constraint.setAllConstraints();
-                        break;
-                case 2:
-                    enterStudentPersonality();
-                    break;
-                case 3:
-                    System.out.println("Set Constraints");
-                case 4:
-                    constraint.setWeightage();
-                    break;
-                case 5:
-                    setSignUpStatus();
-                    break;
-                case 6:
-                    try {
-                        Project.discardUnpopularProjects();
-                    } catch (ProjectMismatchException e) {
-                        e.getMessage();
-                    }
-                    break;
-                case 7:
-                    constraint.displayConstraints();
-                    break;
-                case 8:
-                    createTeams();
-                    break;
-
-                case 9:
-                    //displayTeams();
-                    System.out.println("Display Teams");
-                    break;
-
-                case 10:
-                    System.out.println("Swap Team members");
-                    break;
-
-                case 11:
-                    System.out.println("Display Team Fitness");
-                    break;
-
-                case 12:
-                    mainMenu();
-                    break;
-            }
-        } while (choice != 12);
-    }
-
-
-    //Method to assign personality to all students
-    private void enterStudentPersonality() {
-        boolean foundStudent = false, validPersonality = false;
-        String studID;
-        char studPersonality = '0';
-
-        do {
-            System.out.println("\nEnter assigned student ID:");
-            studID = Global.scan.nextLine();
-            for (Student stud : Student.allStudents) {
-
-                if (((Student) stud).getId().compareTo(studID) == 0) {
-                    foundStudent = true;
-                    System.out.println("\nPlease enter personality of " + studID + " :");
-                    studPersonality = Global.scan.nextLine().toUpperCase().charAt(0);
-
-                    char[] validPersonalities = {'A', 'B', 'C', 'D', 'E', 'F'};
-                    for (int i = 0; i < 6; i++) {
-                        if (studPersonality == validPersonalities[i]) {
-                            validPersonality = true;
-                            stud.setStudentPersonality(studPersonality); // TODO setStudent Personality to Student Class Object
-                        }
-                    }
-                    if (!validPersonality) {
-                        System.out.println("Invalid personality type!");
-                    }
-                }
-            }
-            if (!foundStudent) {
-                System.out.println("Student not found!");
-            }
-        } while (foundStudent == false || studID.isEmpty() || studPersonality == '0');
-    }
-
-
-    //Method to unable or disable Sign Up
-    public void setSignUpStatus() {
-        // true = open && false = closed
-
-        int choice = 0;
-        signUpStatus = true;
-        do {
-            try {
-                System.out.println("Set Sign Up Status" + "\n1. Open" + "\n2.Closed");
-                System.out.println("Please enter your Choice :");
-                choice = Integer.parseInt(Global.scan.next());
-            } catch (NumberFormatException e) {
-                System.err.println("Please enter an integer");
-            }
-        } while (choice < 1 || choice > 3);
-
-        switch (choice) {
-            case 1:
-                signUpStatus = true;
-            case 2:
-                signUpStatus = false;
-        }
-    }
-
-
-
-
-    //Method to form teams for projects
-    private void createTeams() {
-        teamAverageGPACheck();
-        teamMemberGPACheck();
-        ensureFemaleInATeamandExperienceCheck();
-        personalityConstraintCheck();
-
-        Team team = setProjectForTeam(teamStudent);
-        Team.allTeams.add(team);
-
-        //displayTeams();
-    }
-
 
     // 1. Check overallGPA hard constraint
     public static void teamAverageGPACheck() {
@@ -620,7 +428,6 @@ public class ProjectManager extends User implements Serializable {
         }
     }
 
-
     //Method to assign Project to a team
     public static Team setProjectForTeam(ArrayList<Student> teamStudent) {
         HashMap<Project, Integer> projectPopularity = new HashMap<>();
@@ -647,5 +454,175 @@ public class ProjectManager extends User implements Serializable {
         }
         team01.setStudentsInTeam(teamStudent);
         return team01;
+    }
+
+    public ArrayList<Student> getTempStudent() {
+        return tempStudent;
+    }
+
+    public void setTempStudent(ArrayList<Student> tempStudent) {
+        ProjectManager.tempStudent = tempStudent;
+    }
+
+    public ArrayList<String> getStudentPersonalities() {
+        return this.studentPersonalities;
+    }
+
+    public String getId() {
+        return this.id;
+    }
+
+    public String getEmailID() {
+        return this.emailID;
+    }
+
+    public boolean getSignUpStatus() {
+        return signUpStatus;
+    }
+
+
+    // Project Manager Menu
+    public void projectManagerMenu() throws IOException, ClassNotFoundException {
+        int choice = 0;
+        do {
+            try {
+                System.out.println(Constraint.ANSI_RED + "\n*** Project Manager Menu ***\n" + Constraint.ANSI_RESET +
+                        "1. Set all Constraints\n" +
+                        "2. Enter Personality of students\n" +
+                        "3. Set Hard & Soft constraints\n" +
+                        "4. Enter Weight age for Soft-Constraints\n" +
+                        "5. Change Sign up status\n" +
+                        "6. Discard Unpopular projects\n" +
+                        "7. Display Current Constraint\n" +
+                        "8. Run Project Team formation\n" +
+                        "9. Display Teams\n" +
+                        "10. Swap team members\n" +
+                        "11. Display team fitness\n" +
+                        "12. Logout\n");
+                choice = Integer.parseInt(Global.scan.next());
+            } catch (NumberFormatException e) {
+                System.err.println("Please enter an integer (1-12)");
+            }
+
+            Constraint constraint = new Constraint();
+
+            switch (choice) {
+                case 1:
+                    constraint.setAllConstraints();
+                    break;
+                case 2:
+                    enterStudentPersonality();
+                    break;
+                case 3:
+                    System.out.println("Set Constraints");
+                case 4:
+                    constraint.setWeightage();
+                    break;
+                case 5:
+                    setSignUpStatus();
+                    break;
+                case 6:
+                    try {
+                        Project.discardUnpopularProjects();
+                    } catch (ProjectMismatchException e) {
+                        e.getMessage();
+                    }
+                    break;
+                case 7:
+                    constraint.displayConstraints();
+                    break;
+                case 8:
+                    createTeams();
+                    break;
+
+                case 9:
+                    //displayTeams();
+                    System.out.println("Display Teams");
+                    break;
+
+                case 10:
+                    System.out.println("Swap Team members");
+                    break;
+
+                case 11:
+                    System.out.println("Display Team Fitness");
+                    break;
+
+                case 12:
+                    mainMenu();
+                    break;
+            }
+        } while (choice != 12);
+    }
+
+    //Method to assign personality to all students
+    private void enterStudentPersonality() {
+        boolean foundStudent = false, validPersonality = false;
+        String studID;
+        char studPersonality = '0';
+
+        do {
+            System.out.println("\nEnter assigned student ID:");
+            studID = Global.scan.nextLine();
+            for (Student stud : Student.allStudents) {
+
+                if (((Student) stud).getId().compareTo(studID) == 0) {
+                    foundStudent = true;
+                    System.out.println("\nPlease enter personality of " + studID + " :");
+                    studPersonality = Global.scan.nextLine().toUpperCase().charAt(0);
+
+                    char[] validPersonalities = {'A', 'B', 'C', 'D', 'E', 'F'};
+                    for (int i = 0; i < 6; i++) {
+                        if (studPersonality == validPersonalities[i]) {
+                            validPersonality = true;
+                            stud.setStudentPersonality(studPersonality); // TODO setStudent Personality to Student Class Object
+                        }
+                    }
+                    if (!validPersonality) {
+                        System.out.println("Invalid personality type!");
+                    }
+                }
+            }
+            if (!foundStudent) {
+                System.out.println("Student not found!");
+            }
+        } while (foundStudent == false || studID.isEmpty() || studPersonality == '0');
+    }
+
+    //Method to unable or disable Sign Up
+    public void setSignUpStatus() {
+        // true = open && false = closed
+
+        int choice = 0;
+        signUpStatus = true;
+        do {
+            try {
+                System.out.println("Set Sign Up Status" + "\n1. Open" + "\n2.Closed");
+                System.out.println("Please enter your Choice :");
+                choice = Integer.parseInt(Global.scan.next());
+            } catch (NumberFormatException e) {
+                System.err.println("Please enter an integer");
+            }
+        } while (choice < 1 || choice > 3);
+
+        switch (choice) {
+            case 1:
+                signUpStatus = true;
+            case 2:
+                signUpStatus = false;
+        }
+    }
+
+    //Method to form teams for projects
+    private void createTeams() {
+        teamAverageGPACheck();
+        teamMemberGPACheck();
+        ensureFemaleInATeamandExperienceCheck();
+        personalityConstraintCheck();
+
+        Team team = setProjectForTeam(teamStudent);
+        Team.allTeams.add(team);
+
+        //displayTeams();
     }
 }

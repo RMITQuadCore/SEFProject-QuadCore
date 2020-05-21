@@ -5,7 +5,6 @@ import java.util.Scanner;
 
 public class Student extends User implements Serializable  {
     private static final long serialVersionUID = -1640510881420655396L;
-    //Scanner scan = SingletonScanner.getInstance();
     private double gPA;
     private double experience;
     private char gender;
@@ -39,16 +38,8 @@ public class Student extends User implements Serializable  {
         return gender;
     }
 
-    public void setGender(char gender) {
-        this.gender = gender;
-    }
-
     public double getExperience() {
         return experience;
-    }
-
-    public void setExperience(double experience) {
-        this.experience = experience;
     }
 
     public Project[] getPreferredProjects() {

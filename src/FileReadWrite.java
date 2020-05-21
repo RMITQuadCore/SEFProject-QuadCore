@@ -73,6 +73,7 @@ public class FileReadWrite {
         }
         return projectList;
     }
+
     public static void saveTeamDetails(String fileName, ArrayList<Team> teamList) throws IOException {
         FileOutputStream file = new FileOutputStream(fileName);
         ObjectOutputStream out = new ObjectOutputStream(file);//since the array contains an object
@@ -93,6 +94,7 @@ public class FileReadWrite {
         }
         return teamList;
     }
+
     public static void saveRoleDetails(String fileName, ArrayList<Role> roleList) throws IOException {
         FileOutputStream file = new FileOutputStream(fileName);
         ObjectOutputStream out = new ObjectOutputStream(file);//since the array contains an object

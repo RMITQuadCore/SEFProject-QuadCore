@@ -4,7 +4,6 @@ import java.util.Scanner;
 
 public class Role implements Serializable {
     private static final long serialVersionUID = -8977434449646607064L;
-   // Scanner scan = SingletonScanner.getInstance();
     private String id;// ID can be both for student or Project
     private String roleName;
     private ArrayList<String> frameworks = new ArrayList<>();
@@ -14,7 +13,7 @@ public class Role implements Serializable {
     {
         this.id = id;
         this.roleName = roleName;
-        this.frameworks=frameworks;
+        this.frameworks = frameworks;
     }
 
     public ArrayList<String> getFrameworks() {

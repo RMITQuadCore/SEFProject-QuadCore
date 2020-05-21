@@ -1,21 +1,20 @@
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 
 public class Constraint {
 
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_RESET = "\u001B[0m";
     int maxNosOfFemaleStudent;
     float benchmarkStudentGpa;
     int minNosOfStudWithBenchmarkGpa;
     float maxAvgGpaOfTeam;
     float yearsOfExperience;
     int minNosOfStudWithExperience;
-    ArrayList <Character> requiredPersonalities = new ArrayList<>();
-    ArrayList <Character> validPersonalities = new ArrayList<>();;
-    //char[] validPersonalities = {'A', 'B', 'C', 'D', 'E', 'F'};
+    ArrayList<Character> requiredPersonalities = new ArrayList<>();
+    ArrayList<Character> validPersonalities = new ArrayList<>();
     boolean uniquePersonality;
     int teamSize;
-
 
     public int getMaxNosOfFemaleStudent() {
         return maxNosOfFemaleStudent;
@@ -89,13 +88,8 @@ public class Constraint {
         this.uniquePersonality = uniquePersonality;
     }
 
-
-    public static final String ANSI_RED = "\u001B[31m";
-    public static final String ANSI_GREEN = "\u001B[32m";
-    public static final String ANSI_RESET = "\u001B[0m";
-
     //Method to set all constraints
-    public void setAllConstraints(){
+    public void setAllConstraints() {
         System.out.println(ANSI_RED + "Hard Constraints : " + ANSI_RESET);
         System.out.println("1. Maximum number of female student per team: ");
         maxNosOfFemaleStudent = Integer.parseInt(Global.scan.next() + Global.scan.nextLine());
@@ -121,30 +115,30 @@ public class Constraint {
         System.out.println("3. Define valid Personality types of students (A-Z): ");
         int i = 1;
         char input = '0';
-        do{
-            System.out.println("Personality " + i++ +":");
+        do {
+            System.out.println("Personality " + i++ + ":");
             input = Global.scan.nextLine().toUpperCase().charAt(0);
             validPersonalities.add(input);
             System.out.println("Do you want to add more personality: (Y/N)");
             input = Global.scan.nextLine().toUpperCase().charAt(0);
-        }while (input != 'N');
+        } while (input != 'N');
 
         System.out.println("4. Enter Personality(s) type should be present in every team : ");
-        int j =  1;
+        int j = 1;
         String choice = "";
         do {
-            System.out.println("Personality " + j +":");
+            System.out.println("Personality " + j + ":");
             choice = Global.scan.nextLine().toUpperCase();
             boolean isExist = false;
-            for(Character c : validPersonalities){
-                if(choice.equals(validPersonalities)){
+            for (Character c : validPersonalities) {
+                if (choice.equals(validPersonalities)) {
                     requiredPersonalities.add(choice.charAt(0));
                     j++;
                     isExist = true;
                     break;
                 }
             }
-            if(!isExist){
+            if (!isExist) {
                 System.err.println("Invalid personality ");
             }
             System.out.println("Do you want enter more personality(s): (Y/N)");
@@ -152,10 +146,9 @@ public class Constraint {
         } while (choice.charAt(0) != 'N');
 
         System.out.println("5. Should every personality in a team should be unique? (Y/N): ");
-        if(Global.scan.nextLine().toUpperCase().charAt(0) == 'Y'){
+        if (Global.scan.nextLine().toUpperCase().charAt(0) == 'Y') {
             setUniquePersonality(true);
-        }
-        else {
+        } else {
             setUniquePersonality(false);
         }
 
@@ -216,8 +209,8 @@ public class Constraint {
                 "+ year(s) of experience per team: " + minNosOfStudWithExperience + "\n" +
 
                 "2. Any of these Personality type should be in every team: ");
-        for (Character c : requiredPersonalities ) {
-            int k =0;
+        for (Character c : requiredPersonalities) {
+            int k = 0;
             System.out.println(k++);
             System.out.print(" " + requiredPersonalities + ",");
         }
