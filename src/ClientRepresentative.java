@@ -1,6 +1,5 @@
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.Scanner;
 
 public class ClientRepresentative extends User implements Serializable {
     private static final long serialVersionUID = -7506201449608946074L;
@@ -21,7 +20,7 @@ public class ClientRepresentative extends User implements Serializable {
         int choice = 0;
         do {
             try {
-                System.out.println("Client Representative Menu");
+                System.out.println(ANSI_RED +"Client Representative Menu"+ ANSI_RESET);
                 System.out.println("1. Add new project\n" +
                         "2. Display Projects\n" +
                         "3. Logout\n");

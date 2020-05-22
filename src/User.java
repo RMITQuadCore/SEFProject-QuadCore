@@ -20,6 +20,9 @@ public class User implements Serializable {
     private String studentID = "ST000";
     private String clientID = "CL000";
     private String managerID = "PM000";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_RESET = "\u001B[0m";
 
 
     public User() {
@@ -90,22 +93,16 @@ public class User implements Serializable {
     public void mainMenu() throws IOException, ClassNotFoundException {
         int choice = 0;
         do {
-            try {
-                System.out.println("**** Main Menu ****\n" +
-                        "1.Sign Up\n" +
-                        "2.Login\n" +
-                        "3.Exit");
-                System.out.println("Enter your choice : ");
-                choice = Integer.parseInt(Global.scan.next() + Global.scan.nextLine());
-            } catch (NumberFormatException e) {
-                System.err.println("Enter an integer (1-3)");
-            }
-        } while (choice < 1 || choice > 4);
+            System.out.println(ANSI_RED +"\n**** Main Menu ****"+ ANSI_RESET+ "\n" +
+                    "1.Sign Up\n" +
+                    "2.Login\n" +
+                    "3.Exit");
+            choice = InputTools.intChecker(1,3);
 
         switch (choice) {
             case 1:
                 try {
-                    signup();
+                    signUp();
                 } catch (IncorrectInputException e) {
                     e.getMessage();
                 }
@@ -123,11 +120,16 @@ public class User implements Serializable {
                 System.out.println("System exited! Thanks for using Project Team Formation System");
                 System.exit(0);
                 break;
+
+            default:
+                System.err.println("Invalid choice!");
+                break;
         }
+        } while (choice != 3);
 
     }
 
-    public void signup() throws IncorrectInputException, IOException, ClassNotFoundException {
+    public void signUp() throws IncorrectInputException, IOException, ClassNotFoundException {
 
         ProjectManager pm = new ProjectManager();
         //If Project Manager disables signUp, no new sign ups are allowed
@@ -214,14 +216,8 @@ public class User implements Serializable {
         } while (userName.isEmpty() || password.isEmpty());
 
         // ID generation
-        do {
-            try {
-                System.out.println("\nAre you a: \n1.Student\n2.Client Representative\n3.Project Manager\n");
-                choice = Integer.parseInt(Global.scan.next());
-            } catch (NumberFormatException e) {
-                System.err.println("Enter an integer (1-3)");
-            }
-        } while (choice < 1 || choice > 4);
+        System.out.println("\nAre you a: \n1.Student\n2.Client Representative\n3.Project Manager\n");
+        choice = InputTools.intChecker(1,3);
 
         switch (choice) {
             case 1:
@@ -232,34 +228,13 @@ public class User implements Serializable {
                 do {
                     System.out.println("\nEnter your gender: F/M");
                     gender = Global.scan.next().toUpperCase().charAt(0);
-                   /* if (gender != 'F' || gender != 'M') {
-                        continue;
-                    }*/
-                    System.out.println("gender" + gender);
                 } while ((gender != 'F' && gender != 'M'));
 
-                float input = 0;
-                do {
-                    try {
-                        System.out.println("\nEnter your GPA:");
-                        gpa = Float.parseFloat(Global.scan.next());
-                        input = gpa;
-                    } catch (NumberFormatException e) {
-                        System.err.println("Please enter a number (0 - 4)");
-                    }
-                } while (input < 0 || input > 5);
+                System.out.println("\nEnter your GPA:");
+                gpa = InputTools.floatChecker(0,4);
 
-                input = 0;
-                do {
-                    try {
-                        System.out.println("\nEnter your experience:");
-                        experience = Float.parseFloat(Global.scan.next());
-                        input = experience;
-                    } catch (NumberFormatException e) {
-                        System.err.println("Please enter a number");
-                    }
-                } while (input < 0 || input > 60);
-
+                System.out.println("\nEnter your experience:");
+                experience = InputTools.floatChecker(0,80);
 
                 studentID = "ST" + String.format("%03d",
                         (Integer.parseInt(getStudentID().substring(2)) + 1));
@@ -321,40 +296,34 @@ public class User implements Serializable {
         boolean foundUsername = false, foundPassword = false;
         do {
 
-            System.out.println("\n***********Login***********\nEnter username: ");
+            System.out.println("\n"+ ANSI_RED +"****Login****"+ ANSI_RESET + "\n"+
+                    "Enter username: ");
             loginName = Global.scan.nextLine();
 
             for (User user : allUserDetails) {
                 if (user instanceof ClientRepresentative) {
-
                     if (loginName.compareTo(user.getUserName()) == 0) {
                         foundUsername = true;
                         setUserName(loginName);
-
                     }
-
-                } else if (user instanceof Student) {
-
+                }
+                else if (user instanceof Student) {
                     if (loginName.compareTo(user.getUserName()) == 0) {
-
                         foundUsername = true;
                         System.out.println("Username found!" + foundUsername);
                         setUserName(loginName);
-
                     }
-
-                } else {
-
+                }
+                else {
                     if (loginName.compareTo(user.getUserName()) == 0) {
                         foundUsername = true;
                         setUserName(loginName);
                     }
-
                 }
 
                 if (foundUsername) {
                     // System.out.println("Login name:" + user.getUserName());
-                    System.out.println("\nEnter Password: ");
+                    System.out.println("Enter Password: ");
                     pass = Global.scan.nextLine();
 
                     if (pass.compareTo(user.getPassword()) == 0) {

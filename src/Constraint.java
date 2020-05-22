@@ -15,6 +15,9 @@ public class Constraint {
     ArrayList<Character> validPersonalities = new ArrayList<>();
     boolean uniquePersonality;
     int teamSize;
+    int uniquePersonalityWeightAge = 0;
+    int requiredPersonalityWeightAge = 0;
+    int experienceWeightAge = 0;
 
     public int getMaxNosOfFemaleStudent() {
         return maxNosOfFemaleStudent;
@@ -90,27 +93,30 @@ public class Constraint {
 
     //Method to set all constraints
     public void setAllConstraints() {
+        System.out.println(" Enter number of students in a team: ");
+        teamSize = InputTools.intChecker(1, 100);
+
         System.out.println(ANSI_RED + "Hard Constraints : " + ANSI_RESET);
         System.out.println("1. Maximum number of female student per team: ");
-        maxNosOfFemaleStudent = Integer.parseInt(Global.scan.next() + Global.scan.nextLine());
+        maxNosOfFemaleStudent = InputTools.intChecker(0, teamSize);
 
         System.out.println("2. Benchmark GPA of individual student: ");
-        benchmarkStudentGpa = Float.parseFloat(Global.scan.nextLine());
+        benchmarkStudentGpa = InputTools.floatChecker(0, 4);
 
         System.out.println("3. Minimum number of student with at least benchmark GPA in a team: ");
-        minNosOfStudWithBenchmarkGpa = Integer.parseInt(Global.scan.nextLine());
+        minNosOfStudWithBenchmarkGpa = InputTools.intChecker(0, teamSize);
 
         System.out.println("4. Maximum average GPA of a team: ");
-        maxAvgGpaOfTeam = Float.parseFloat(Global.scan.nextLine());
+        maxAvgGpaOfTeam = InputTools.floatChecker(0, 4);
 
 
         System.out.println("\n" + ANSI_GREEN + "Soft Constraints: " + ANSI_RESET);
         System.out.println("1. Number of years of experience benchmark: ");
-        yearsOfExperience = Float.parseFloat(Global.scan.nextLine());
+        yearsOfExperience = InputTools.floatChecker(0, 80);
 
         System.out.println("2. Minimum number of student with " + yearsOfExperience +
                 "+ year(s) of experience per team: ");
-        minNosOfStudWithExperience = Integer.parseInt(Global.scan.nextLine());
+        minNosOfStudWithExperience = InputTools.intChecker(0, teamSize);
 
         System.out.println("3. Define valid Personality types of students (A-Z): ");
         int i = 1;
@@ -121,7 +127,7 @@ public class Constraint {
             validPersonalities.add(input);
             System.out.println("Do you want to add more personality: (Y/N)");
             input = Global.scan.nextLine().toUpperCase().charAt(0);
-        } while (input != 'N');
+        } while (input == 'Y');
 
         System.out.println("4. Enter Personality(s) type should be present in every team : ");
         int j = 1;
@@ -131,7 +137,7 @@ public class Constraint {
             choice = Global.scan.nextLine().toUpperCase();
             boolean isExist = false;
             for (Character c : validPersonalities) {
-                if (choice.equals(validPersonalities)) {
+                if (choice.equals(c.toString())) {
                     requiredPersonalities.add(choice.charAt(0));
                     j++;
                     isExist = true;
@@ -143,57 +149,44 @@ public class Constraint {
             }
             System.out.println("Do you want enter more personality(s): (Y/N)");
             choice = Global.scan.nextLine().toUpperCase();
-        } while (choice.charAt(0) != 'N');
+        } while (choice.charAt(0) == 'Y');
 
-        System.out.println("5. Should every personality in a team should be unique? (Y/N): ");
-        if (Global.scan.nextLine().toUpperCase().charAt(0) == 'Y') {
-            setUniquePersonality(true);
-        } else {
-            setUniquePersonality(false);
-        }
 
-        System.out.println(" Enter number of students in a team: ");
-        teamSize = Integer.parseInt(Global.scan.nextLine());
+        boolean isExist = false;
+        do {
+            System.out.println("5. Should every personality in a team should be unique? (Y/N): ");
+            if (Global.scan.nextLine().toUpperCase().charAt(0) == 'Y') {
+                setUniquePersonality(true);
+                isExist = true;
+            } else if (Global.scan.nextLine().toUpperCase().charAt(0) == 'N') {
+                setUniquePersonality(false);
+                isExist = true;
+            }
+        } while (isExist == false);
 
         displayConstraints();
     }
 
 
     // Method to set weight age for soft constraints
-    public void setWeightage() {
-        int personalityWeightage = 0;
-        int experienceWeightage = 0;
+    public void setWeightAge() {
+
         System.out.println("\nEnter weight age for Soft-Constraints (1-4): ");
-        do {
-            try {
-                System.out.println("Personality Soft-Constraint :");
-                personalityWeightage = Integer.parseInt(Global.scan.next() + Global.scan.nextLine());
 
-                if (personalityWeightage < 1 || personalityWeightage > 4) {
-                    System.out.println("Please enter weighatge in range 1 to 4");
-                    continue;
-                }
-            } catch (NumberFormatException e) {
-                System.err.println("Please enter an integer (1-4)");
-            }
-        } while (personalityWeightage < 1 || personalityWeightage > 4);
+        System.out.println("Unique personality constraint: ");
+        uniquePersonalityWeightAge = InputTools.intChecker(1, 4);
 
-        do {
-            try {
-                System.out.println("Experience Soft-Constraint :");
-                experienceWeightage = Integer.parseInt(Global.scan.next());
-                if (experienceWeightage < 1 || experienceWeightage > 4) {
-                    System.out.println("Please enter weighatge in range 1 to 4");
-                    continue;
-                }
-            } catch (NumberFormatException e) {
-                System.err.println("Please enter an integer (1-4)");
-            }
-        } while (experienceWeightage < 1 || experienceWeightage > 4);
+        System.out.println("Required personality in a team constraint: ");
+        uniquePersonalityWeightAge = InputTools.intChecker(1, 4);
+
+        System.out.println("Experience Soft-Constraint : ");
+        experienceWeightAge = InputTools.intChecker(1, 4);
     }
 
 
     public void displayConstraints() {
+        System.out.println("Number of students in a team: " + teamSize);
+
         System.out.println("Currently Set Constraints are: ");
 
         System.out.println("\n Hard Constraint: \n" +
@@ -218,8 +211,9 @@ public class Constraint {
         System.out.println(
                 "3. Every personality on a team should be unique: " + uniquePersonality);
 
-        System.out.println("Number of students in a team: " + teamSize);
+        System.out.println("\n Weight age for Soft constraints : \n" +
+                "1. Unique personality constraint: " + uniquePersonalityWeightAge + "\n" +
+                "2. Required personality in a team constraint: " + requiredPersonalityWeightAge + "\n" +
+                "3. Experience Soft-Constraint : " + experienceWeightAge + "\n");
     }
-
-
 }

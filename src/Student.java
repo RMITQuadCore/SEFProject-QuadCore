@@ -3,8 +3,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Student extends User implements Serializable  {
+public class Student extends User implements Serializable {
     private static final long serialVersionUID = -1640510881420655396L;
+    public static ArrayList<Student> allStudents = new ArrayList<>(); // TODO Maybe remove
     private double gPA;
     private double experience;
     private char gender;
@@ -12,7 +13,6 @@ public class Student extends User implements Serializable  {
     private Role[] preferredRoles = new Role[2];// TODO Change to arraylist
     private Project[] preferredProjects = new Project[4]; // TODO Change to arraylist
     private Student[] dislikedMembers = new Student[3]; // TODO Change to arraylist
-    public static ArrayList<Student> allStudents = new ArrayList<>(); // TODO Maybe remove
 
     public Student(String id, String firstName, String lastName, String emailID, String userName,
                    String password, String org, double gPA, double experience, char gender, char studentPersonality) {
@@ -46,8 +46,16 @@ public class Student extends User implements Serializable  {
         return preferredProjects;
     }
 
+    public void setPreferredProjects(Project[] preferredProjects) {
+        this.preferredProjects = preferredProjects;
+    }
+
     public double getgPA() {
         return gPA;
+    }
+
+    public void setgPA(double gPA) {
+        this.gPA = gPA;
     }
 
     public Role[] getPreferredRoles() {
@@ -66,18 +74,11 @@ public class Student extends User implements Serializable  {
         this.dislikedMembers = dislikedMembers;
     }
 
-    public void setgPA(double gPA) {
-        this.gPA = gPA;
-    }
-
-    public void setPreferredProjects(Project[] preferredProjects) {
-        this.preferredProjects = preferredProjects;
-    }
-
     public void enterDislikedMembers() {
         System.out.println(getId() + "! You are allowed to enter 3 members you do not wish to team up with.");
         for (int i = 0; i < 3; i++) {
             boolean studentExists = false;
+            //TODO Display all student list
             do {
                 System.out.print(" \nPlease enter the student ID of member number " + (i + 1) + ":");
                 String input = Global.scan.nextLine();
@@ -136,7 +137,7 @@ public class Student extends User implements Serializable  {
                         if (input.equals(Project.totalProjects.get(j).getProjectId())) {
                             projectExists = true;
                             preferredProjects[i] = Project.totalProjects.get(j);
-                            FileReadWrite.saveStudentDetails(Main.studentsFileName,Student.allStudents);
+                            FileReadWrite.saveStudentDetails(Main.studentsFileName, Student.allStudents);
                             Project.totalProjects.get(j).setPopularityCounter(Project.totalProjects.get(j).getPopularityCounter() + (4 - i));
                         }
                     }
@@ -152,6 +153,7 @@ public class Student extends User implements Serializable  {
 
     public void enterPreferredRoles(Project project) {
         String input;
+        //TODO Display list
         System.out.println(" You are allowed to enter 2 Roles you would like to apply for.");
         for (int i = 0; i < 2; i++) {
             boolean roleExists = false;
@@ -201,22 +203,21 @@ public class Student extends User implements Serializable  {
     }
 
     public void studentMenu() throws IOException {
-        int ch = 0;
+        int choice = 0;
         boolean quit = false;
         do {
-            do {
-                try {
-                    System.out.println("\n1.Enter preferred projects\n2.Enter preferred roles\n3.Enter disliked members\n4.Logout\nEnter you choice : ");
-                    ch = Integer.parseInt(Global.scan.next());
-                } catch (NumberFormatException e) {
-                    System.err.println("Enter an integer");
-                }
-            } while (ch < 1 || ch > 4);
+            System.out.println(ANSI_RED+ "****Student Menu****\n" + ANSI_RESET+
+                    "1.Enter preferred projects\n" +
+                    "2.Enter preferred roles\n" +
+                    "3.Enter disliked members\n" +
+                    "4.Logout ");
+            choice = InputTools.intChecker(1,4);
 
-            switch (ch) {
+            switch (choice) {
                 case 1:
                     if (Project.totalProjects.size() == 0) {
-                        System.out.println(" Sorry no projects have been registered at the moment. Please come back later");
+                        System.out.println(" Sorry no projects have been registered at the moment. " +
+                                "Please come back later");
                     } else {
                         enterPreferredProjects();
                     }
