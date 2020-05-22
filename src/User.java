@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
-    public static ArrayList<User> allUserDetails = new ArrayList<User>();
+    public static ArrayList<User> allUserDetails = new ArrayList<>();
     // private String confirmPassword;
 
 
@@ -21,7 +21,6 @@ public class User implements Serializable {
     private String clientID = "CL000";
     private String managerID = "PM000";
     public static final String ANSI_RED = "\u001B[31m";
-    public static final String ANSI_GREEN = "\u001B[32m";
     public static final String ANSI_RESET = "\u001B[0m";
 
 
@@ -91,7 +90,7 @@ public class User implements Serializable {
 
 
     public void mainMenu() throws IOException, ClassNotFoundException {
-        int choice = 0;
+        int choice;
         do {
             System.out.println(ANSI_RED +"\n**** Main Menu ****"+ ANSI_RESET+ "\n" +
                     "1.Sign Up\n" +
@@ -133,7 +132,7 @@ public class User implements Serializable {
 
         ProjectManager pm = new ProjectManager();
         //If Project Manager disables signUp, no new sign ups are allowed
-        if (pm.getSignUpStatus() == false) {
+        if (!pm.getSignUpStatus()) {
             System.out.println("Sign Up is disable by Project Manager." +
                     "Please Contact Project Manager.");
             return;
@@ -142,7 +141,7 @@ public class User implements Serializable {
 
         boolean foundFirstName = false, foundLastName = false, foundOrg = false;
 
-        int choice = 0;
+        int choice;
 
         System.out.print("***********Sign Up***********\n");
 
@@ -160,7 +159,7 @@ public class User implements Serializable {
             } catch (IncorrectInputException ex) {
                 System.err.println(ex.getMessage());
             }
-        } while (foundFirstName == true || firstName.isEmpty());
+        } while ((foundFirstName == true) || firstName.isEmpty());
 
         do {
             try {
@@ -194,15 +193,20 @@ public class User implements Serializable {
 
 
         // regex expression to validate email ID
-        String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
+        String regex = "^[\\w-_.+]*[\\w-_.]@([\\w]+\\.)+[\\w]+[\\w]$";
         do {
             System.out.println("Email id: (example@xyz.com)");
-            emailID = Global.scan.nextLine();
+            emailID = Global.scan.next() + Global.scan.nextLine();
         } while (!(emailID.matches(regex)));
 
         for (User u : allUserDetails) {
-            if (u.getEmailID().compareTo(emailID) == 0) {
-                System.err.println("Username already present. Use a different email id!");
+//            if (u.getEmailID() != null){
+//                System.out.println("Email id already present. Use a different email id!");
+//                //return;
+//            }
+            if ((u.getEmailID() != null) && u.getEmailID().compareTo(emailID) == 0) {
+                System.out.println("Email id already present. Use a different email id!");
+                return;
             }
         }
 
@@ -211,7 +215,7 @@ public class User implements Serializable {
             System.out.println("\nUsername: ");
             userName = Global.scan.nextLine();
 
-            System.out.println("\nPassword: ");
+            System.out.println("Password: ");
             password = Global.scan.nextLine();
         } while (userName.isEmpty() || password.isEmpty());
 
@@ -223,18 +227,16 @@ public class User implements Serializable {
             case 1:
 
                 char gender;
-                float gpa = 0;
-                float experience = 0;
                 do {
-                    System.out.println("\nEnter your gender: F/M");
+                    System.out.println("Enter your gender: F/M");
                     gender = Global.scan.next().toUpperCase().charAt(0);
                 } while ((gender != 'F' && gender != 'M'));
 
-                System.out.println("\nEnter your GPA:");
-                gpa = InputTools.floatChecker(0,4);
+                System.out.println("GPA ");
+                float gpa = InputTools.floatChecker(0, 4);
 
-                System.out.println("\nEnter your experience:");
-                experience = InputTools.floatChecker(0,80);
+                System.out.println("Your Experience ");
+                float experience = InputTools.floatChecker(0, 80);
 
                 studentID = "ST" + String.format("%03d",
                         (Integer.parseInt(getStudentID().substring(2)) + 1));
@@ -257,6 +259,7 @@ public class User implements Serializable {
 
                 clientID = "CL"
                         + String.format("%03d", (Integer.parseInt(getClientID().substring(2)) + 1));
+                System.out.println("substring" + Integer.parseInt(getClientID().substring(2)) + 1);
 
                 setClientID(clientID);
 
@@ -310,7 +313,7 @@ public class User implements Serializable {
                 else if (user instanceof Student) {
                     if (loginName.compareTo(user.getUserName()) == 0) {
                         foundUsername = true;
-                        System.out.println("Username found!" + foundUsername);
+                        System.out.println("Username found!" + true);
                         setUserName(loginName);
                     }
                 }
@@ -353,13 +356,13 @@ public class User implements Serializable {
                     }
                 }
             }
-            if (foundUsername == false) {
+            if (!foundUsername) {
                 System.err.println("Username not signed up!");
-            } else if (foundUsername == false && foundPassword == false) {
+            } else if (!foundUsername && !foundPassword) {
                 throw new IncorrectInputException("Incorrect username or password!");
             }
 
-        } while (foundUsername == false || foundPassword == false);
+        } while (!foundUsername || !foundPassword);
         mainMenu();
     }
 

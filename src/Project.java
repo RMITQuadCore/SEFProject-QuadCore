@@ -83,7 +83,7 @@ public class Project implements Serializable {
     public void createProject(ClientRepresentative client) throws IOException {
         this.client = client;
         projectId = "PROJ"
-                + String.format("%03d", (Integer.parseInt(getProjectId().substring(4, getProjectId().length())) + 1));
+                + String.format("%03d", (Integer.parseInt(getProjectId().substring(4)) + 1));
         this.setProjectId(projectId);
         System.out.println("Enter Project Title: ");
         projectTitle = Global.scan.next() + Global.scan.nextLine();
@@ -93,19 +93,19 @@ public class Project implements Serializable {
         this.projectDetails = projectDetails;
         String choice;
         do {
-            System.out.println("Specify one required role: ");
+            System.out.println("Specify a required role: ");
             String roleName = Global.scan.nextLine();
             ArrayList<String> frameworks = new ArrayList<String>();
             String input;
             do {
-                System.out.println("Specify one framework '" + roleName + "' should be familiar with:");
+                System.out.println("Specify a framework '" + roleName + "' should be familiar with:");
                 String framework = Global.scan.nextLine();
                 frameworks.add(framework);
-                System.out.println("Do you want to add more frameworks? Y/N");
+                System.out.println("Do you want to add more frameworks? (Y/N)");
                 input = Global.scan.nextLine();
             } while (input.toUpperCase().compareTo("N") != 0);
             rolesInProject.add(new Role(projectId, roleName, frameworks));
-            System.out.println("Do you want to add more roles? Y/N");
+            System.out.println("Do you want to add more roles? (Y/N)");
             choice = Global.scan.nextLine();
         } while (choice.toUpperCase().compareTo("N") != 0);
         totalProjects.add(this);
@@ -116,15 +116,15 @@ public class Project implements Serializable {
     public void displayProject() {
         for (Project p : totalProjects) {
             System.out.println("\nClient Id: " + p.getClient().getId());
-            System.out.println("project Id: " + p.getProjectId());
-            System.out.println("project Title: " + p.getProjectTitle());
-            System.out.println("projectDetails: " + p.getProjectDetails());
+            System.out.println("Project Id: " + p.getProjectId());
+            System.out.println("Project Title: " + p.getProjectTitle());
+            System.out.println("Project Details: " + p.getProjectDetails());
 
             for (Role r : p.getRolesInProject()) {
-                System.out.println("Role: " + r.getRoleName());
+                System.out.println("\nRole: " + r.getRoleName());
                 System.out.println("Frameworks are: ");
                 for (String f : r.getFrameworks()) {
-                    System.out.println(f);
+                    System.out.println("\t"+f);
                 }
             }
         }

@@ -5,6 +5,11 @@ public class Constraint {
     public static final String ANSI_RED = "\u001B[31m";
     public static final String ANSI_GREEN = "\u001B[32m";
     public static final String ANSI_RESET = "\u001B[0m";
+
+    String  constraintId;
+    String constraintDescription;
+
+    ArrayList<Constraint> constraints = new ArrayList<>();
     int maxNosOfFemaleStudent;
     float benchmarkStudentGpa;
     int minNosOfStudWithBenchmarkGpa;
@@ -18,6 +23,83 @@ public class Constraint {
     int uniquePersonalityWeightAge = 0;
     int requiredPersonalityWeightAge = 0;
     int experienceWeightAge = 0;
+
+    public Constraint(String constraintId, String constraintDescription) {
+        this.constraintId = constraintId;
+        this.constraintDescription = constraintDescription;
+    }
+
+    public Constraint(String constraintId, String constraintDescription, int maxNosOfFemaleStudent,
+                      float benchmarkStudentGpa, int minNosOfStudWithBenchmarkGpa, float maxAvgGpaOfTeam,
+                      float yearsOfExperience, int minNosOfStudWithExperience,
+                      ArrayList<Character> requiredPersonalities, ArrayList<Character> validPersonalities,
+                      boolean uniquePersonality, int teamSize, int uniquePersonalityWeightAge,
+                      int requiredPersonalityWeightAge, int experienceWeightAge) {
+        this.constraintId = constraintId;
+        this.constraintDescription = constraintDescription;
+        this.maxNosOfFemaleStudent = maxNosOfFemaleStudent;
+        this.benchmarkStudentGpa = benchmarkStudentGpa;
+        this.minNosOfStudWithBenchmarkGpa = minNosOfStudWithBenchmarkGpa;
+        this.maxAvgGpaOfTeam = maxAvgGpaOfTeam;
+        this.yearsOfExperience = yearsOfExperience;
+        this.minNosOfStudWithExperience = minNosOfStudWithExperience;
+        this.requiredPersonalities = requiredPersonalities;
+        this.validPersonalities = validPersonalities;
+        this.uniquePersonality = uniquePersonality;
+        this.teamSize = teamSize;
+        this.uniquePersonalityWeightAge = uniquePersonalityWeightAge;
+        this.requiredPersonalityWeightAge = requiredPersonalityWeightAge;
+        this.experienceWeightAge = experienceWeightAge;
+    }
+
+
+    public String getConstraintId() {
+        return constraintId;
+    }
+
+    public void setConstraintId(String constraintId) {
+        this.constraintId = constraintId;
+    }
+
+    public String getConstraintDescription() {
+        return constraintDescription;
+    }
+
+    public void setConstraintDescription(String constraintDescription) {
+        this.constraintDescription = constraintDescription;
+    }
+
+    public int getTeamSize() {
+        return teamSize;
+    }
+
+    public void setTeamSize(int teamSize) {
+        this.teamSize = teamSize;
+    }
+
+    public int getUniquePersonalityWeightAge() {
+        return uniquePersonalityWeightAge;
+    }
+
+    public void setUniquePersonalityWeightAge(int uniquePersonalityWeightAge) {
+        this.uniquePersonalityWeightAge = uniquePersonalityWeightAge;
+    }
+
+    public int getRequiredPersonalityWeightAge() {
+        return requiredPersonalityWeightAge;
+    }
+
+    public void setRequiredPersonalityWeightAge(int requiredPersonalityWeightAge) {
+        this.requiredPersonalityWeightAge = requiredPersonalityWeightAge;
+    }
+
+    public int getExperienceWeightAge() {
+        return experienceWeightAge;
+    }
+
+    public void setExperienceWeightAge(int experienceWeightAge) {
+        this.experienceWeightAge = experienceWeightAge;
+    }
 
     public int getMaxNosOfFemaleStudent() {
         return maxNosOfFemaleStudent;
@@ -91,6 +173,11 @@ public class Constraint {
         this.uniquePersonality = uniquePersonality;
     }
 
+    public void createConstraint() {
+        constraintId = "CONS"
+                + String.format("%03d", (Integer.parseInt(getConstraintId().substring(4, getConstraintId().length())) + 1));
+    }
+
     //Method to set all constraints
     public void setAllConstraints() {
         System.out.println(" Enter number of students in a team: ");
@@ -120,7 +207,7 @@ public class Constraint {
 
         System.out.println("3. Define valid Personality types of students (A-Z): ");
         int i = 1;
-        char input = '0';
+        char input;
         do {
             System.out.println("Personality " + i++ + ":");
             input = Global.scan.nextLine().toUpperCase().charAt(0);
@@ -131,7 +218,7 @@ public class Constraint {
 
         System.out.println("4. Enter Personality(s) type should be present in every team : ");
         int j = 1;
-        String choice = "";
+        String choice;
         do {
             System.out.println("Personality " + j + ":");
             choice = Global.scan.nextLine().toUpperCase();
@@ -162,7 +249,7 @@ public class Constraint {
                 setUniquePersonality(false);
                 isExist = true;
             }
-        } while (isExist == false);
+        } while (!isExist);
 
         displayConstraints();
     }
@@ -201,11 +288,11 @@ public class Constraint {
                 "1. Minimum number of student with " + yearsOfExperience +
                 "+ year(s) of experience per team: " + minNosOfStudWithExperience + "\n" +
 
-                "2. Any of these Personality type should be in every team: ");
+                "2. One of these Personality type should be in every team: ");
         for (Character c : requiredPersonalities) {
             int k = 0;
             System.out.println(k++);
-            System.out.print(" " + requiredPersonalities + ",");
+            System.out.print(" " + c.toString() + ",");
         }
 
         System.out.println(

@@ -20,7 +20,7 @@ public class ClientRepresentative extends User implements Serializable {
         int choice = 0;
         do {
             try {
-                System.out.println(ANSI_RED +"Client Representative Menu"+ ANSI_RESET);
+                System.out.println(ANSI_RED +"****Client Representative Menu****"+ ANSI_RESET);
                 System.out.println("1. Add new project\n" +
                         "2. Display Projects\n" +
                         "3. Logout\n");
