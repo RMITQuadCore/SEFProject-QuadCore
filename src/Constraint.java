@@ -57,6 +57,10 @@ public class Constraint {
     }
 
 
+    /**
+     * Getter and Setter Methods
+     * @return
+     */
     public String getConstraintId() {
         return constraintId;
     }
@@ -183,6 +187,9 @@ public class Constraint {
     }
 
 
+    /**
+     * Method to define and set value for all constraints by Project Manager.
+     */
     public void setAllConstraints() {
         System.out.println(" Enter number of students in a team: ");
         teamSize = InputTools.intChecker(1, 100);
@@ -259,7 +266,9 @@ public class Constraint {
     }
 
 
-    // Method to set weight age for soft constraints
+    /**
+     * Method to set weight age for soft constraints
+     */
     public void setWeightAge() {
 
         System.out.println("\nEnter weight age for Soft-Constraints (1-4): ");
@@ -274,7 +283,9 @@ public class Constraint {
         experienceWeightAge = InputTools.intChecker(1, 4);
     }
 
-
+    /**
+     * Method to display all set constraints.
+     */
     public void displayConstraints() {
         System.out.println("Number of students in a team: " + teamSize);
 

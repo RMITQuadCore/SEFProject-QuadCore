@@ -16,6 +16,11 @@ public class Role implements Serializable {
         this.frameworks = frameworks;
     }
 
+
+    /**
+     * Getter and setter methods.
+     * @return
+     */
     public ArrayList<String> getFrameworks() {
         return frameworks;
     }
@@ -36,9 +41,13 @@ public class Role implements Serializable {
         this.roleName = roleName;
     }
 
+    /**
+     * Method to enter preferred frameworks by student
+     * @param role
+     */
     public void enterFrameworks(Role role) {
         boolean frameWorkFound = false;
-        do {
+        do { //TODO Display list of frameworks
             System.out.println("Enter the framework : ");
             String input = Global.scan.nextLine();
 
@@ -56,6 +65,9 @@ public class Role implements Serializable {
         } while (!frameWorkFound);
     }
 
+    /**
+     * Method to enter & define framework of a role by client representative
+     */
     public void enterFrameworks() {
         System.out.println("Enter the framework : ");
         String input = Global.scan.nextLine();

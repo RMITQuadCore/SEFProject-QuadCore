@@ -7,7 +7,7 @@ public class Project implements Serializable {
     public static ArrayList < Project > totalProjects = new ArrayList < Project > ();
     public static int projectCounter = 0;
     public int popularityCounter;
-    private String projectId = "PROJ100";
+    private String projectId = "PROJ000";
     private ClientRepresentative client;
     private String projectTitle;
     private String projectDetails;
@@ -24,6 +24,11 @@ public class Project implements Serializable {
         this.projectDetails = projectDetails;
     }
 
+
+    /**
+     * Getter and setter methods.
+     * @return
+     */
     public static int getProjectCounter() {
         return projectCounter;
     }
@@ -80,6 +85,16 @@ public class Project implements Serializable {
         this.popularityCounter = popularityCounter;
     }
 
+
+    /**
+     * Method to create new projects.
+     *
+     * Client representative can create new projects with specified roles and
+     * frameworks which will be made available to students.
+     * All projects will have an auto generated unique project ID.
+     * @param client
+     * @throws IOException
+     */
     public void createProject(ClientRepresentative client) throws IOException {
         if (totalProjects.size() > 0) {
             Project lastProject = totalProjects.get(totalProjects.size() - 1);
@@ -137,8 +152,12 @@ public class Project implements Serializable {
         }
     }
 
-    //Constraint constraint = new Constraint();
-    //Method to discard unpopular projects
+
+    /**
+     * Method to discard unpopular projects based on popularity vote by students.
+     * @return
+     * @throws ProjectMismatchException
+     */
     public static boolean discardUnpopularProjects() throws ProjectMismatchException {
         int numProjectReqd = 0;
         int numStudents = Student.allStudents.size();

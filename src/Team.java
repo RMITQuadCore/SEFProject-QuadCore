@@ -9,8 +9,13 @@ public class Team implements Serializable {
     private int teamFitness;
     private ArrayList < Constraint > constraintsMet = new ArrayList < > ();
     private Project projectAssigned;
+
     // TODO displayTeam Method should be added
 
+    /**
+     * Getter and setter methods.
+     * @param teamID
+     */
     public Team(String teamID) {
         this.teamID = teamID;
     }

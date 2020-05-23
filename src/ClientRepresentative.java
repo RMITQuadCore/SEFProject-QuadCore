@@ -19,21 +19,21 @@ public class ClientRepresentative extends User implements Serializable {
     }
 
 
+    /**
+     * Method display Client representative it's menu and further navigate to required functionality.
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public void clientMenu() throws IOException, ClassNotFoundException {
         int choice = 0;
         do {
-            try {
                 System.out.println(ANSI_YELLOW + "****Client Representative Menu****" + ANSI_RESET);
                 System.out.println(
                         "1. Add new project\n" +
-                                "2. Display Projects\n" +
-                                "3. Logout\n"
+                        "2. Display Projects\n" +
+                        "3. Logout\n"
                 );
-
-                choice = Integer.parseInt(Global.scan.next());
-            } catch (NumberFormatException e) {
-                System.err.println("Please enter an integer (1-3)");
-            }
+                choice = InputTools.intChecker(1,3);
 
             switch (choice) {
                 case 1:

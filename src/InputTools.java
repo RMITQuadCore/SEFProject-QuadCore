@@ -1,6 +1,11 @@
 public class InputTools {
 
-    // Method to make sure correct option is entered by user
+    /**
+     * Method to make sure correct integer value is entered by the user.
+     * @param min
+     * @param max
+     * @return
+     */
     public static int intChecker(int min, int max) {
         int response = 0;
 
@@ -18,7 +23,12 @@ public class InputTools {
         return response;
     }
 
-    // Method to make sure correct float value is entered by user
+    /**
+     * Method to make sure correct float value is entered by the user.
+     * @param min
+     * @param max
+     * @return
+     */
     public static float floatChecker(float min, float max) {
         float response = 0;
 

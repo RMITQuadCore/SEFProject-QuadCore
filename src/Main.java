@@ -15,7 +15,9 @@ public class Main implements Serializable {
         Project.totalProjects = FileReadWrite.readProjectDetails(projectsFileName); //Updating Projects Array List
     }
 
-
+    /**
+     * Main Method
+     */
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         updateArrays();
         User user = new User();

@@ -7,7 +7,6 @@ import java.util.regex.Pattern;
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
     public static ArrayList < User > allUserDetails = new ArrayList < > ();
-    // private String confirmPassword;
 
 
     private String id;
@@ -39,6 +38,10 @@ public class User implements Serializable {
     }
 
 
+    /**
+     * Getter and setter methods.
+     * @return
+     */
     public String getEmailID() {
         return emailID;
     }
@@ -88,6 +91,13 @@ public class User implements Serializable {
     }
 
 
+    /**
+     * The Main Menu
+     *
+     * First thing users see when they execute the program.
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public void mainMenu() throws IOException, ClassNotFoundException {
         int choice;
         do {
@@ -128,6 +138,15 @@ public class User implements Serializable {
 
     }
 
+    /**
+     * Method to Sign Up
+     *
+     * For new user, where they enter their required personal details and sign up into the program.
+     * Method validates the details and save them for future use and assigns them an Unique ID.
+     * @throws IncorrectInputException
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public void signUp() throws IncorrectInputException, IOException, ClassNotFoundException {
 
         ProjectManager pm = new ProjectManager();
@@ -225,7 +244,7 @@ public class User implements Serializable {
         choice = InputTools.intChecker(1, 3);
 
         switch (choice) {
-            case 1:
+            case 1: //For Students
 
                 char gender;
                 do {
@@ -267,7 +286,7 @@ public class User implements Serializable {
 
                 break;
 
-            case 2:
+            case 2: //For Client Representative
                 String newClientID = clientID;
                 if (allUserDetails.size() > 0) {
                     User lastClient = null;
@@ -292,7 +311,7 @@ public class User implements Serializable {
                 System.out.println("You have successfully signed up with ID: " + newClientID + "!\n");
                 break;
 
-            case 3:
+            case 3: //For Project Manager
                 String newManagerID = managerID;
                 if(allUserDetails.size() > 0){
                     User lastManager = null;
@@ -322,6 +341,14 @@ public class User implements Serializable {
         mainMenu();
     }
 
+    /**
+     * Method to Login for already signed up users.
+     *
+     * User can sign up using their username and password where they are further directed to their respective Menu.
+     * @throws IncorrectInputException
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public void login() throws IncorrectInputException, IOException, ClassNotFoundException {
 
         // Verify the login for both, when the field is blank and the Submit button is
@@ -396,6 +423,11 @@ public class User implements Serializable {
         mainMenu();
     }
 
+    /**
+     * Method to validate names to make sure it doesn't have any special characters.
+     * @param input
+     * @return
+     */
     public boolean inputValidations(String input) {
         boolean result;
         Pattern p = Pattern.compile("[^[a-zA-Z\\s]+$]", Pattern.CASE_INSENSITIVE);
