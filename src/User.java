@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
-    public static ArrayList<User> allUserDetails = new ArrayList<>();
+    public static ArrayList < User > allUserDetails = new ArrayList < > ();
     // private String confirmPassword;
 
 
@@ -20,12 +20,11 @@ public class User implements Serializable {
     private String studentID = "ST000";
     private String clientID = "CL000";
     private String managerID = "PM000";
-    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
     public static final String ANSI_RESET = "\u001B[0m";
 
 
-    public User() {
-    }
+    public User() {}
 
     public User(String id, String firstName, String lastName, String emailID, String userName, String password,
                 String organisation) {
@@ -92,38 +91,39 @@ public class User implements Serializable {
     public void mainMenu() throws IOException, ClassNotFoundException {
         int choice;
         do {
-            System.out.println(ANSI_RED +"\n**** Main Menu ****"+ ANSI_RESET+ "\n" +
+            System.out.println(
+                    ANSI_YELLOW + "\n**** Main Menu ****" + ANSI_RESET + "\n" +
                     "1.Sign Up\n" +
                     "2.Login\n" +
                     "3.Exit");
-            choice = InputTools.intChecker(1,3);
+            choice = InputTools.intChecker(1, 3);
 
-        switch (choice) {
-            case 1:
-                try {
-                    signUp();
-                } catch (IncorrectInputException e) {
-                    e.getMessage();
-                }
-                break;
+            switch (choice) {
+                case 1:
+                    try {
+                        signUp();
+                    } catch (IncorrectInputException e) {
+                        e.getMessage();
+                    }
+                    break;
 
-            case 2:
-                try {
-                    login();
-                } catch (IncorrectInputException e) {
-                    e.getMessage();
-                }
-                break;
+                case 2:
+                    try {
+                        login();
+                    } catch (IncorrectInputException e) {
+                        e.getMessage();
+                    }
+                    break;
 
-            case 3:
-                System.out.println("System exited! Thanks for using Project Team Formation System");
-                System.exit(0);
-                break;
+                case 3:
+                    System.out.println("System exited! Thanks for using Project Team Formation System");
+                    System.exit(0);
+                    break;
 
-            default:
-                System.err.println("Invalid choice!");
-                break;
-        }
+                default:
+                    System.err.println("Invalid choice!");
+                    break;
+            }
         } while (choice != 3);
 
     }
@@ -133,7 +133,8 @@ public class User implements Serializable {
         ProjectManager pm = new ProjectManager();
         //If Project Manager disables signUp, no new sign ups are allowed
         if (!pm.getSignUpStatus()) {
-            System.out.println("Sign Up is disable by Project Manager." +
+            System.out.println(
+                    "Sign Up is disable by Project Manager." +
                     "Please Contact Project Manager.");
             return;
         }
@@ -143,7 +144,7 @@ public class User implements Serializable {
 
         int choice;
 
-        System.out.print("***********Sign Up***********\n");
+        System.out.print("****Sign Up****\n");
 
         // First/ Last name field should not contain special characters.
         do {
@@ -196,14 +197,14 @@ public class User implements Serializable {
         String regex = "^[\\w-_.+]*[\\w-_.]@([\\w]+\\.)+[\\w]+[\\w]$";
         do {
             System.out.println("Email id: (example@xyz.com)");
-            emailID = Global.scan.next() + Global.scan.nextLine();
+            emailID = Global.scan.nextLine();
         } while (!(emailID.matches(regex)));
 
-        for (User u : allUserDetails) {
-//            if (u.getEmailID() != null){
-//                System.out.println("Email id already present. Use a different email id!");
-//                //return;
-//            }
+        for (User u: allUserDetails) {
+            //            if (u.getEmailID() != null){
+            //                System.out.println("Email id already present. Use a different email id!");
+            //                //return;
+            //            }
             if ((u.getEmailID() != null) && u.getEmailID().compareTo(emailID) == 0) {
                 System.out.println("Email id already present. Use a different email id!");
                 return;
@@ -221,7 +222,7 @@ public class User implements Serializable {
 
         // ID generation
         System.out.println("\nAre you a: \n1.Student\n2.Client Representative\n3.Project Manager\n");
-        choice = InputTools.intChecker(1,3);
+        choice = InputTools.intChecker(1, 3);
 
         switch (choice) {
             case 1:
@@ -238,46 +239,77 @@ public class User implements Serializable {
                 System.out.println("Your Experience ");
                 float experience = InputTools.floatChecker(0, 80);
 
-                studentID = "ST" + String.format("%03d",
-                        (Integer.parseInt(getStudentID().substring(2)) + 1));
+                String newStudentID = studentID;
+                if(allUserDetails.size() > 0) {
+                    User lastStudent = null;
+                    for(User u: allUserDetails) {
+                        if(u instanceof Student) {
+                            lastStudent = u;
+                        }
+                    }
+                    newStudentID = lastStudent != null ? lastStudent.getStudentID() : newStudentID;
+                    System.out.println(newStudentID);
+                }
+                newStudentID = "ST" + String.format("%03d",
+                        (Integer.parseInt(newStudentID.substring(2)) + 1));
 
-                setStudentID(studentID);
+                //setStudentID(studentID);
 
-                allUserDetails.add(new Student(studentID, firstName, lastName, emailID, userName, password, organisation, gpa, experience,
+                allUserDetails.add(new Student(newStudentID, firstName, lastName, emailID, userName, password, organisation, gpa, experience,
                         gender, '0'));
 
-                Student.allStudents.add(new Student(studentID, firstName, lastName, emailID, userName, password, organisation, gpa,
+                Student.allStudents.add(new Student(newStudentID, firstName, lastName, emailID, userName, password, organisation, gpa,
                         experience, gender, '0'));
                 FileReadWrite.saveUserDetails(Main.userFileName, allUserDetails);
                 FileReadWrite.saveStudentDetails(Main.studentsFileName, Student.allStudents);
 
-                System.out.println("You have successfully signed up with ID: " + studentID + "!\n");
+                System.out.println("You have successfully signed up with ID: " + newStudentID + "!\n");
 
                 break;
 
             case 2:
+                String newClientID = clientID;
+                if (allUserDetails.size() > 0) {
+                    User lastClient = null;
+                    for (User u: allUserDetails) {
+                        if (u instanceof ClientRepresentative) {
+                            lastClient = u;
+                        }
+                    }
+                    newClientID = lastClient != null ? lastClient.getClientID() : newClientID;
+                    //System.out.println(newClientID);
+                    //                    newClientID = "CL" + String.format("%03d", (Integer.parseInt(lastClient.getClientID().substring(2)) + 1));
+                }
+                newClientID = "CL" + String.format("%03d", (Integer.parseInt(newClientID.substring(2)) + 1));
 
-                clientID = "CL"
-                        + String.format("%03d", (Integer.parseInt(getClientID().substring(2)) + 1));
-                System.out.println("substring" + Integer.parseInt(getClientID().substring(2)) + 1);
-
-                setClientID(clientID);
+                //                clientID = "CL" + String.format("%03d", (Integer.parseInt(getClientID().substring(2)) + 1));
+                //                System.out.println("substring" + Integer.parseInt(getClientID().substring(2)) + 1);
+                //                setClientID(clientID);
 
                 allUserDetails.add(
-                        new ClientRepresentative(clientID, firstName, lastName, emailID, userName, password, organisation));
+                        new ClientRepresentative(newClientID, firstName, lastName, emailID, userName, password, organisation));
                 FileReadWrite.saveUserDetails(Main.userFileName, allUserDetails);
-                System.out.println("You have successfully signed up with ID: " + clientID + "!\n");
+                System.out.println("You have successfully signed up with ID: " + newClientID + "!\n");
                 break;
 
             case 3:
+                String newManagerID = managerID;
+                if(allUserDetails.size() > 0){
+                    User lastManager = null;
+                    for(User u: allUserDetails) {
+                        if(u instanceof ProjectManager){
+                            lastManager = u;
+                        }
+                    }
+                    newManagerID = lastManager != null ? lastManager.getManagerID() : newManagerID;
+                }
 
-                managerID = "PM" + String.format("%03d",
-                        (Integer.parseInt(getManagerID().substring(2)) + 1));
+                newManagerID = "PM" + String.format("%03d", (Integer.parseInt(newManagerID.substring(2)) + 1));
 
-                setManagerID(managerID);
-                allUserDetails.add(new ProjectManager(managerID, firstName, lastName, emailID, userName, password, organisation));
+               // setManagerID(managerID);
+                allUserDetails.add(new ProjectManager(newManagerID, firstName, lastName, emailID, userName, password, organisation));
                 FileReadWrite.saveUserDetails(Main.userFileName, allUserDetails);
-                System.out.println("You have successfully signed up with ID: " + managerID + "!\n");
+                System.out.println("You have successfully signed up with ID: " + newManagerID + "!\n");
                 break;
 
             default:
@@ -299,25 +331,23 @@ public class User implements Serializable {
         boolean foundUsername = false, foundPassword = false;
         do {
 
-            System.out.println("\n"+ ANSI_RED +"****Login****"+ ANSI_RESET + "\n"+
+            System.out.println("\n" + ANSI_YELLOW + "****Login****" + ANSI_RESET + "\n" +
                     "Enter username: ");
             loginName = Global.scan.nextLine();
 
-            for (User user : allUserDetails) {
+            for (User user: allUserDetails) {
                 if (user instanceof ClientRepresentative) {
                     if (loginName.compareTo(user.getUserName()) == 0) {
                         foundUsername = true;
                         setUserName(loginName);
                     }
-                }
-                else if (user instanceof Student) {
+                } else if (user instanceof Student) {
                     if (loginName.compareTo(user.getUserName()) == 0) {
                         foundUsername = true;
                         System.out.println("Username found!" + true);
                         setUserName(loginName);
                     }
-                }
-                else {
+                } else {
                     if (loginName.compareTo(user.getUserName()) == 0) {
                         foundUsername = true;
                         setUserName(loginName);

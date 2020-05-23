@@ -1,16 +1,15 @@
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Student extends User implements Serializable {
     private static final long serialVersionUID = -1640510881420655396L;
-    public static ArrayList<Student> allStudents = new ArrayList<>(); // TODO Maybe remove
+    public static ArrayList < Student > allStudents = new ArrayList < > (); // TODO Maybe remove
     private double gPA;
     private double experience;
     private char gender;
     private char studentPersonality; // Changes made according to Class diagram
-    private Role[] preferredRoles = new Role[2];// TODO Change to arraylist
+    private Role[] preferredRoles = new Role[2]; // TODO Change to arraylist
     private Project[] preferredProjects = new Project[4]; // TODO Change to arraylist
     private Student[] dislikedMembers = new Student[3]; // TODO Change to arraylist
 
@@ -23,8 +22,7 @@ public class Student extends User implements Serializable {
         this.studentPersonality = studentPersonality;
     }
 
-    public Student() {
-    }
+    public Student() {}
 
     public char getStudentPersonality() {
         return studentPersonality;
@@ -83,7 +81,7 @@ public class Student extends User implements Serializable {
                 System.out.print(" \nPlease enter the student ID of member number " + (i + 1) + ":");
                 String input = Global.scan.nextLine();
                 boolean dislikedStudExists = false;
-                for (Student dislikedMember : dislikedMembers) {
+                for (Student dislikedMember: dislikedMembers) {
                     if (input.equals(dislikedMember.getId())) {
                         dislikedStudExists = true;
                     }
@@ -115,7 +113,7 @@ public class Student extends User implements Serializable {
 
     public void enterPreferredProjects() throws IOException {
         System.out.println(" The List of available projects are ");
-        for (Project a : Project.totalProjects) {
+        for (Project a: Project.totalProjects) {
             System.out.println(a.getProjectId() + " " + a.getProjectTitle() + " Client -" + a.getClient().getId());
         }
 
@@ -206,12 +204,12 @@ public class Student extends User implements Serializable {
         int choice = 0;
         boolean quit = false;
         do {
-            System.out.println(ANSI_RED+ "****Student Menu****\n" + ANSI_RESET+
+            System.out.println(ANSI_YELLOW + "****Student Menu****\n" + ANSI_RESET +
                     "1.Enter preferred projects\n" +
                     "2.Enter preferred roles\n" +
                     "3.Enter disliked members\n" +
                     "4.Logout ");
-            choice = InputTools.intChecker(1,4);
+            choice = InputTools.intChecker(1, 4);
 
             switch (choice) {
                 case 1:

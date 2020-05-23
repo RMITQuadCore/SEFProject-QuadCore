@@ -3,11 +3,11 @@ import java.util.ArrayList;
 
 public class Team implements Serializable {
     private static final long serialVersionUID = -1323766548602603946L;
-    public static ArrayList<Team> allTeams = new ArrayList<>();
+    public static ArrayList < Team > allTeams = new ArrayList < > ();
     private String teamID;
-    private ArrayList<Student> studentsInTeam = new ArrayList<>();
+    private ArrayList < Student > studentsInTeam = new ArrayList < > ();
     private int teamFitness;
-    private ArrayList<Constraint> constraintsMet = new ArrayList<>();
+    private ArrayList < Constraint > constraintsMet = new ArrayList < > ();
     private Project projectAssigned;
     // TODO displayTeam Method should be added
 
@@ -23,11 +23,11 @@ public class Team implements Serializable {
         this.teamID = teamID;
     }
 
-    public ArrayList<Student> getStudentsInTeam() {
+    public ArrayList < Student > getStudentsInTeam() {
         return studentsInTeam;
     }
 
-    public void setStudentsInTeam(ArrayList<Student> studentsInTeam) {
+    public void setStudentsInTeam(ArrayList < Student > studentsInTeam) {
         this.studentsInTeam = studentsInTeam;
     }
 
@@ -39,11 +39,11 @@ public class Team implements Serializable {
         this.teamFitness = teamFitness;
     }
 
-    public ArrayList<Constraint> getConstraintsMet() {
+    public ArrayList < Constraint > getConstraintsMet() {
         return constraintsMet;
     }
 
-    public void setConstraintsMet(ArrayList<Constraint> constraintsMet) {
+    public void setConstraintsMet(ArrayList < Constraint > constraintsMet) {
         this.constraintsMet = constraintsMet;
     }
 

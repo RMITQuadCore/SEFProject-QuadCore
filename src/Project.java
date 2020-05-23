@@ -4,14 +4,14 @@ import java.util.ArrayList;
 
 public class Project implements Serializable {
     private static final long serialVersionUID = 7351202416537420904L;
-    public static ArrayList<Project> totalProjects = new ArrayList<Project>();
+    public static ArrayList < Project > totalProjects = new ArrayList < Project > ();
     public static int projectCounter = 0;
     public int popularityCounter;
     private String projectId = "PROJ100";
     private ClientRepresentative client;
     private String projectTitle;
     private String projectDetails;
-    private ArrayList<Role> rolesInProject = new ArrayList<Role>();
+    private ArrayList < Role > rolesInProject = new ArrayList < Role > ();
 
     public Project() {
 
@@ -32,11 +32,11 @@ public class Project implements Serializable {
         Project.projectCounter = projectCounter;
     }
 
-    public ArrayList<Role> getRolesInProject() {
+    public ArrayList < Role > getRolesInProject() {
         return rolesInProject;
     }
 
-    public void setRolesInProject(ArrayList<Role> rolesInProject) {
+    public void setRolesInProject(ArrayList < Role > rolesInProject) {
         this.rolesInProject = rolesInProject;
     }
 
@@ -81,21 +81,28 @@ public class Project implements Serializable {
     }
 
     public void createProject(ClientRepresentative client) throws IOException {
+        if (totalProjects.size() > 0) {
+            Project lastProject = totalProjects.get(totalProjects.size() - 1);
+            projectId = "PROJ" + String.format("%03d", (Integer.parseInt(lastProject.getProjectId().substring(4)) + 1));
+        } else {
+            projectId = "PROJ" + String.format("%03d", (Integer.parseInt(projectId.substring(4)) + 1));
+        }
+
         this.client = client;
-        projectId = "PROJ"
-                + String.format("%03d", (Integer.parseInt(getProjectId().substring(4)) + 1));
-        this.setProjectId(projectId);
+        //        this.setProjectId(projectId);
         System.out.println("Enter Project Title: ");
         projectTitle = Global.scan.next() + Global.scan.nextLine();
-        this.projectTitle = projectTitle;
+        //        this.projectTitle = projectTitle;
         System.out.println("Enter Project details: ");
         projectDetails = Global.scan.nextLine();
-        this.projectDetails = projectDetails;
+        //        this.projectDetails = projectDetails;
+
         String choice;
         do {
             System.out.println("Specify a required role: ");
             String roleName = Global.scan.nextLine();
-            ArrayList<String> frameworks = new ArrayList<String>();
+            ArrayList < String > frameworks = new ArrayList < String > ();
+
             String input;
             do {
                 System.out.println("Specify a framework '" + roleName + "' should be familiar with:");
@@ -104,28 +111,28 @@ public class Project implements Serializable {
                 System.out.println("Do you want to add more frameworks? (Y/N)");
                 input = Global.scan.nextLine();
             } while (input.toUpperCase().compareTo("N") != 0);
+
             rolesInProject.add(new Role(projectId, roleName, frameworks));
             System.out.println("Do you want to add more roles? (Y/N)");
             choice = Global.scan.nextLine();
         } while (choice.toUpperCase().compareTo("N") != 0);
+
         totalProjects.add(this);
         FileReadWrite.saveProjectDetails(Main.projectsFileName, Project.totalProjects);
         System.out.println("Success! Project is created with Id : " + projectId);
     }
 
     public void displayProject() {
-        for (Project p : totalProjects) {
-            System.out.println("\nClient Id: " + p.getClient().getId());
-            System.out.println("Project Id: " + p.getProjectId());
-            System.out.println("Project Title: " + p.getProjectTitle());
-            System.out.println("Project Details: " + p.getProjectDetails());
+        System.out.println("\nClient Id: " + this.getClient().getId());
+        System.out.println("Project Id: " + this.getProjectId());
+        System.out.println("Project Title: " + this.getProjectTitle());
+        System.out.println("Project Details: " + this.getProjectDetails());
 
-            for (Role r : p.getRolesInProject()) {
-                System.out.println("\nRole: " + r.getRoleName());
-                System.out.println("Frameworks are: ");
-                for (String f : r.getFrameworks()) {
-                    System.out.println("\t"+f);
-                }
+        for (Role r: this.getRolesInProject()) {
+            System.out.println("\nRole: " + r.getRoleName());
+            System.out.println("Frameworks: ");
+            for (String f: r.getFrameworks()) {
+                System.out.println("\t" + f);
             }
         }
     }
@@ -172,9 +179,9 @@ public class Project implements Serializable {
             Project.totalProjects.remove(i);
         }
         System.out.println("Required Projects:");
-        for (Project p : Project.totalProjects) {
-            System.out.println("\nsrc.Project ID: " + p.getProjectId() + "\nsrc.Project Details: " + p.getProjectDetails()
-                    + "\nsrc.Project Popularity Counter:" + p.getPopularityCounter());
+        for (Project p: Project.totalProjects) {
+            System.out.println("\nsrc.Project ID: " + p.getProjectId() + "\nsrc.Project Details: " + p.getProjectDetails() +
+                    "\nsrc.Project Popularity Counter:" + p.getPopularityCounter());
         }
         return true;
     }

@@ -2,27 +2,31 @@ import java.util.ArrayList;
 
 public class Constraint {
 
-    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
     public static final String ANSI_GREEN = "\u001B[32m";
     public static final String ANSI_RESET = "\u001B[0m";
 
-    String  constraintId;
+    String constraintId;
     String constraintDescription;
 
-    ArrayList<Constraint> constraints = new ArrayList<>();
+    ArrayList < Constraint > constraints = new ArrayList < > ();
     int maxNosOfFemaleStudent;
     float benchmarkStudentGpa;
     int minNosOfStudWithBenchmarkGpa;
     float maxAvgGpaOfTeam;
     float yearsOfExperience;
     int minNosOfStudWithExperience;
-    ArrayList<Character> requiredPersonalities = new ArrayList<>();
-    ArrayList<Character> validPersonalities = new ArrayList<>();
+    ArrayList < Character > requiredPersonalities = new ArrayList < > ();
+    ArrayList < Character > validPersonalities = new ArrayList < > ();
     boolean uniquePersonality;
     int teamSize;
     int uniquePersonalityWeightAge = 0;
     int requiredPersonalityWeightAge = 0;
     int experienceWeightAge = 0;
+
+    public Constraint() {
+
+    }
 
     public Constraint(String constraintId, String constraintDescription) {
         this.constraintId = constraintId;
@@ -32,7 +36,7 @@ public class Constraint {
     public Constraint(String constraintId, String constraintDescription, int maxNosOfFemaleStudent,
                       float benchmarkStudentGpa, int minNosOfStudWithBenchmarkGpa, float maxAvgGpaOfTeam,
                       float yearsOfExperience, int minNosOfStudWithExperience,
-                      ArrayList<Character> requiredPersonalities, ArrayList<Character> validPersonalities,
+                      ArrayList < Character > requiredPersonalities, ArrayList < Character > validPersonalities,
                       boolean uniquePersonality, int teamSize, int uniquePersonalityWeightAge,
                       int requiredPersonalityWeightAge, int experienceWeightAge) {
         this.constraintId = constraintId;
@@ -149,19 +153,19 @@ public class Constraint {
         this.minNosOfStudWithExperience = minNosOfStudWithExperience;
     }
 
-    public ArrayList<Character> getRequiredPersonalities() {
+    public ArrayList < Character > getRequiredPersonalities() {
         return requiredPersonalities;
     }
 
-    public void setRequiredPersonalities(ArrayList<Character> requiredPersonalities) {
+    public void setRequiredPersonalities(ArrayList < Character > requiredPersonalities) {
         this.requiredPersonalities = requiredPersonalities;
     }
 
-    public ArrayList<Character> getValidPersonalities() {
+    public ArrayList < Character > getValidPersonalities() {
         return validPersonalities;
     }
 
-    public void setValidPersonalities(ArrayList<Character> validPersonalities) {
+    public void setValidPersonalities(ArrayList < Character > validPersonalities) {
         this.validPersonalities = validPersonalities;
     }
 
@@ -174,16 +178,16 @@ public class Constraint {
     }
 
     public void createConstraint() {
-        constraintId = "CONS"
-                + String.format("%03d", (Integer.parseInt(getConstraintId().substring(4, getConstraintId().length())) + 1));
+        constraintId = "CONS" +
+                String.format("%03d", (Integer.parseInt(getConstraintId().substring(4, getConstraintId().length())) + 1));
     }
 
-    //Method to set all constraints
+
     public void setAllConstraints() {
         System.out.println(" Enter number of students in a team: ");
         teamSize = InputTools.intChecker(1, 100);
 
-        System.out.println(ANSI_RED + "Hard Constraints : " + ANSI_RESET);
+        System.out.println(ANSI_YELLOW + "Hard Constraints : " + ANSI_RESET);
         System.out.println("1. Maximum number of female student per team: ");
         maxNosOfFemaleStudent = InputTools.intChecker(0, teamSize);
 
@@ -223,7 +227,7 @@ public class Constraint {
             System.out.println("Personality " + j + ":");
             choice = Global.scan.nextLine().toUpperCase();
             boolean isExist = false;
-            for (Character c : validPersonalities) {
+            for (Character c: validPersonalities) {
                 if (choice.equals(c.toString())) {
                     requiredPersonalities.add(choice.charAt(0));
                     j++;
@@ -276,20 +280,21 @@ public class Constraint {
 
         System.out.println("Currently Set Constraints are: ");
 
-        System.out.println("\n Hard Constraint: \n" +
-                "1. Maximum number of female student per team: " + maxNosOfFemaleStudent + "\n" +
+        System.out.println(
+                "\n Hard Constraint: \n" +
+                        "1. Maximum number of female student per team: " + maxNosOfFemaleStudent + "\n" +
 
-                "2. Minimum number of student with at least " + benchmarkStudentGpa +
-                " GPA per team: " + minNosOfStudWithBenchmarkGpa + "\n" +
+                        "2. Minimum number of student with at least " + benchmarkStudentGpa +
+                        " GPA per team: " + minNosOfStudWithBenchmarkGpa + "\n" +
 
-                "3. Maximum average GPA of a team: " + maxAvgGpaOfTeam + " GPA");
+                        "3. Maximum average GPA of a team: " + maxAvgGpaOfTeam + " GPA");
 
         System.out.println("\n Soft Constraints: \n" +
                 "1. Minimum number of student with " + yearsOfExperience +
                 "+ year(s) of experience per team: " + minNosOfStudWithExperience + "\n" +
 
                 "2. One of these Personality type should be in every team: ");
-        for (Character c : requiredPersonalities) {
+        for (Character c: requiredPersonalities) {
             int k = 0;
             System.out.println(k++);
             System.out.print(" " + c.toString() + ",");
