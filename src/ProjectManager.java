@@ -223,53 +223,22 @@ public class ProjectManager extends User implements Serializable {
     //Method to form teams for projects
     public void createTeams()
     {
-        System.out.println("Entered Method");
         ArrayList<Student> teamCreator = new ArrayList<Student>();
         Integer[] teamSize = getTeamSizeArray();// Calculate all the sizes
-        System.out.println("Team Sizes are ");
-        for(int i= 0; i< teamSize.length; i++)
-        {
-            System.out.println("Team size = "+teamSize[i]);
-        }
         for (int i =0 ; i < teamSize.length ; i ++)
-        {   System.out.println("Entered Method");
-            System.out.println("TeamCreator Size  is  now " + teamCreator.size());
-            for(Student student : teamCreator)
-            {
-                System.out.println(student.getFirstName());
-            }
+        {   System.out.println("Team size = "+teamSize[i]);
             teamCreator = femaleHardConstraintApplicator(teamCreator, teamSize[i]);//Initial 4/ 3/ 2 students added to the ArrayList
-            System.out.println("1st Check done");
-            System.out.println("TeamCreator Size  is  now " + teamCreator.size());
-            for(Student student : teamCreator)
-            {
-                System.out.println(student.getFirstName());
-            }
-            if(!Constraint.femaleHardConstraintCheck(teamCreator))
+            if(!Constraint.femaleHardConstraintCheck(teamCreator)) // Hard Constraint Check
             {
                 System.out.println("Sorry! A team cannot be formed currently as a hard constraint is not met.\n" +
                         "Hard Constraint : Maximum of one woman per team cannot be met currently");
                 break;
             }
+            else System.out.println("Female Hard Constraint Maintained.");
             teamCreator = dislikedMembersRemover(teamCreator);
-            System.out.println("2st Check done");
-            System.out.println("TeamCreator Size  is  now " + teamCreator.size());
-            for(Student student : teamCreator)
-            {
-                System.out.println(student.getFirstName());
-            }
-
             //teamCreator = personalityConstraintApplicator(teamCreator);
-            System.out.println("3st Check done");
-            System.out.println("TeamCreator Size  is  now " + teamCreator.size());
-            for(Student student : teamCreator)
-            {
-                System.out.println(student.getFirstName());
-            }
             teamCreator = experienceSoftConstraintApplicator(teamCreator);
-            System.out.println("4st Check done");
             teamCreator = teamAverageGPAConstraintApplicator(teamCreator);
-            System.out.println("5st Check done");
             if(!Constraint.averageGPAHardConstraintCheck(teamCreator))
             {
                 System.out.println("Sorry! A team cannot be formed currently as a hard constraint is not met.\n" +
@@ -277,24 +246,24 @@ public class ProjectManager extends User implements Serializable {
                 break;
             }
             teamCreator = teamMemberGPAConstraintApplicator(teamCreator);
-            System.out.println("6st Check done");
             if(!Constraint.twoMembersWith3GPAHardConstraintCheck(teamCreator) && !Constraint.averageGPAHardConstraintCheck(teamCreator))
             {
                 System.out.println("Sorry! A team cannot be formed currently as a hard constraint is not met.\n" +
                         "Hard Constraint : Two Members needed with GPA 3 or Above.");
                 break;
             }
+            else System.out.println(" GPA Hard Constraints Maintained.\n\n");
             Team team = setProjectForTeam(teamCreator);
-            System.out.println("Team Created");
+            System.out.println("\n\nTeam Created");
             Team.allTeams.add(team);
-            System.out.println("Congratulations! A team has been formed!!.\n" +
-                    "The team ID is : " + team.getTeamID() +
-                    "\nThe Project Assigned to this team is : " + team.getProjectAssigned().getProjectTitle() +
-                    "\nThe team's fitness is : " + team.getTeamFitness());
-            System.out.println("The Students IDs of students in this team are: ");
+            System.out.println("\nCongratulations! A team has been formed!!.\n" +
+                    "The team ID is : \t\t\t" + team.getTeamID() +
+                    "\nThe Project Assigned to this team is \t: " + team.getProjectAssigned().getProjectTitle() +
+                    "\nThe team's fitness is \t\t\t: " + team.getTeamFitness()+"\n");
+            System.out.print("The Students IDs of students in this team are: \n\n");
             for (Student student : teamCreator)
             {
-                System.out.print(student.getId() + " ");
+                System.out.print(student.getId() + "  Name: " + student.getFirstName() + "\t  Gender : " + student.getGender() + "\n");
             }
             teamCreator.clear();
 
@@ -304,7 +273,7 @@ public class ProjectManager extends User implements Serializable {
                     System.out.println("Do you want to attempt to create another team ?\n" +
                             "1.Yes\n" +
                             "2.No \n");
-                    System.out.println("Enter your choice : ");
+                    System.out.print("Enter your choice : ");
                     choice = Integer.parseInt(Global.scan.next() + Global.scan.nextLine());
                 } catch (NumberFormatException e) {
                     System.err.println("Enter an integer (1-2)");
