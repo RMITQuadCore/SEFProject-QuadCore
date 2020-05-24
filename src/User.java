@@ -5,9 +5,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class User implements Serializable {
-    private static final long serialVersionUID = 1L;
-    public static ArrayList < User > allUserDetails = new ArrayList < > ();
-
+    private static final long serialVersionUID =1L;
+    public static ArrayList<User> allUserDetails = new ArrayList<User>();
+    // private String confirmPassword;
 
     private String id;
     private String firstName;
@@ -19,11 +19,10 @@ public class User implements Serializable {
     private String studentID = "ST000";
     private String clientID = "CL000";
     private String managerID = "PM000";
-    public static final String ANSI_YELLOW = "\u001B[33m";
-    public static final String ANSI_RESET = "\u001B[0m";
 
 
-    public User() {}
+    public User() {
+    }
 
     public User(String id, String firstName, String lastName, String emailID, String userName, String password,
                 String organisation) {
@@ -37,13 +36,28 @@ public class User implements Serializable {
 
     }
 
+    public String getFirstName() {
+        return firstName;
+    }
 
-    /**
-     * Getter and setter methods.
-     * @return
-     */
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
     public String getEmailID() {
         return emailID;
+    }
+
+    public void setEmailID(String emailID) {
+        this.emailID = emailID;
     }
 
     public String getUserName() {
@@ -86,74 +100,68 @@ public class User implements Serializable {
         this.managerID = managerID;
     }
 
+    public String getOrganisation() {
+        return organisation;
+    }
+
+    public void setOrganisation(String organisation) {
+        this.organisation = organisation;
+    }
+
     public String getId() {
         return id;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
 
-    /**
-     * The Main Menu
-     *
-     * First thing users see when they execute the program.
-     * @throws IOException
-     * @throws ClassNotFoundException
-     */
     public void mainMenu() throws IOException, ClassNotFoundException {
-        int choice;
+        int choice = 0;
         do {
-            System.out.println(
-                    ANSI_YELLOW + "\n**** Main Menu ****" + ANSI_RESET + "\n" +
-                    "1.Sign Up\n" +
-                    "2.Login\n" +
-                    "3.Exit");
-            choice = InputTools.intChecker(1, 3);
-
-            switch (choice) {
-                case 1:
-                    try {
-                        signUp();
-                    } catch (IncorrectInputException e) {
-                        e.getMessage();
-                    }
-                    break;
-
-                case 2:
-                    try {
-                        login();
-                    } catch (IncorrectInputException e) {
-                        e.getMessage();
-                    }
-                    break;
-
-                case 3:
-                    System.out.println("System exited! Thanks for using Project Team Formation System");
-                    System.exit(0);
-                    break;
-
-                default:
-                    System.err.println("Invalid choice!");
-                    break;
+            try {
+                System.out.println("**** Main Menu ****\n" +
+                        "1.Sign Up\n" +
+                        "2.Login\n" +
+                        "3.Exit");
+                System.out.println("Enter your choice : ");
+                choice = Integer.parseInt(Global.scan.next() + Global.scan.nextLine());
+            } catch (NumberFormatException e) {
+                System.err.println("Enter an integer (1-3)");
             }
-        } while (choice != 3);
+        } while (choice < 1 || choice > 4);
+
+        switch (choice) {
+            case 1:
+                try {
+                    signup();
+                } catch (IncorrectInputException e) {
+                    e.getMessage();
+                }
+                break;
+
+            case 2:
+                try {
+                    login();
+                } catch (IncorrectInputException e) {
+                    e.getMessage();
+                }
+                break;
+
+            case 3:
+                System.out.println("System exited! Thanks for using Project Team Formation System");
+                System.exit(0);
+                break;
+        }
 
     }
 
-    /**
-     * Method to Sign Up
-     *
-     * For new user, where they enter their required personal details and sign up into the program.
-     * Method validates the details and save them for future use and assigns them an Unique ID.
-     * @throws IncorrectInputException
-     * @throws IOException
-     * @throws ClassNotFoundException
-     */
-    public void signUp() throws IncorrectInputException, IOException, ClassNotFoundException {
+    public void signup() throws IncorrectInputException, IOException, ClassNotFoundException {
 
         ProjectManager pm = new ProjectManager();
         //If Project Manager disables signUp, no new sign ups are allowed
-        if (!pm.getSignUpStatus()) {
-            System.out.println(
-                    "Sign Up is disable by Project Manager." +
+        if (pm.getSignUpStatus() == false) {
+            System.out.println("Sign Up is disable by Project Manager." +
                     "Please Contact Project Manager.");
             return;
         }
@@ -161,9 +169,9 @@ public class User implements Serializable {
 
         boolean foundFirstName = false, foundLastName = false, foundOrg = false;
 
-        int choice;
+        int choice = 0;
 
-        System.out.print("****Sign Up****\n");
+        System.out.print("***********Sign Up***********\n");
 
         // First/ Last name field should not contain special characters.
         do {
@@ -179,7 +187,7 @@ public class User implements Serializable {
             } catch (IncorrectInputException ex) {
                 System.err.println(ex.getMessage());
             }
-        } while ((foundFirstName == true) || firstName.isEmpty());
+        } while (foundFirstName == true || firstName.isEmpty());
 
         do {
             try {
@@ -213,20 +221,15 @@ public class User implements Serializable {
 
 
         // regex expression to validate email ID
-        String regex = "^[\\w-_.+]*[\\w-_.]@([\\w]+\\.)+[\\w]+[\\w]$";
+        String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
         do {
             System.out.println("Email id: (example@xyz.com)");
             emailID = Global.scan.nextLine();
         } while (!(emailID.matches(regex)));
 
-        for (User u: allUserDetails) {
-            //            if (u.getEmailID() != null){
-            //                System.out.println("Email id already present. Use a different email id!");
-            //                //return;
-            //            }
-            if ((u.getEmailID() != null) && u.getEmailID().compareTo(emailID) == 0) {
-                System.out.println("Email id already present. Use a different email id!");
-                return;
+        for (User u : allUserDetails) {
+            if (u.getEmailID().compareTo(emailID) == 0) {
+                System.err.println("Username already present. Use a different email id!");
             }
         }
 
@@ -235,100 +238,104 @@ public class User implements Serializable {
             System.out.println("\nUsername: ");
             userName = Global.scan.nextLine();
 
-            System.out.println("Password: ");
+            System.out.println("\nPassword: ");
             password = Global.scan.nextLine();
         } while (userName.isEmpty() || password.isEmpty());
 
         // ID generation
-        System.out.println("\nAre you a: \n1.Student\n2.Client Representative\n3.Project Manager\n");
-        choice = InputTools.intChecker(1, 3);
+        do {
+            try {
+                System.out.println("\nAre you a: \n1.Student\n2.Client Representative\n3.Project Manager\n");
+                choice = Integer.parseInt(Global.scan.next());
+            } catch (NumberFormatException e) {
+                System.err.println("Enter an integer (1-3)");
+            }
+        } while (choice < 1 || choice > 4);
 
         switch (choice) {
-            case 1: //For Students
+            case 1:
 
                 char gender;
+                float gpa = 0;
+                float experience = 0;
                 do {
-                    System.out.println("Enter your gender: F/M");
+                    System.out.println("\nEnter your gender: F/M");
                     gender = Global.scan.next().toUpperCase().charAt(0);
+                   /* if (gender != 'F' || gender != 'M') {
+                        continue;
+                    }*/
+                    System.out.println("gender" + gender);
                 } while ((gender != 'F' && gender != 'M'));
 
-                System.out.println("GPA ");
-                float gpa = InputTools.floatChecker(0, 4);
-
-                System.out.println("Your Experience ");
-                float experience = InputTools.floatChecker(0, 80);
-
-                String newStudentID = studentID;
-                if(allUserDetails.size() > 0) {
-                    User lastStudent = null;
-                    for(User u: allUserDetails) {
-                        if(u instanceof Student) {
-                            lastStudent = u;
-                        }
+                float input = 0;
+                do {
+                    try {
+                        System.out.println("\nEnter your GPA:");
+                        gpa = Float.parseFloat(Global.scan.next());
+                        input = gpa;
+                    } catch (NumberFormatException e) {
+                        System.err.println("Please enter a number (0 - 4)");
                     }
-                    newStudentID = lastStudent != null ? lastStudent.getStudentID() : newStudentID;
-                    System.out.println(newStudentID);
-                }
-                newStudentID = "ST" + String.format("%03d",
-                        (Integer.parseInt(newStudentID.substring(2)) + 1));
+                } while (input < 0 || input > 5);
 
-                //setStudentID(studentID);
+                input = 0;
+                do {
+                    try {
+                        System.out.println("\nEnter your experience:");
+                        experience = Float.parseFloat(Global.scan.next());
+                        input = experience;
+                    } catch (NumberFormatException e) {
+                        System.err.println("Please enter a number");
+                    }
+                } while (input < 0 || input > 60);
 
-                allUserDetails.add(new Student(newStudentID, firstName, lastName, emailID, userName, password, organisation, gpa, experience,
+
+                studentID = "ST" + String.format("%03d",
+                        (Integer.parseInt(getStudentID().substring(2)) + 1));
+
+                setStudentID(studentID);
+
+                allUserDetails.add(new Student(studentID, firstName, lastName, emailID, userName, password, organisation, gpa, experience,
                         gender, '0'));
 
-                Student.allStudents.add(new Student(newStudentID, firstName, lastName, emailID, userName, password, organisation, gpa,
+                Student.allStudents.add(new Student(studentID, firstName, lastName, emailID, userName, password, organisation, gpa,
                         experience, gender, '0'));
-                FileReadWrite.saveUserDetails(Main.userFileName, allUserDetails);
-                FileReadWrite.saveStudentDetails(Main.studentsFileName, Student.allStudents);
+                ProjectManager.studentsNotInATeam.add(new Student(studentID, firstName, lastName, emailID, userName, password, organisation, gpa,
+                        experience, gender, '0'));
+                FileReadWrite.saveUserDetails(Main.userFileName,allUserDetails);
+                FileReadWrite.saveStudentDetails(Main.studentsFileName,Student.allStudents);
+                FileReadWrite.saveStudentDetails(Main.studentsNotInATeamFileName,ProjectManager.studentsNotInATeam);
 
-                System.out.println("You have successfully signed up with ID: " + newStudentID + "!\n");
+                System.out.println("You have successfully signed up with ID: " + studentID + "!\n");
 
                 break;
 
-            case 2: //For Client Representative
-                String newClientID = clientID;
-                if (allUserDetails.size() > 0) {
-                    User lastClient = null;
-                    for (User u: allUserDetails) {
-                        if (u instanceof ClientRepresentative) {
-                            lastClient = u;
-                        }
-                    }
-                    newClientID = lastClient != null ? lastClient.getClientID() : newClientID;
-                    //System.out.println(newClientID);
-                    //                    newClientID = "CL" + String.format("%03d", (Integer.parseInt(lastClient.getClientID().substring(2)) + 1));
-                }
-                newClientID = "CL" + String.format("%03d", (Integer.parseInt(newClientID.substring(2)) + 1));
+            case 2:
 
-                //                clientID = "CL" + String.format("%03d", (Integer.parseInt(getClientID().substring(2)) + 1));
-                //                System.out.println("substring" + Integer.parseInt(getClientID().substring(2)) + 1);
-                //                setClientID(clientID);
+                clientID = "CL"
+                        + String.format("%03d", (Integer.parseInt(getClientID().substring(2)) + 1));
+
+                setClientID(clientID);
 
                 allUserDetails.add(
-                        new ClientRepresentative(newClientID, firstName, lastName, emailID, userName, password, organisation));
-                FileReadWrite.saveUserDetails(Main.userFileName, allUserDetails);
-                System.out.println("You have successfully signed up with ID: " + newClientID + "!\n");
+                        new ClientRepresentative(clientID, firstName, lastName, emailID, userName, password, organisation));
+                FileReadWrite.saveUserDetails(Main.userFileName,allUserDetails);
+                System.out.println("You have successfully signed up with ID: " + clientID + "!\n");
                 break;
 
-            case 3: //For Project Manager
-                String newManagerID = managerID;
-                if(allUserDetails.size() > 0){
-                    User lastManager = null;
-                    for(User u: allUserDetails) {
-                        if(u instanceof ProjectManager){
-                            lastManager = u;
-                        }
-                    }
-                    newManagerID = lastManager != null ? lastManager.getManagerID() : newManagerID;
+            case 3:
+
+                managerID = "PM" + String.format("%03d",
+                        (Integer.parseInt(getManagerID().substring(2)) + 1));
+
+                setManagerID(managerID);
+                allUserDetails.add(new ProjectManager(managerID, firstName, lastName, emailID, userName, password, organisation));
+                FileReadWrite.saveUserDetails(Main.userFileName,allUserDetails);
+                System.out.println("You have successfully signed up with ID: " + managerID + "!\n");
+                for (User user1 : User.allUserDetails)
+                {
+                    System.out.println(user1.getId() + "  Name: " + user1.getFirstName());
                 }
-
-                newManagerID = "PM" + String.format("%03d", (Integer.parseInt(newManagerID.substring(2)) + 1));
-
-               // setManagerID(managerID);
-                allUserDetails.add(new ProjectManager(newManagerID, firstName, lastName, emailID, userName, password, organisation));
-                FileReadWrite.saveUserDetails(Main.userFileName, allUserDetails);
-                System.out.println("You have successfully signed up with ID: " + newManagerID + "!\n");
                 break;
 
             default:
@@ -341,14 +348,6 @@ public class User implements Serializable {
         mainMenu();
     }
 
-    /**
-     * Method to Login for already signed up users.
-     *
-     * User can sign up using their username and password where they are further directed to their respective Menu.
-     * @throws IncorrectInputException
-     * @throws IOException
-     * @throws ClassNotFoundException
-     */
     public void login() throws IncorrectInputException, IOException, ClassNotFoundException {
 
         // Verify the login for both, when the field is blank and the Submit button is
@@ -358,32 +357,40 @@ public class User implements Serializable {
         boolean foundUsername = false, foundPassword = false;
         do {
 
-            System.out.println("\n" + ANSI_YELLOW + "****Login****" + ANSI_RESET + "\n" +
-                    "Enter username: ");
+            System.out.println("\n***********Login***********\nEnter username: ");
             loginName = Global.scan.nextLine();
 
-            for (User user: allUserDetails) {
+            for (User user : allUserDetails) {
                 if (user instanceof ClientRepresentative) {
+
                     if (loginName.compareTo(user.getUserName()) == 0) {
                         foundUsername = true;
                         setUserName(loginName);
+
                     }
+
                 } else if (user instanceof Student) {
+
                     if (loginName.compareTo(user.getUserName()) == 0) {
+
                         foundUsername = true;
-                        System.out.println("Username found!" + true);
+                        System.out.println("Username found!" + foundUsername);
                         setUserName(loginName);
+
                     }
+
                 } else {
+
                     if (loginName.compareTo(user.getUserName()) == 0) {
                         foundUsername = true;
                         setUserName(loginName);
                     }
+
                 }
 
                 if (foundUsername) {
                     // System.out.println("Login name:" + user.getUserName());
-                    System.out.println("Enter Password: ");
+                    System.out.println("\nEnter Password: ");
                     pass = Global.scan.nextLine();
 
                     if (pass.compareTo(user.getPassword()) == 0) {
@@ -413,21 +420,16 @@ public class User implements Serializable {
                     }
                 }
             }
-            if (!foundUsername) {
+            if (foundUsername == false) {
                 System.err.println("Username not signed up!");
-            } else if (!foundUsername && !foundPassword) {
+            } else if (foundUsername == false && foundPassword == false) {
                 throw new IncorrectInputException("Incorrect username or password!");
             }
 
-        } while (!foundUsername || !foundPassword);
+        } while (foundUsername == false || foundPassword == false);
         mainMenu();
     }
 
-    /**
-     * Method to validate names to make sure it doesn't have any special characters.
-     * @param input
-     * @return
-     */
     public boolean inputValidations(String input) {
         boolean result;
         Pattern p = Pattern.compile("[^[a-zA-Z\\s]+$]", Pattern.CASE_INSENSITIVE);

@@ -8,7 +8,6 @@ public class ClientRepresentative extends User implements Serializable {
     public ArrayList < Project > projects = Project.totalProjects;
 
     public ClientRepresentative() {
-
     }
 
 

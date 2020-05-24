@@ -1,17 +1,20 @@
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Project implements Serializable {
     private static final long serialVersionUID = 7351202416537420904L;
-    public static ArrayList < Project > totalProjects = new ArrayList < Project > ();
-    public static int projectCounter = 0;
-    public int popularityCounter;
-    private String projectId = "PROJ000";
+    public static ArrayList<Project> totalProjects = new ArrayList<Project>();
+    public static ArrayList<Project> projectsNotAssigned = totalProjects;
+    private String projectId = "PROJ100";
     private ClientRepresentative client;
     private String projectTitle;
     private String projectDetails;
-    private ArrayList < Role > rolesInProject = new ArrayList < Role > ();
+    private ArrayList<Role> rolesInProject = new ArrayList<Role>();
+    public static int projectCounter = 0;
+    public int popularityCounter;
+    //Scanner scan = SingletonScanner.getInstance(); // TODO Remove Scanner
 
     public Project() {
 
@@ -24,24 +27,11 @@ public class Project implements Serializable {
         this.projectDetails = projectDetails;
     }
 
-
-    /**
-     * Getter and setter methods.
-     * @return
-     */
-    public static int getProjectCounter() {
-        return projectCounter;
-    }
-
-    public static void setProjectCounter(int projectCounter) {
-        Project.projectCounter = projectCounter;
-    }
-
-    public ArrayList < Role > getRolesInProject() {
+    public ArrayList<Role> getRolesInProject() {
         return rolesInProject;
     }
 
-    public void setRolesInProject(ArrayList < Role > rolesInProject) {
+    public void setRolesInProject(ArrayList<Role> rolesInProject) {
         this.rolesInProject = rolesInProject;
     }
 
@@ -77,6 +67,14 @@ public class Project implements Serializable {
         this.projectDetails = projectDetails;
     }
 
+    public static int getProjectCounter() {
+        return projectCounter;
+    }
+
+    public static void setProjectCounter(int projectCounter) {
+        Project.projectCounter = projectCounter;
+    }
+
     public int getPopularityCounter() {
         return popularityCounter;
     }
@@ -85,79 +83,59 @@ public class Project implements Serializable {
         this.popularityCounter = popularityCounter;
     }
 
-
-    /**
-     * Method to create new projects.
-     *
-     * Client representative can create new projects with specified roles and
-     * frameworks which will be made available to students.
-     * All projects will have an auto generated unique project ID.
-     * @param client
-     * @throws IOException
-     */
     public void createProject(ClientRepresentative client) throws IOException {
-        if (totalProjects.size() > 0) {
-            Project lastProject = totalProjects.get(totalProjects.size() - 1);
-            projectId = "PROJ" + String.format("%03d", (Integer.parseInt(lastProject.getProjectId().substring(4)) + 1));
-        } else {
-            projectId = "PROJ" + String.format("%03d", (Integer.parseInt(projectId.substring(4)) + 1));
-        }
-
         this.client = client;
-        //        this.setProjectId(projectId);
+        projectId = "PROJ"
+                + String.format("%03d", (Project.totalProjects.size()+1));
+        this.setProjectId(projectId);
         System.out.println("Enter Project Title: ");
         projectTitle = Global.scan.next() + Global.scan.nextLine();
-        //        this.projectTitle = projectTitle;
+        this.projectTitle = projectTitle;
         System.out.println("Enter Project details: ");
         projectDetails = Global.scan.nextLine();
-        //        this.projectDetails = projectDetails;
-
+        this.projectDetails = projectDetails;
         String choice;
         do {
-            System.out.println("Specify a required role: ");
+            System.out.println("Specify one required role: ");
             String roleName = Global.scan.nextLine();
-            ArrayList < String > frameworks = new ArrayList < String > ();
-
+            ArrayList<String> frameworks = new ArrayList<String>();
             String input;
             do {
-                System.out.println("Specify a framework '" + roleName + "' should be familiar with:");
+                System.out.println("Specify one framework '" + roleName + "' should be familiar with:");
                 String framework = Global.scan.nextLine();
                 frameworks.add(framework);
-                System.out.println("Do you want to add more frameworks? (Y/N)");
+                System.out.println("Do you want to add more frameworks? Y/N");
                 input = Global.scan.nextLine();
             } while (input.toUpperCase().compareTo("N") != 0);
-
             rolesInProject.add(new Role(projectId, roleName, frameworks));
-            System.out.println("Do you want to add more roles? (Y/N)");
+            System.out.println("Do you want to add more roles? Y/N");
             choice = Global.scan.nextLine();
         } while (choice.toUpperCase().compareTo("N") != 0);
-
         totalProjects.add(this);
-        FileReadWrite.saveProjectDetails(Main.projectsFileName, Project.totalProjects);
+        projectsNotAssigned.add(this);
+        FileReadWrite.saveProjectDetails(Main.projectsFileName,Project.totalProjects);
+        FileReadWrite.saveProjectDetails(Main.projectsNotAssignedFileName,Project.projectsNotAssigned);
         System.out.println("Success! Project is created with Id : " + projectId);
     }
 
     public void displayProject() {
-        System.out.println("\nClient Id: " + this.getClient().getId());
-        System.out.println("Project Id: " + this.getProjectId());
-        System.out.println("Project Title: " + this.getProjectTitle());
-        System.out.println("Project Details: " + this.getProjectDetails());
+        for (Project p : totalProjects) {
+            System.out.println("\nClient Id: " + p.getClient().getId());
+            System.out.println("project Id: " + p.getProjectId());
+            System.out.println("project Title: " + p.getProjectTitle());
+            System.out.println("projectDetails: " + p.getProjectDetails());
 
-        for (Role r: this.getRolesInProject()) {
-            System.out.println("\nRole: " + r.getRoleName());
-            System.out.println("Frameworks: ");
-            for (String f: r.getFrameworks()) {
-                System.out.println("\t" + f);
+            for (Role r : p.getRolesInProject()) {
+                System.out.println("Role: " + r.getRoleName());
+                System.out.println("Frameworks are: ");
+                for (String f : r.getFrameworks()) {
+                    System.out.println(f);
+                }
             }
         }
     }
 
-
-    /**
-     * Method to discard unpopular projects based on popularity vote by students.
-     * @return
-     * @throws ProjectMismatchException
-     */
+    //Method to discard unpopular projects //TODO This will be in Project
     public static boolean discardUnpopularProjects() throws ProjectMismatchException {
         int numProjectReqd = 0;
         int numStudents = Student.allStudents.size();
@@ -167,7 +145,7 @@ public class Project implements Serializable {
         System.out.println("Number of projects: " + numProjects);
 
         try {
-            numProjectReqd = (numStudents / 4); //TODO constraint.teamSize instead of 4
+            numProjectReqd = (numStudents / 4 + 1);
             System.out.println("Number of projects required: " + numProjectReqd);
 
             if (numProjectReqd > numProjects) {
@@ -193,15 +171,18 @@ public class Project implements Serializable {
                 }
             }
         }
+
+
         for (int i = numProjects - 1; i >= numProjectReqd; i--) {
 
             Project.totalProjects.remove(i);
         }
         System.out.println("Required Projects:");
-        for (Project p: Project.totalProjects) {
-            System.out.println("\nsrc.Project ID: " + p.getProjectId() + "\nsrc.Project Details: " + p.getProjectDetails() +
-                    "\nsrc.Project Popularity Counter:" + p.getPopularityCounter());
+        for (Project p : Project.totalProjects) {
+            System.out.println("\nsrc.Project ID: " + p.getProjectId() + "\nsrc.Project Details: " + p.getProjectDetails()
+                    + "\nsrc.Project Popularity Counter:" + p.getPopularityCounter());
         }
+
         return true;
     }
 }

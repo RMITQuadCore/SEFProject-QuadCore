@@ -1,113 +1,27 @@
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 public class Constraint {
 
-    public static final String ANSI_YELLOW = "\u001B[33m";
-    public static final String ANSI_GREEN = "\u001B[32m";
-    public static final String ANSI_RESET = "\u001B[0m";
+    private String iD;
+    private String description;
+    private int weightage;
 
-    String constraintId;
-    String constraintDescription;
+    //constructor
 
-    ArrayList < Constraint > constraints = new ArrayList < > ();
     int maxNosOfFemaleStudent;
     float benchmarkStudentGpa;
     int minNosOfStudWithBenchmarkGpa;
     float maxAvgGpaOfTeam;
     float yearsOfExperience;
     int minNosOfStudWithExperience;
-    ArrayList < Character > requiredPersonalities = new ArrayList < > ();
-    ArrayList < Character > validPersonalities = new ArrayList < > ();
+    ArrayList <Character> requiredPersonalities = new ArrayList<>();
+    ArrayList <Character> validPersonalities = new ArrayList<>();;
+    //char[] validPersonalities = {'A', 'B', 'C', 'D', 'E', 'F'};
     boolean uniquePersonality;
     int teamSize;
-    int uniquePersonalityWeightAge = 0;
-    int requiredPersonalityWeightAge = 0;
-    int experienceWeightAge = 0;
 
-    public Constraint() {
-
-    }
-
-    public Constraint(String constraintId, String constraintDescription) {
-        this.constraintId = constraintId;
-        this.constraintDescription = constraintDescription;
-    }
-
-    public Constraint(String constraintId, String constraintDescription, int maxNosOfFemaleStudent,
-                      float benchmarkStudentGpa, int minNosOfStudWithBenchmarkGpa, float maxAvgGpaOfTeam,
-                      float yearsOfExperience, int minNosOfStudWithExperience,
-                      ArrayList < Character > requiredPersonalities, ArrayList < Character > validPersonalities,
-                      boolean uniquePersonality, int teamSize, int uniquePersonalityWeightAge,
-                      int requiredPersonalityWeightAge, int experienceWeightAge) {
-        this.constraintId = constraintId;
-        this.constraintDescription = constraintDescription;
-        this.maxNosOfFemaleStudent = maxNosOfFemaleStudent;
-        this.benchmarkStudentGpa = benchmarkStudentGpa;
-        this.minNosOfStudWithBenchmarkGpa = minNosOfStudWithBenchmarkGpa;
-        this.maxAvgGpaOfTeam = maxAvgGpaOfTeam;
-        this.yearsOfExperience = yearsOfExperience;
-        this.minNosOfStudWithExperience = minNosOfStudWithExperience;
-        this.requiredPersonalities = requiredPersonalities;
-        this.validPersonalities = validPersonalities;
-        this.uniquePersonality = uniquePersonality;
-        this.teamSize = teamSize;
-        this.uniquePersonalityWeightAge = uniquePersonalityWeightAge;
-        this.requiredPersonalityWeightAge = requiredPersonalityWeightAge;
-        this.experienceWeightAge = experienceWeightAge;
-    }
-
-
-    /**
-     * Getter and Setter Methods
-     * @return
-     */
-    public String getConstraintId() {
-        return constraintId;
-    }
-
-    public void setConstraintId(String constraintId) {
-        this.constraintId = constraintId;
-    }
-
-    public String getConstraintDescription() {
-        return constraintDescription;
-    }
-
-    public void setConstraintDescription(String constraintDescription) {
-        this.constraintDescription = constraintDescription;
-    }
-
-    public int getTeamSize() {
-        return teamSize;
-    }
-
-    public void setTeamSize(int teamSize) {
-        this.teamSize = teamSize;
-    }
-
-    public int getUniquePersonalityWeightAge() {
-        return uniquePersonalityWeightAge;
-    }
-
-    public void setUniquePersonalityWeightAge(int uniquePersonalityWeightAge) {
-        this.uniquePersonalityWeightAge = uniquePersonalityWeightAge;
-    }
-
-    public int getRequiredPersonalityWeightAge() {
-        return requiredPersonalityWeightAge;
-    }
-
-    public void setRequiredPersonalityWeightAge(int requiredPersonalityWeightAge) {
-        this.requiredPersonalityWeightAge = requiredPersonalityWeightAge;
-    }
-
-    public int getExperienceWeightAge() {
-        return experienceWeightAge;
-    }
-
-    public void setExperienceWeightAge(int experienceWeightAge) {
-        this.experienceWeightAge = experienceWeightAge;
-    }
 
     public int getMaxNosOfFemaleStudent() {
         return maxNosOfFemaleStudent;
@@ -157,19 +71,19 @@ public class Constraint {
         this.minNosOfStudWithExperience = minNosOfStudWithExperience;
     }
 
-    public ArrayList < Character > getRequiredPersonalities() {
+    public ArrayList<Character> getRequiredPersonalities() {
         return requiredPersonalities;
     }
 
-    public void setRequiredPersonalities(ArrayList < Character > requiredPersonalities) {
+    public void setRequiredPersonalities(ArrayList<Character> requiredPersonalities) {
         this.requiredPersonalities = requiredPersonalities;
     }
 
-    public ArrayList < Character > getValidPersonalities() {
+    public ArrayList<Character> getValidPersonalities() {
         return validPersonalities;
     }
 
-    public void setValidPersonalities(ArrayList < Character > validPersonalities) {
+    public void setValidPersonalities(ArrayList<Character> validPersonalities) {
         this.validPersonalities = validPersonalities;
     }
 
@@ -181,142 +95,228 @@ public class Constraint {
         this.uniquePersonality = uniquePersonality;
     }
 
-    public void createConstraint() {
-        constraintId = "CONS" +
-                String.format("%03d", (Integer.parseInt(getConstraintId().substring(4, getConstraintId().length())) + 1));
-    }
 
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_RESET = "\u001B[0m";
 
-    /**
-     * Method to define and set value for all constraints by Project Manager.
-     */
-    public void setAllConstraints() {
-        System.out.println(" Enter number of students in a team: ");
-        teamSize = InputTools.intChecker(1, 100);
-
-        System.out.println(ANSI_YELLOW + "Hard Constraints : " + ANSI_RESET);
+    //Method to set all constraints
+    public void setAllConstraints(){
+        System.out.println(ANSI_RED + "Hard Constraints : " + ANSI_RESET);
         System.out.println("1. Maximum number of female student per team: ");
-        maxNosOfFemaleStudent = InputTools.intChecker(0, teamSize);
+        maxNosOfFemaleStudent = Integer.parseInt(Global.scan.next() + Global.scan.nextLine());
 
         System.out.println("2. Benchmark GPA of individual student: ");
-        benchmarkStudentGpa = InputTools.floatChecker(0, 4);
+        benchmarkStudentGpa = Float.parseFloat(Global.scan.nextLine());
 
         System.out.println("3. Minimum number of student with at least benchmark GPA in a team: ");
-        minNosOfStudWithBenchmarkGpa = InputTools.intChecker(0, teamSize);
+        minNosOfStudWithBenchmarkGpa = Integer.parseInt(Global.scan.nextLine());
 
         System.out.println("4. Maximum average GPA of a team: ");
-        maxAvgGpaOfTeam = InputTools.floatChecker(0, 4);
+        maxAvgGpaOfTeam = Float.parseFloat(Global.scan.nextLine());
 
 
         System.out.println("\n" + ANSI_GREEN + "Soft Constraints: " + ANSI_RESET);
         System.out.println("1. Number of years of experience benchmark: ");
-        yearsOfExperience = InputTools.floatChecker(0, 80);
+        yearsOfExperience = Float.parseFloat(Global.scan.nextLine());
 
         System.out.println("2. Minimum number of student with " + yearsOfExperience +
                 "+ year(s) of experience per team: ");
-        minNosOfStudWithExperience = InputTools.intChecker(0, teamSize);
+        minNosOfStudWithExperience = Integer.parseInt(Global.scan.nextLine());
 
         System.out.println("3. Define valid Personality types of students (A-Z): ");
         int i = 1;
-        char input;
-        do {
-            System.out.println("Personality " + i++ + ":");
+        char input = '0';
+        do{
+            System.out.println("Personality " + i++ +":");
             input = Global.scan.nextLine().toUpperCase().charAt(0);
             validPersonalities.add(input);
             System.out.println("Do you want to add more personality: (Y/N)");
             input = Global.scan.nextLine().toUpperCase().charAt(0);
-        } while (input == 'Y');
+        }while (input != 'N');
 
         System.out.println("4. Enter Personality(s) type should be present in every team : ");
-        int j = 1;
-        String choice;
+        int j =  1;
+        String choice = "";
         do {
-            System.out.println("Personality " + j + ":");
+            System.out.println("Personality " + j +":");
             choice = Global.scan.nextLine().toUpperCase();
             boolean isExist = false;
-            for (Character c: validPersonalities) {
-                if (choice.equals(c.toString())) {
+            for(Character c : validPersonalities){
+                if(choice.equals(validPersonalities)){
                     requiredPersonalities.add(choice.charAt(0));
                     j++;
                     isExist = true;
                     break;
                 }
             }
-            if (!isExist) {
+            if(!isExist){
                 System.err.println("Invalid personality ");
             }
             System.out.println("Do you want enter more personality(s): (Y/N)");
             choice = Global.scan.nextLine().toUpperCase();
-        } while (choice.charAt(0) == 'Y');
+        } while (choice.charAt(0) != 'N');
 
+        System.out.println("5. Should every personality in a team should be unique? (Y/N): ");
+        if(Global.scan.nextLine().toUpperCase().charAt(0) == 'Y'){
+            setUniquePersonality(true);
+        }
+        else {
+            setUniquePersonality(false);
+        }
 
-        boolean isExist = false;
-        do {
-            System.out.println("5. Should every personality in a team should be unique? (Y/N): ");
-            if (Global.scan.nextLine().toUpperCase().charAt(0) == 'Y') {
-                setUniquePersonality(true);
-                isExist = true;
-            } else if (Global.scan.nextLine().toUpperCase().charAt(0) == 'N') {
-                setUniquePersonality(false);
-                isExist = true;
-            }
-        } while (!isExist);
+        System.out.println(" Enter number of students in a team: ");
+        teamSize = Integer.parseInt(Global.scan.nextLine());
 
         displayConstraints();
     }
 
 
-    /**
-     * Method to set weight age for soft constraints
-     */
-    public void setWeightAge() {
-
+    // Method to set weight age for soft constraints
+    public void setWeightage() {
+        int personalityWeightage = 0;
+        int experienceWeightage = 0;
         System.out.println("\nEnter weight age for Soft-Constraints (1-4): ");
+        do {
+            try {
+                System.out.println("Personality Soft-Constraint :");
+                personalityWeightage = Integer.parseInt(Global.scan.next() + Global.scan.nextLine());
 
-        System.out.println("Unique personality constraint: ");
-        uniquePersonalityWeightAge = InputTools.intChecker(1, 4);
+                if (personalityWeightage < 1 || personalityWeightage > 4) {
+                    System.out.println("Please enter weighatge in range 1 to 4");
+                    continue;
+                }
+            } catch (NumberFormatException e) {
+                System.err.println("Please enter an integer (1-4)");
+            }
+        } while (personalityWeightage < 1 || personalityWeightage > 4);
 
-        System.out.println("Required personality in a team constraint: ");
-        uniquePersonalityWeightAge = InputTools.intChecker(1, 4);
-
-        System.out.println("Experience Soft-Constraint : ");
-        experienceWeightAge = InputTools.intChecker(1, 4);
+        do {
+            try {
+                System.out.println("Experience Soft-Constraint :");
+                experienceWeightage = Integer.parseInt(Global.scan.next());
+                if (experienceWeightage < 1 || experienceWeightage > 4) {
+                    System.out.println("Please enter weighatge in range 1 to 4");
+                    continue;
+                }
+            } catch (NumberFormatException e) {
+                System.err.println("Please enter an integer (1-4)");
+            }
+        } while (experienceWeightage < 1 || experienceWeightage > 4);
     }
 
-    /**
-     * Method to display all set constraints.
-     */
-    public void displayConstraints() {
-        System.out.println("Number of students in a team: " + teamSize);
 
+    public void displayConstraints() {
         System.out.println("Currently Set Constraints are: ");
 
-        System.out.println(
-                "\n Hard Constraint: \n" +
-                        "1. Maximum number of female student per team: " + maxNosOfFemaleStudent + "\n" +
+        System.out.println("\n Hard Constraint: \n" +
+                "1. Maximum number of female student per team: " + maxNosOfFemaleStudent + "\n" +
 
-                        "2. Minimum number of student with at least " + benchmarkStudentGpa +
-                        " GPA per team: " + minNosOfStudWithBenchmarkGpa + "\n" +
+                "2. Minimum number of student with at least " + benchmarkStudentGpa +
+                " GPA per team: " + minNosOfStudWithBenchmarkGpa + "\n" +
 
-                        "3. Maximum average GPA of a team: " + maxAvgGpaOfTeam + " GPA");
+                "3. Maximum average GPA of a team: " + maxAvgGpaOfTeam + " GPA");
 
         System.out.println("\n Soft Constraints: \n" +
                 "1. Minimum number of student with " + yearsOfExperience +
                 "+ year(s) of experience per team: " + minNosOfStudWithExperience + "\n" +
 
-                "2. One of these Personality type should be in every team: ");
-        for (Character c: requiredPersonalities) {
-            int k = 0;
+                "2. Any of these Personality type should be in every team: ");
+        for (Character c : requiredPersonalities ) {
+            int k =0;
             System.out.println(k++);
-            System.out.print(" " + c.toString() + ",");
+            System.out.print(" " + requiredPersonalities + ",");
         }
 
         System.out.println(
                 "3. Every personality on a team should be unique: " + uniquePersonality);
 
-        System.out.println("\n Weight age for Soft constraints : \n" +
-                "1. Unique personality constraint: " + uniquePersonalityWeightAge + "\n" +
-                "2. Required personality in a team constraint: " + requiredPersonalityWeightAge + "\n" +
-                "3. Experience Soft-Constraint : " + experienceWeightAge + "\n");
+        System.out.println("Number of students in a team: " + teamSize);
     }
+
+    public static boolean uniquePersonalityConstraintCheck(ArrayList<Student> teamCreator)
+    {
+        boolean noDuplicate = true;
+        for (int j = 0; j < teamCreator.size(); j++)
+        {
+            for (int k = 0; k < teamCreator.size(); k++) {
+                k = +j;
+                if (j == k) {
+                    continue;
+                } else if (teamCreator.get(j).getStudentPersonality() == teamCreator.get(k).getStudentPersonality())
+                {
+                   noDuplicate = false;
+                }
+            }
+        }
+        return noDuplicate;
+    }
+    public static boolean existingABPersonalityConstraintCheck(ArrayList<Student> teamCreator)
+    {
+        boolean persoAOrBPresent = false;
+        for (Student student : teamCreator) {
+            if (student.getStudentPersonality() == 'A' || student.getStudentPersonality() == 'B' || student.getStudentPersonality() == 'a' || student.getStudentPersonality() == 'b') {
+                //if A or B personality is present in team
+                persoAOrBPresent = true;
+                break;
+            }
+        }
+        return persoAOrBPresent;
+    }
+
+    public static boolean averageGPAHardConstraintCheck(ArrayList<Student> teamCreator)
+    {
+        double sumOfGPA = 0;
+        for (Student student : teamCreator) {
+            sumOfGPA = sumOfGPA + student.getgPA();
+        }
+        if ((sumOfGPA / 4) > 3.5)
+            return false;
+        else return true;
+    }
+
+    public static boolean twoMembersWith3GPAHardConstraintCheck(ArrayList<Student> teamCreator)
+    {
+        int GPAGreaterThanThreeCounter = 0;
+        for (int i = 0; i < teamCreator.size(); i++)
+        {
+            if (teamCreator.get(i).getgPA() >= 3.00)
+            {
+                GPAGreaterThanThreeCounter++;
+            }
+        }
+        if(GPAGreaterThanThreeCounter > 2)
+        {
+            return true;
+        }
+        else return false;
+
+    }
+    public static boolean memberWith5YearExperienceConstraintCheck(ArrayList<Student> teamCreator)
+    {
+        boolean experienceCriteria = false;
+        for (Student student : teamCreator)
+        {
+            if (student.getExperience() >= 5)
+            {
+                experienceCriteria = true;
+                break;
+            }
+        }
+
+        return experienceCriteria;
+    }
+    public static boolean femaleHardConstraintCheck(ArrayList<Student> teamCreator)
+    {
+        int femaleCounter =0 ;
+       for(Student student : teamCreator)
+       {
+           if (student.getGender() == 'f' || student.getGender() == 'F' )
+               femaleCounter++;
+       }
+        if (femaleCounter>1)
+        return false;
+        else return true;
+    }
+
 }
