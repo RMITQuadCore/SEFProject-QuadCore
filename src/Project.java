@@ -6,6 +6,7 @@ import java.util.Scanner;
 public class Project implements Serializable {
     private static final long serialVersionUID = 7351202416537420904L;
     public static ArrayList<Project> totalProjects = new ArrayList<Project>();
+    public static ArrayList<Project> projectsNotAssigned = totalProjects;
     private String projectId = "PROJ100";
     private ClientRepresentative client;
     private String projectTitle;
@@ -85,7 +86,7 @@ public class Project implements Serializable {
     public void createProject(ClientRepresentative client) throws IOException {
         this.client = client;
         projectId = "PROJ"
-                + String.format("%03d", (Integer.parseInt(getProjectId().substring(4, getProjectId().length())) + 1));
+                + String.format("%03d", (Project.totalProjects.size()+1));
         this.setProjectId(projectId);
         System.out.println("Enter Project Title: ");
         projectTitle = Global.scan.next() + Global.scan.nextLine();
@@ -111,7 +112,9 @@ public class Project implements Serializable {
             choice = Global.scan.nextLine();
         } while (choice.toUpperCase().compareTo("N") != 0);
         totalProjects.add(this);
+        projectsNotAssigned.add(this);
         FileReadWrite.saveProjectDetails(Main.projectsFileName,Project.totalProjects);
+        FileReadWrite.saveProjectDetails(Main.projectsNotAssignedFileName,Project.projectsNotAssigned);
         System.out.println("Success! Project is created with Id : " + projectId);
     }
 
@@ -142,7 +145,7 @@ public class Project implements Serializable {
         System.out.println("Number of projects: " + numProjects);
 
         try {
-            numProjectReqd = (numStudents / 4);
+            numProjectReqd = (numStudents / 4 + 1);
             System.out.println("Number of projects required: " + numProjectReqd);
 
             if (numProjectReqd > numProjects) {

@@ -9,7 +9,6 @@ public class User implements Serializable {
     public static ArrayList<User> allUserDetails = new ArrayList<User>();
     // private String confirmPassword;
 
-
     private String id;
     private String firstName;
     private String lastName;
@@ -301,8 +300,11 @@ public class User implements Serializable {
 
                 Student.allStudents.add(new Student(studentID, firstName, lastName, emailID, userName, password, organisation, gpa,
                         experience, gender, '0'));
+                ProjectManager.studentsNotInATeam.add(new Student(studentID, firstName, lastName, emailID, userName, password, organisation, gpa,
+                        experience, gender, '0'));
                 FileReadWrite.saveUserDetails(Main.userFileName,allUserDetails);
                 FileReadWrite.saveStudentDetails(Main.studentsFileName,Student.allStudents);
+                FileReadWrite.saveStudentDetails(Main.studentsNotInATeamFileName,ProjectManager.studentsNotInATeam);
 
                 System.out.println("You have successfully signed up with ID: " + studentID + "!\n");
 
@@ -330,6 +332,10 @@ public class User implements Serializable {
                 allUserDetails.add(new ProjectManager(managerID, firstName, lastName, emailID, userName, password, organisation));
                 FileReadWrite.saveUserDetails(Main.userFileName,allUserDetails);
                 System.out.println("You have successfully signed up with ID: " + managerID + "!\n");
+                for (User user1 : User.allUserDetails)
+                {
+                    System.out.println(user1.getId() + "  Name: " + user1.getFirstName());
+                }
                 break;
 
             default:

@@ -4,6 +4,12 @@ import java.util.Collections;
 
 public class Constraint {
 
+    private String iD;
+    private String description;
+    private int weightage;
+
+    //constructor
+
     int maxNosOfFemaleStudent;
     float benchmarkStudentGpa;
     int minNosOfStudWithBenchmarkGpa;
@@ -228,5 +234,89 @@ public class Constraint {
         System.out.println("Number of students in a team: " + teamSize);
     }
 
+    public static boolean uniquePersonalityConstraintCheck(ArrayList<Student> teamCreator)
+    {
+        boolean noDuplicate = true;
+        for (int j = 0; j < teamCreator.size(); j++)
+        {
+            for (int k = 0; k < teamCreator.size(); k++) {
+                k = +j;
+                if (j == k) {
+                    continue;
+                } else if (teamCreator.get(j).getStudentPersonality() == teamCreator.get(k).getStudentPersonality())
+                {
+                   noDuplicate = false;
+                }
+            }
+        }
+        return noDuplicate;
+    }
+    public static boolean existingABPersonalityConstraintCheck(ArrayList<Student> teamCreator)
+    {
+        boolean persoAOrBPresent = false;
+        for (Student student : teamCreator) {
+            if (student.getStudentPersonality() == 'A' || student.getStudentPersonality() == 'B' || student.getStudentPersonality() == 'a' || student.getStudentPersonality() == 'b') {
+                //if A or B personality is present in team
+                persoAOrBPresent = true;
+                break;
+            }
+        }
+        return persoAOrBPresent;
+    }
+
+    public static boolean averageGPAHardConstraintCheck(ArrayList<Student> teamCreator)
+    {
+        double sumOfGPA = 0;
+        for (Student student : teamCreator) {
+            sumOfGPA = sumOfGPA + student.getgPA();
+        }
+        if ((sumOfGPA / 4) > 3.5)
+            return false;
+        else return true;
+    }
+
+    public static boolean twoMembersWith3GPAHardConstraintCheck(ArrayList<Student> teamCreator)
+    {
+        int GPAGreaterThanThreeCounter = 0;
+        for (int i = 0; i < teamCreator.size(); i++)
+        {
+            if (teamCreator.get(i).getgPA() >= 3.00)
+            {
+                GPAGreaterThanThreeCounter++;
+            }
+        }
+        if(GPAGreaterThanThreeCounter > 2)
+        {
+            return true;
+        }
+        else return false;
+
+    }
+    public static boolean memberWith5YearExperienceConstraintCheck(ArrayList<Student> teamCreator)
+    {
+        boolean experienceCriteria = false;
+        for (Student student : teamCreator)
+        {
+            if (student.getExperience() >= 5)
+            {
+                experienceCriteria = true;
+                break;
+            }
+        }
+
+        return experienceCriteria;
+    }
+    public static boolean femaleHardConstraintCheck(ArrayList<Student> teamCreator)
+    {
+        int femaleCounter =0 ;
+       for(Student student : teamCreator)
+       {
+           if (student.getGender() == 'f' || student.getGender() == 'F' )
+               femaleCounter++;
+       }
+        if (femaleCounter>1)
+        return false;
+        else return true;
+    }
 
 }

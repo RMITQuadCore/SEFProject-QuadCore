@@ -8,7 +8,6 @@ public class ClientRepresentative extends User implements Serializable {
     //Scanner scan = SingletonScanner.getInstance();
 
     public ClientRepresentative() {
-
     }
 
 
