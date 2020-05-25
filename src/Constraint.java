@@ -1,6 +1,4 @@
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 
 public class Constraint {
 
@@ -268,7 +266,7 @@ public class Constraint {
     {
         double sumOfGPA = 0;
         for (Student student : teamCreator) {
-            sumOfGPA = sumOfGPA + student.getgPA();
+            sumOfGPA = sumOfGPA + student.getGPA();
         }
         if ((sumOfGPA / 4) > 3.5)
             return false;
@@ -280,7 +278,7 @@ public class Constraint {
         int GPAGreaterThanThreeCounter = 0;
         for (int i = 0; i < teamCreator.size(); i++)
         {
-            if (teamCreator.get(i).getgPA() >= 3.00)
+            if (teamCreator.get(i).getGPA() >= 3.00)
             {
                 GPAGreaterThanThreeCounter++;
             }

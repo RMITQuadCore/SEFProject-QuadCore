@@ -16,6 +16,8 @@ public class Student extends User implements Serializable {
 
     private Team assignedTeam;
 
+
+
     public Student(String id, String firstName, String lastName, String emailID, String userName,
                    String password, String org, double gPA, double experience, char gender, char studentPersonality) {
         super(id, firstName, lastName, emailID, userName, password, org);
@@ -35,31 +37,39 @@ public class Student extends User implements Serializable {
     public char getStudentPersonality() {
         return studentPersonality;
     }
-
     public void setStudentPersonality(char studentPersonality) {
         this.studentPersonality = studentPersonality;
     }
-
     public char getGender() {
         return gender;
     }
-
     public double getExperience() {
         return experience;
     }
-
     public Project[] getPreferredProjects() {
         return preferredProjects;
     }
-
     public void setPreferredProjects(Project[] preferredProjects) {
         this.preferredProjects = preferredProjects;
+    }
+    public Student[] getDislikedMembers() {
+        return dislikedMembers;
+    }
+    public void setExperience(double experience) {
+        this.experience = experience;
+    }
+
+    public void setGender(char gender) {
+        this.gender = gender;
+    }
+    public void setDislikedMembers(Student[] dislikedMembers) {
+        this.dislikedMembers = dislikedMembers;
     }
     public Team getAssignedTeam() { return assignedTeam; }
 
     public void setAssignedTeam(Team assignedTeam) { this.assignedTeam = assignedTeam; }
 
-    public double getgPA() {
+    public double getGPA() {
         return gPA;
     }
 
@@ -67,7 +77,6 @@ public class Student extends User implements Serializable {
 
         this.gPA = gPA;
     }
-
     public Role[] getPreferredRoles() {
         return preferredRoles;
     }
@@ -75,15 +84,6 @@ public class Student extends User implements Serializable {
     public void setPreferredRoles(Role[] preferredRoles) {
         this.preferredRoles = preferredRoles;
     }
-
-    public Student[] getDislikedMembers() {
-        return dislikedMembers;
-    }
-
-    public void setDislikedMembers(Student[] dislikedMembers) {
-        this.dislikedMembers = dislikedMembers;
-    }
-
 
     /**
      * Method to display menu for Student and further navigate to required functionality.
@@ -100,7 +100,7 @@ public class Student extends User implements Serializable {
                 "                    Organisation \t: " + getOrganisation() +"\n" +
                 "                    Email\t\t\t: " + getEmailID() +"\n" +
                 "                    Gender\t\t\t: " + getGender()  +"\n" +
-                "                    GPA\t\t\t\t: " + numberFormat.format(getgPA())  +"\n" +
+                "                    GPA\t\t\t\t: " + numberFormat.format(getGPA())  +"\n" +
                 "                    Experience \t\t: " + numberFormat.format(getExperience()) + " Years"  +"\n\n" );
         System.out.print("                    Project Preferences \t: ");
 
@@ -127,9 +127,10 @@ public class Student extends User implements Serializable {
         System.out.print("\n                    Disliked Students \t\t: ");
         if(!empty)
         {
+            System.out.println();
             for(int i =0 ; i < dislikedMembers.length; i++)
             {
-                System.out.println("\n                    " +i+1 + ". ID : " + dislikedMembers[i].getId() + "\tName : " + dislikedMembers[i].getFirstName() + " " + dislikedMembers[i].getLastName());
+                System.out.println("                    " +(i+1) + ". ID : " + dislikedMembers[i].getId() + "\tName : " + dislikedMembers[i].getFirstName() + " " + dislikedMembers[i].getLastName());
             }
         }
         else System.out.println("Not Entered");
@@ -139,8 +140,8 @@ public class Student extends User implements Serializable {
 
 
             System.out.println( "****Student Menu****\n" +
-                    "1.Enter/Change preferred projects\n" +
-                    "2.Enter/Change preferred roles\n" +
+                    "1.Enter/Change Preferred Projects\n" +
+                    "2.Enter/Change Preferred Roles\n" +
                     "3.Enter/Change Disliked Members\n" +
                     "4.Change GPA\n" +
                     "5.Get Team Assignment and Details\n" +
@@ -159,22 +160,27 @@ public class Student extends User implements Serializable {
                     //enterPreferredRoles();
                     break;
                 case 3:
-                    System.out.println("                    Students that currently signed up are: \n\n ");
-                    int i=1;
-                    for(Student student : allStudents)
+                    if(Student.allStudents.size() == 0)
                     {
-                        if(!(student.getId()==getId()))
+                    System.out.println(" Sorry no students to select at the moment. \n" +
+                            " Please come back later");
+                    } else
                         {
+                            System.out.println("                    Students that currently signed up are: \n\n ");
+                            int i = 1;
+                            for (Student student : allStudents) {
+                                if (!(student.getId() == getId())) {
 
-                            System.out.println("                    "+i+". Student ID: " + student.getId() +"\t" +
-                                    "Name \t\t\t: " + student.getFirstName() + " " + student.getLastName() +"\n");
-                            i++;
+                                    System.out.println("                    " + i + ". Student ID: " + student.getId() + "\t" +
+                                            "Name \t\t\t: " + student.getFirstName() + " " + student.getLastName() );
+                                    i++;
+                                }
+                            }
+                            enterDislikedMembers();
+                            break;
                         }
-                    }
-                    enterDislikedMembers();
-                    break;
                 case 4:
-                    System.out.println("Current GPA: " +numberFormat.format(getgPA()) +"\n");
+                    System.out.println("Current GPA: " +numberFormat.format(getGPA()) +"\n");
                     double input = 0;
                     do {
                         try {
@@ -185,7 +191,7 @@ public class Student extends User implements Serializable {
                             System.err.println("Please enter a number (0 - 4)");
                         }
                     } while (input < 0 || input > 5);
-                    System.out.println("\n\n Your GPA is now : " +numberFormat.format(getgPA()) + "\n\n");
+                    System.out.println("\n\n Your GPA is now : " +numberFormat.format(getGPA()) + "\n\n");
                     break;
                 case 5:
                     if (assignedTeam == null)
@@ -201,7 +207,6 @@ public class Student extends User implements Serializable {
                             System.out.println("ID : " + student.getId() + "\tName : " + student.getFirstName() + " " + student.getLastName() +"\n");
                         }
                     }
-
                     break;
                 case 6:
                     quit = true;
@@ -222,13 +227,13 @@ public class Student extends User implements Serializable {
         for (int i = 0; i < 3; i++)
         {
             boolean studentExists = false;
-            //TODO Display all student list
             do {
-                System.out.print(" \nPlease enter the student ID of member number " + (i + 1) + ":");
+                System.out.print(" \nPlease enter the student ID of member number " + (i+1) + ":");
                 String input = Global.scan.nextLine();
                 boolean dislikedStudExists = false;
                 boolean empty = true;
-                for (int j=0; i<dislikedMembers.length; i++) {
+                for (int j=0; j<dislikedMembers.length; j++)
+                {
                     if (dislikedMembers[j] != null) {
                         empty = false;
                         break;
@@ -236,24 +241,34 @@ public class Student extends User implements Serializable {
                 }
                 if(!empty)
                 {
-                    for (Student dislikedMember: dislikedMembers) {
-                        if (input.equals(dislikedMember.getId())) {
-                            dislikedStudExists = true;
+                    System.out.println(dislikedMembers.length);
+                    for (int a =0 ; a < dislikedMembers.length; a++)
+                    {
+                        if(dislikedMembers[a] != null)
+                        {
+                            if (input.equalsIgnoreCase(dislikedMembers[a].getId())) {
+                                dislikedStudExists = true;
+                                break;
+                            }
                         }
+
                     }
                 }
                 if (!dislikedStudExists) {
-                    if (input.equals(getId())) {
+                    if (input.equalsIgnoreCase(getId())) {
                         System.out.println("\nYou cannot enter your own ID!!");
-                    } else {
-                        for (int j = 0; j < allStudents.size(); j++) {
-                            if (input.equals(allStudents.get(j).getId())) {
+                    } else
+                        {
+                        for (Student student : allStudents)
+                        {
+                            if (input.equalsIgnoreCase(student.getId()))
+                            {
                                 studentExists = true;
-                                dislikedMembers[i] = allStudents.get(j);
+                                dislikedMembers[i] = student;
                             }
                         }
                         if (!studentExists) {
-                            System.out.println("\nNo student found. Please enter an dislikedStudExists student's ID");
+                            System.out.println("\nNo student found. Please enter the  student's ID from the list above");
                         }
                     }
                 } else {
@@ -265,7 +280,6 @@ public class Student extends User implements Serializable {
 
     }
 
-
     /**
      * Method to enter preferred Projects by student
      * @throws IOException
@@ -273,7 +287,7 @@ public class Student extends User implements Serializable {
     public void enterPreferredProjects() throws IOException {
         System.out.println(" The List of available projects are ");
         for (Project a: Project.projectsNotAssigned) {
-            System.out.println("ID:\t"+a.getProjectId() + "\tTitle : " + a.getProjectTitle() + "\t" + "\t\tClient : " + a.getClient().getOrganisation());
+            System.out.println("ID:\t"+a.getProjectId() + "\t\tClient : " + a.getClient().getOrganisation()+ "\tTitle : " + a.getProjectTitle() + "\t" );
         }
 
         String input;

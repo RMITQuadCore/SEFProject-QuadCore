@@ -374,7 +374,6 @@ public class User  implements Serializable {
                     if (loginName.compareTo(user.getUserName()) == 0) {
 
                         foundUsername = true;
-                        System.out.println("Username found!" + foundUsername);
                         setUserName(loginName);
 
                     }
