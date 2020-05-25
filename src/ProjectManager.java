@@ -236,9 +236,8 @@ public class ProjectManager extends User implements Serializable {
             }
             else System.out.println("Female Hard Constraint Maintained.");
             teamCreator = dislikedMembersRemover(teamCreator);
-
-            //teamCreator = personalityConstraintApplicator(teamCreator);
-
+            teamCreator = uniquePersonalityConstraintApplicator(teamCreator);
+            teamCreator = personalityAorBPresentApplicator(teamCreator);
             teamCreator = experienceSoftConstraintApplicator(teamCreator);
             teamCreator = teamAverageGPAConstraintApplicator(teamCreator);
             if(!Constraint.averageGPAHardConstraintCheck(teamCreator))
@@ -474,10 +473,9 @@ public class ProjectManager extends User implements Serializable {
     //5 & 6 Function to make sure teams have unique personalities
     // and A or B type personality is present in a team
     //Satisfying Personality Soft Constraint
-    public static ArrayList<Student> personalityConstraintApplicator(ArrayList<Student> teamCreator) {
+    public static ArrayList<Student> uniquePersonalityConstraintApplicator(ArrayList<Student> teamCreator) {
         //To check if duplicate personalities are present and removing team. Creating a unique Personality Team
-        for (int j = 0; j < teamCreator.size(); j++)
-        {
+        for (int j = 0; j < teamCreator.size(); j++) {
             for (int k = 0; k < teamCreator.size(); k++) {
                 k = +j;
                 if (j == k) {
@@ -497,9 +495,10 @@ public class ProjectManager extends User implements Serializable {
                 }
             }
         }
-
-        //To ensure A or B personality is present
-
+      return teamCreator;
+    }     //To ensure A or B personality is present
+public ArrayList<Student> personalityAorBPresentApplicator(ArrayList<Student> teamCreator)
+        {
         boolean persoAOrBPresent = false;
         for (Student student : teamCreator) {
             if (student.getStudentPersonality() == 'A' || student.getStudentPersonality() == 'B' || student.getStudentPersonality() == 'a' || student.getStudentPersonality() == 'b') {
