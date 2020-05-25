@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class User implements Serializable {
+public class User  implements Serializable {
     private static final long serialVersionUID =1L;
     public static ArrayList<User> allUserDetails = new ArrayList<User>();
     // private String confirmPassword;
