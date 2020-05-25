@@ -34,6 +34,7 @@ public class Student extends User implements Serializable {
      * Getter and setter methods.
      * @return
      */
+
     public char getStudentPersonality() {
         return studentPersonality;
     }
@@ -136,9 +137,8 @@ public class Student extends User implements Serializable {
         else System.out.println("Not Entered");
         System.out.println("\n\n\n");
 
+
         int choice = 0;
-
-
             System.out.println( "****Student Menu****\n" +
                     "1.Enter/Change Preferred Projects\n" +
                     "2.Enter/Change Preferred Roles\n" +
@@ -147,6 +147,7 @@ public class Student extends User implements Serializable {
                     "5.Get Team Assignment and Details\n" +
                     "6.Logout\n");
             choice = InputTools.intChecker(1, 6);
+
             switch (choice) {
                 case 1:
                     if (Project.projectsNotAssigned.size() == 0) {
@@ -156,9 +157,11 @@ public class Student extends User implements Serializable {
                         enterPreferredProjects();
                     }
                     break;
+
                 case 2:
                     //enterPreferredRoles();
                     break;
+
                 case 3:
                     if(Student.allStudents.size() == 0)
                     {
@@ -179,20 +182,15 @@ public class Student extends User implements Serializable {
                             enterDislikedMembers();
                             break;
                         }
+
                 case 4:
-                    System.out.println("Current GPA: " +numberFormat.format(getGPA()) +"\n");
-                    double input = 0;
-                    do {
-                        try {
-                            System.out.print("\nEnter your new GPA: ");
-                            gPA = Float.parseFloat(Global.scan.next());
-                            input = gPA;
-                        } catch (NumberFormatException e) {
-                            System.err.println("Please enter a number (0 - 4)");
-                        }
-                    } while (input < 0 || input > 5);
-                    System.out.println("\n\n Your GPA is now : " +numberFormat.format(getGPA()) + "\n\n");
+                    System.out.println("Current GPA: " +numberFormat.format(getgPA()) +"\n");
+
+                    System.out.print("\nEnter your new GPA: ");
+                    gPA = InputTools.floatChecker(0,4);
+                    System.out.println("\n\n Your GPA is now : " +numberFormat.format(getgPA()) + "\n\n");
                     break;
+
                 case 5:
                     if (assignedTeam == null)
                     {
@@ -208,9 +206,11 @@ public class Student extends User implements Serializable {
                         }
                     }
                     break;
+
                 case 6:
                     quit = true;
                     break;
+
                 default:
                     System.out.println("Invalid choice!");
                     break;

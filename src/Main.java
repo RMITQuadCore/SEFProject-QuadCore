@@ -10,6 +10,7 @@ public class Main implements Serializable {
     public static String projectsFileName = "Projects.txt";
     public static String projectsNotAssignedFileName = "ProjectsNotAssigned.txt";
     public static String teamsFileName = "Teams.txt";
+//ToDO change file extension to .ser
 
    public static void updateArrays() throws IOException, ClassNotFoundException {
        User.allUserDetails = FileReadWrite.readUserDetails(userFileName);//Updating User Array List
@@ -21,6 +22,9 @@ public class Main implements Serializable {
    }
 
 
+    /**
+     * Main Method
+     */
     public static void main(String[] args) throws IOException, ClassNotFoundException ,NullPointerException{
         updateArrays();
         ProjectManager.studentsNotInATeam.get(2).setGender('F');

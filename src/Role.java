@@ -1,6 +1,6 @@
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Scanner;
+
 
 public class Role implements Serializable {
     private static final long serialVersionUID = -8977434449646607064L;
@@ -41,6 +41,7 @@ public class Role implements Serializable {
         this.roleName = roleName;
     }
 
+
     /**
      * Method to enter preferred frameworks by student
      * @param role
@@ -67,7 +68,7 @@ public class Role implements Serializable {
 
     /**
      * Method to enter & define framework of a role by client representative
-     */
+     */ //TODO why method is not being used
     public void enterFrameworks() {
         System.out.println("Enter the framework : ");
         String input = Global.scan.nextLine();
