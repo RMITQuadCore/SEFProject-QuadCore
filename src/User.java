@@ -120,7 +120,7 @@ public class User implements Serializable {
         int choice = 0;
         do {
             try {
-                System.out.println("**** Main Menu ****\n" +
+                System.out.println("\n**** Main Menu ****\n" +
                         "1.Sign Up\n" +
                         "2.Login\n" +
                         "3.Exit");
@@ -171,7 +171,7 @@ public class User implements Serializable {
 
         int choice = 0;
 
-        System.out.print("***********Sign Up***********\n");
+        System.out.print("****Sign Up****\n");
 
         // First/ Last name field should not contain special characters.
         do {
@@ -357,7 +357,7 @@ public class User implements Serializable {
         boolean foundUsername = false, foundPassword = false;
         do {
 
-            System.out.println("\n***********Login***********\nEnter username: ");
+            System.out.println("\n****Login****\nEnter username: ");
             loginName = Global.scan.nextLine();
 
             for (User user : allUserDetails) {
@@ -390,7 +390,7 @@ public class User implements Serializable {
 
                 if (foundUsername) {
                     // System.out.println("Login name:" + user.getUserName());
-                    System.out.println("\nEnter Password: ");
+                    System.out.println("Enter Password: ");
                     pass = Global.scan.nextLine();
 
                     if (pass.compareTo(user.getPassword()) == 0) {

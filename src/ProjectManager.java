@@ -40,7 +40,7 @@ public class ProjectManager extends User implements Serializable {
         int choice = 0;
         do {
             try {
-                System.out.println(Constraint.ANSI_RED+ "\n*** Project Manager Menu ***\n" + Constraint.ANSI_RESET+
+                System.out.println(Constraint.ANSI_YELLOW + "\n*** Project Manager Menu ***\n" + Constraint.ANSI_RESET+
                         "1. Set all Constraints\n" +
                         "2. Enter Personality of students\n" +
                         "3. Set Hard & Soft constraints\n" +
@@ -52,7 +52,8 @@ public class ProjectManager extends User implements Serializable {
                         "9. Display Teams\n" +
                         "10. Swap team members\n" +
                         "11. Display team fitness\n" +
-                        "12. Logout\n");
+                        "12. Logout\n" +
+                        "Enter your choice: ");
                 choice = Integer.parseInt(Global.scan.next());
             } catch (NumberFormatException e) {
                 System.err.println("Please enter an integer (1-12)");
@@ -254,7 +255,7 @@ public class ProjectManager extends User implements Serializable {
             }
             else System.out.println(" GPA Hard Constraints Maintained.\n\n");
             Team team = setProjectForTeam(teamCreator);
-            System.out.println("\n\nTeam Created");
+            System.out.println("Team Created!");
             Team.allTeams.add(team);
             System.out.println("\nCongratulations! A team has been formed!!.\n" +
                     "The team ID is : \t\t\t" + team.getTeamID() +
