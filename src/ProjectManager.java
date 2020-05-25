@@ -295,15 +295,15 @@ public class ProjectManager extends User implements Serializable {
 
             double sumOfGPA = 0;
             for (Student student : teamCreator) {
-                sumOfGPA = sumOfGPA + student.getGPA();
+                sumOfGPA = sumOfGPA + student.getGpa();
             }
             if ((sumOfGPA / 4) > 3.5)
             {
                 for (int i = 0; i < studentsNotInATeam.size(); i++) {
-                    if ((studentsNotInATeam.get(i).getGender() == 'm' || studentsNotInATeam.get(i).getGender() == 'M')&& studentsNotInATeam.get(i).getGPA() < 3.00) {
+                    if ((studentsNotInATeam.get(i).getGender() == 'm' || studentsNotInATeam.get(i).getGender() == 'M')&& studentsNotInATeam.get(i).getGpa() < 3.00) {
                         for (Student student : teamCreator) {
-                            if ((student.getGender() == 'm' || student.getGender() == 'M')  && student.getGPA() > 3.50) {
-                                if (((sumOfGPA - student.getGPA() + studentsNotInATeam.get(i).getGPA()) / 4) < 3.5) {
+                            if ((student.getGender() == 'm' || student.getGender() == 'M')  && student.getGpa() > 3.50) {
+                                if (((sumOfGPA - student.getGpa() + studentsNotInATeam.get(i).getGpa()) / 4) < 3.5) {
                                     studentsNotInATeam.add(student);
                                     teamCreator.remove(student);
                                     teamCreator.add(studentsNotInATeam.get(i));
@@ -322,21 +322,21 @@ public class ProjectManager extends User implements Serializable {
     {
         int GPAGreaterThanThreeCounter = 0;
         for (int i = 0; i < teamCreator.size(); i++) {
-            if (teamCreator.get(i).getGPA() >= 3.00) {
+            if (teamCreator.get(i).getGpa() >= 3.00) {
                 GPAGreaterThanThreeCounter++;
             }
         }
         double sumOfGPA = 0;
         for (Student student : teamCreator) {
-            sumOfGPA = sumOfGPA + student.getGPA();
+            sumOfGPA = sumOfGPA + student.getGpa();
         }
         double averageGpaOfTeam = sumOfGPA / 4;
 
         if (GPAGreaterThanThreeCounter < 2) {
             for (int i = 0; i < studentsNotInATeam.size(); i++) {
-                if (studentsNotInATeam.get(i).getGender() == 'm' && studentsNotInATeam.get(i).getGPA() >= 3.00) {
+                if (studentsNotInATeam.get(i).getGender() == 'm' && studentsNotInATeam.get(i).getGpa() >= 3.00) {
                     for (Student student : teamCreator) {
-                        if ((studentsNotInATeam.get(i).getGender() == 'm' && student.getGPA() < 3.00) && (((sumOfGPA + studentsNotInATeam.get(i).getGPA() - student.getGPA()) / 4) < 3.50)) {
+                        if ((studentsNotInATeam.get(i).getGender() == 'm' && student.getGpa() < 3.00) && (((sumOfGPA + studentsNotInATeam.get(i).getGpa() - student.getGpa()) / 4) < 3.50)) {
                             studentsNotInATeam.add(student);
                             teamCreator.remove(student);
                             teamCreator.add(studentsNotInATeam.get(i));

@@ -377,7 +377,7 @@ public class Constraint {
     {
         double sumOfGPA = 0;
         for (Student student : teamCreator) {
-            sumOfGPA = sumOfGPA + student.getGPA();
+            sumOfGPA = sumOfGPA + student.getGpa();
         }
         if ((sumOfGPA / 4) > 3.5)
             return false;
@@ -395,7 +395,7 @@ public class Constraint {
         int GPAGreaterThanThreeCounter = 0;
         for (int i = 0; i < teamCreator.size(); i++)
         {
-            if (teamCreator.get(i).getGPA() >= 3.00)
+            if (teamCreator.get(i).getGpa() >= 3.00)
             {
                 GPAGreaterThanThreeCounter++;
             }

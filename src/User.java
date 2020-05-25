@@ -36,12 +36,49 @@ public class User  implements Serializable {
 
     }
 
+
     /**
      * Getter and setter methods.
      * @return
      */
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getOrganisation() {
+        return organisation;
+    }
+
+    public void setOrganisation(String organisation) {
+        this.organisation = organisation;
+    }
+
     public String getEmailID() {
         return emailID;
+    }
+
+    public void setEmailID(String emailID) {
+        this.emailID = emailID;
     }
 
     public String getUserName() {
@@ -82,10 +119,6 @@ public class User  implements Serializable {
 
     public void setManagerID(String managerID) {
         this.managerID = managerID;
-    }
-
-    public String getId() {
-        return id;
     }
 
 

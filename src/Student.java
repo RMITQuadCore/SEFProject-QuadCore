@@ -70,7 +70,7 @@ public class Student extends User implements Serializable {
 
     public void setAssignedTeam(Team assignedTeam) { this.assignedTeam = assignedTeam; }
 
-    public double getGPA() {
+    public double getGpa() {
         return gPA;
     }
 
@@ -101,7 +101,7 @@ public class Student extends User implements Serializable {
                 "                    Organisation \t: " + getOrganisation() +"\n" +
                 "                    Email\t\t\t: " + getEmailID() +"\n" +
                 "                    Gender\t\t\t: " + getGender()  +"\n" +
-                "                    GPA\t\t\t\t: " + numberFormat.format(getGPA())  +"\n" +
+                "                    GPA\t\t\t\t: " + numberFormat.format(getGpa())  +"\n" +
                 "                    Experience \t\t: " + numberFormat.format(getExperience()) + " Years"  +"\n\n" );
         System.out.print("                    Project Preferences \t: ");
 
@@ -184,11 +184,11 @@ public class Student extends User implements Serializable {
                         }
 
                 case 4:
-                    System.out.println("Current GPA: " +numberFormat.format(getgPA()) +"\n");
+                    System.out.println("Current GPA: " +numberFormat.format(getGpa()) +"\n");
 
                     System.out.print("\nEnter your new GPA: ");
                     gPA = InputTools.floatChecker(0,4);
-                    System.out.println("\n\n Your GPA is now : " +numberFormat.format(getgPA()) + "\n\n");
+                    System.out.println("\n\n Your GPA is now : " +numberFormat.format(getGpa()) + "\n\n");
                     break;
 
                 case 5:
