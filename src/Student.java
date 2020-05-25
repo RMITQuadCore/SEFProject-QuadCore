@@ -1,19 +1,17 @@
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Scanner;
 
-public class Student extends User implements Serializable  {
+public class Student extends User implements Serializable {
     private static final long serialVersionUID = -1640510881420655396L;
-    //Scanner scan = SingletonScanner.getInstance();
+    public static ArrayList < Student > allStudents = new ArrayList < > (); // TODO Maybe remove
     private double gPA;
     private double experience;
     private char gender;
     private char studentPersonality; // Changes made according to Class diagram
-    private Role[] preferredRoles = new Role[2];// TODO Change to arraylist
+    private Role[] preferredRoles = new Role[2]; // TODO Change to arraylist
     private Project[] preferredProjects = new Project[4]; // TODO Change to arraylist
     private Student[] dislikedMembers = new Student[3]; // TODO Change to arraylist
-    public static ArrayList<Student> allStudents = new ArrayList<>(); // TODO Maybe remove
 
     public Student(String id, String firstName, String lastName, String emailID, String userName,
                    String password, String org, double gPA, double experience, char gender, char studentPersonality) {
@@ -24,9 +22,13 @@ public class Student extends User implements Serializable  {
         this.studentPersonality = studentPersonality;
     }
 
-    public Student() {
-    }
+    public Student() {}
 
+
+    /**
+     * Getter and setter methods.
+     * @return
+     */
     public char getStudentPersonality() {
         return studentPersonality;
     }
@@ -39,24 +41,24 @@ public class Student extends User implements Serializable  {
         return gender;
     }
 
-    public void setGender(char gender) {
-        this.gender = gender;
-    }
-
     public double getExperience() {
         return experience;
-    }
-
-    public void setExperience(double experience) {
-        this.experience = experience;
     }
 
     public Project[] getPreferredProjects() {
         return preferredProjects;
     }
 
+    public void setPreferredProjects(Project[] preferredProjects) {
+        this.preferredProjects = preferredProjects;
+    }
+
     public double getgPA() {
         return gPA;
+    }
+
+    public void setgPA(double gPA) {
+        this.gPA = gPA;
     }
 
     public Role[] getPreferredRoles() {
@@ -75,23 +77,62 @@ public class Student extends User implements Serializable  {
         this.dislikedMembers = dislikedMembers;
     }
 
-    public void setgPA(double gPA) {
-        this.gPA = gPA;
+
+    /**
+     * Method to display menu for Student and further navigate to required functionality.
+     * @throws IOException
+     */
+    public void studentMenu() throws IOException {
+        int choice = 0;
+        boolean quit = false;
+        do {
+            System.out.println(ANSI_YELLOW + "****Student Menu****\n" + ANSI_RESET +
+                    "1.Enter preferred projects\n" +
+                    "2.Enter preferred roles\n" +
+                    "3.Enter disliked members\n" +
+                    "4.Logout ");
+            choice = InputTools.intChecker(1, 4);
+
+            switch (choice) {
+                case 1:
+                    if (Project.totalProjects.size() == 0) {
+                        System.out.println(" Sorry no projects have been registered at the moment. " +
+                                "Please come back later");
+                    } else {
+                        enterPreferredProjects();
+                    }
+                    // super.start();
+                    break;
+                case 2:
+                    //enterPreferredRoles();
+                    break;
+                case 3:
+                    enterDislikedMembers();
+                    break;
+                case 4:
+                    quit = true;
+                    break;
+                default:
+                    System.out.println("Invalid choice!");
+                    break;
+            }
+        } while (!quit);
     }
 
-    public void setPreferredProjects(Project[] preferredProjects) {
-        this.preferredProjects = preferredProjects;
-    }
 
-    public void enterDislikedMembers() {
+    /**
+     * Method for students to enter disliked students whom they don't want to team up with.
+     */
+    public void enterDislikedMembers() { //TODO Display all student IDs
         System.out.println(getId() + "! You are allowed to enter 3 members you do not wish to team up with.");
         for (int i = 0; i < 3; i++) {
             boolean studentExists = false;
+            //TODO Display all student list
             do {
                 System.out.print(" \nPlease enter the student ID of member number " + (i + 1) + ":");
                 String input = Global.scan.nextLine();
                 boolean dislikedStudExists = false;
-                for (Student dislikedMember : dislikedMembers) {
+                for (Student dislikedMember: dislikedMembers) {
                     if (input.equals(dislikedMember.getId())) {
                         dislikedStudExists = true;
                     }
@@ -121,9 +162,13 @@ public class Student extends User implements Serializable  {
     }
 
 
+    /**
+     * Method to enter preferred Projects by student
+     * @throws IOException
+     */
     public void enterPreferredProjects() throws IOException {
         System.out.println(" The List of available projects are ");
-        for (Project a : Project.totalProjects) {
+        for (Project a: Project.totalProjects) {
             System.out.println(a.getProjectId() + " " + a.getProjectTitle() + " Client -" + a.getClient().getId());
         }
 
@@ -145,7 +190,7 @@ public class Student extends User implements Serializable  {
                         if (input.equals(Project.totalProjects.get(j).getProjectId())) {
                             projectExists = true;
                             preferredProjects[i] = Project.totalProjects.get(j);
-                            FileReadWrite.saveStudentDetails(Main.studentsFileName,Student.allStudents);
+                            FileReadWrite.saveStudentDetails(Main.studentsFileName, Student.allStudents);
                             Project.totalProjects.get(j).setPopularityCounter(Project.totalProjects.get(j).getPopularityCounter() + (4 - i));
                         }
                     }
@@ -159,8 +204,14 @@ public class Student extends User implements Serializable  {
         }
     }
 
+
+    /**
+     * Method to enter preferred roles for a project by student.
+     * @param project
+     */
     public void enterPreferredRoles(Project project) {
         String input;
+        //TODO Display list of roles
         System.out.println(" You are allowed to enter 2 Roles you would like to apply for.");
         for (int i = 0; i < 2; i++) {
             boolean roleExists = false;
@@ -208,44 +259,4 @@ public class Student extends User implements Serializable  {
             } while (!roleExists);
         }
     }
-
-    public void studentMenu() throws IOException {
-        int ch = 0;
-        boolean quit = false;
-        do {
-            do {
-                try {
-                    System.out.println("\n1.Enter preferred projects\n2.Enter preferred roles\n3.Enter disliked members\n4.Logout\nEnter you choice : ");
-                    ch = Integer.parseInt(Global.scan.next());
-                } catch (NumberFormatException e) {
-                    System.err.println("Enter an integer");
-                }
-            } while (ch < 1 || ch > 4);
-
-            switch (ch) {
-                case 1:
-                    if (Project.totalProjects.size() == 0) {
-                        System.out.println(" Sorry no projects have been registered at the moment. Please come back later");
-                    } else {
-                        enterPreferredProjects();
-                    }
-                    // super.start();
-                    break;
-                case 2:
-                    //enterPreferredRoles();
-                    break;
-                case 3:
-                    enterDislikedMembers();
-                    break;
-                case 4:
-                    quit = true;
-                    break;
-                default:
-                    System.out.println("Invalid choice!");
-                    break;
-            }
-        } while (!quit);
-    }
-
-
 }
