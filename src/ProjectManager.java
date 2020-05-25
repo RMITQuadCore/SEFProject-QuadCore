@@ -236,9 +236,8 @@ public class ProjectManager extends User implements Serializable {
             }
             else System.out.println("Female Hard Constraint Maintained.");
             teamCreator = dislikedMembersRemover(teamCreator);
-
-            //teamCreator = personalityConstraintApplicator(teamCreator);
-
+            teamCreator = uniquePersonalityConstraintApplicator(teamCreator);
+            teamCreator = personalityAorBPresentApplicator(teamCreator);
             teamCreator = experienceSoftConstraintApplicator(teamCreator);
             teamCreator = teamAverageGPAConstraintApplicator(teamCreator);
             if(!Constraint.averageGPAHardConstraintCheck(teamCreator))
@@ -296,15 +295,15 @@ public class ProjectManager extends User implements Serializable {
 
             double sumOfGPA = 0;
             for (Student student : teamCreator) {
-                sumOfGPA = sumOfGPA + student.getgPA();
+                sumOfGPA = sumOfGPA + student.getGPA();
             }
             if ((sumOfGPA / 4) > 3.5)
             {
                 for (int i = 0; i < studentsNotInATeam.size(); i++) {
-                    if ((studentsNotInATeam.get(i).getGender() == 'm' || studentsNotInATeam.get(i).getGender() == 'M')&& studentsNotInATeam.get(i).getgPA() < 3.00) {
+                    if ((studentsNotInATeam.get(i).getGender() == 'm' || studentsNotInATeam.get(i).getGender() == 'M')&& studentsNotInATeam.get(i).getGPA() < 3.00) {
                         for (Student student : teamCreator) {
-                            if ((student.getGender() == 'm' || student.getGender() == 'M')  && student.getgPA() > 3.50) {
-                                if (((sumOfGPA - student.getgPA() + studentsNotInATeam.get(i).getgPA()) / 4) < 3.5) {
+                            if ((student.getGender() == 'm' || student.getGender() == 'M')  && student.getGPA() > 3.50) {
+                                if (((sumOfGPA - student.getGPA() + studentsNotInATeam.get(i).getGPA()) / 4) < 3.5) {
                                     studentsNotInATeam.add(student);
                                     teamCreator.remove(student);
                                     teamCreator.add(studentsNotInATeam.get(i));
@@ -323,21 +322,21 @@ public class ProjectManager extends User implements Serializable {
     {
         int GPAGreaterThanThreeCounter = 0;
         for (int i = 0; i < teamCreator.size(); i++) {
-            if (teamCreator.get(i).getgPA() >= 3.00) {
+            if (teamCreator.get(i).getGPA() >= 3.00) {
                 GPAGreaterThanThreeCounter++;
             }
         }
         double sumOfGPA = 0;
         for (Student student : teamCreator) {
-            sumOfGPA = sumOfGPA + student.getgPA();
+            sumOfGPA = sumOfGPA + student.getGPA();
         }
         double averageGpaOfTeam = sumOfGPA / 4;
 
         if (GPAGreaterThanThreeCounter < 2) {
             for (int i = 0; i < studentsNotInATeam.size(); i++) {
-                if (studentsNotInATeam.get(i).getGender() == 'm' && studentsNotInATeam.get(i).getgPA() >= 3.00) {
+                if (studentsNotInATeam.get(i).getGender() == 'm' && studentsNotInATeam.get(i).getGPA() >= 3.00) {
                     for (Student student : teamCreator) {
-                        if ((studentsNotInATeam.get(i).getGender() == 'm' && student.getgPA() < 3.00) && (((sumOfGPA + studentsNotInATeam.get(i).getgPA() - student.getgPA()) / 4) < 3.50)) {
+                        if ((studentsNotInATeam.get(i).getGender() == 'm' && student.getGPA() < 3.00) && (((sumOfGPA + studentsNotInATeam.get(i).getGPA() - student.getGPA()) / 4) < 3.50)) {
                             studentsNotInATeam.add(student);
                             teamCreator.remove(student);
                             teamCreator.add(studentsNotInATeam.get(i));
@@ -400,7 +399,7 @@ public class ProjectManager extends User implements Serializable {
     {
         int femaleCount = 0;
         for (Student t : studentsNotInATeam) {
-            if (t.getGender() == 'f') {
+            if (t.getGender() == 'f' || t.getGender() == 'F') {
                 femaleCount++;
             }
         }
@@ -408,7 +407,7 @@ public class ProjectManager extends User implements Serializable {
             boolean femaleFound = false;
             while (k < teamSize) {
                 for (int z = 0; z < studentsNotInATeam.size(); z++) {
-                    if (studentsNotInATeam.get(z).getGender() == 'f' || studentsNotInATeam.get(z).getGender() == 'F') {
+                    if (studentsNotInATeam.get(z).getGender() == 'f' || studentsNotInATeam.get(z).getGender() == 'F' && !femaleFound) {
                         teamCreator.add(studentsNotInATeam.get(z));
                         femaleFound = true;
                         femaleCount--;
@@ -416,7 +415,7 @@ public class ProjectManager extends User implements Serializable {
                         k++;
                         break;
                     }
-                    if (studentsNotInATeam.get(z).getGender() == 'm' && femaleFound == true) {
+                    if ((studentsNotInATeam.get(z).getGender() == 'm' || studentsNotInATeam.get(z).getGender() == 'M' ) && femaleFound == true) {
                         teamCreator.add(studentsNotInATeam.get(z));
                         studentsNotInATeam.remove(studentsNotInATeam.get(z));
                         k++;
@@ -474,10 +473,9 @@ public class ProjectManager extends User implements Serializable {
     //5 & 6 Function to make sure teams have unique personalities
     // and A or B type personality is present in a team
     //Satisfying Personality Soft Constraint
-    public static ArrayList<Student> personalityConstraintApplicator(ArrayList<Student> teamCreator) {
+    public static ArrayList<Student> uniquePersonalityConstraintApplicator(ArrayList<Student> teamCreator) {
         //To check if duplicate personalities are present and removing team. Creating a unique Personality Team
-        for (int j = 0; j < teamCreator.size(); j++)
-        {
+        for (int j = 0; j < teamCreator.size(); j++) {
             for (int k = 0; k < teamCreator.size(); k++) {
                 k = +j;
                 if (j == k) {
@@ -497,9 +495,10 @@ public class ProjectManager extends User implements Serializable {
                 }
             }
         }
-
-        //To ensure A or B personality is present
-
+      return teamCreator;
+    }     //To ensure A or B personality is present
+public ArrayList<Student> personalityAorBPresentApplicator(ArrayList<Student> teamCreator)
+        {
         boolean persoAOrBPresent = false;
         for (Student student : teamCreator) {
             if (student.getStudentPersonality() == 'A' || student.getStudentPersonality() == 'B' || student.getStudentPersonality() == 'a' || student.getStudentPersonality() == 'b') {
@@ -560,6 +559,10 @@ public class ProjectManager extends User implements Serializable {
                 team.setProjectAssigned(entry.getKey());
                 Project.projectsNotAssigned.remove(entry.getKey());
             }
+        }
+        for (Student student : team.getStudentsInTeam())
+        {
+            student.setAssignedTeam(team);
         }
         team.setStudentsInTeam(teamCreator);
         return team;
