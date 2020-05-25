@@ -236,7 +236,7 @@ public class ProjectManager extends User implements Serializable {
             }
             else System.out.println("Female Hard Constraint Maintained.");
             teamCreator = dislikedMembersRemover(teamCreator);
-            //teamCreator = personalityConstraintApplicator(teamCreator);
+            teamCreator = personalityConstraintApplicator(teamCreator);
             teamCreator = experienceSoftConstraintApplicator(teamCreator);
             teamCreator = teamAverageGPAConstraintApplicator(teamCreator);
             if(!Constraint.averageGPAHardConstraintCheck(teamCreator))
