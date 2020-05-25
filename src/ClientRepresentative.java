@@ -26,7 +26,7 @@ public class ClientRepresentative extends User implements Serializable {
     public void clientMenu() throws IOException, ClassNotFoundException {
         int choice = 0;
         do {
-                System.out.println(ANSI_YELLOW + "****Client Representative Menu****" + ANSI_RESET);
+                System.out.println( "****Client Representative Menu****" );
                 System.out.println(
                         "1. Add new project\n" +
                         "2. Display Projects\n" +

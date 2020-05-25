@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class Student extends User implements Serializable {
@@ -12,6 +13,8 @@ public class Student extends User implements Serializable {
     private Role[] preferredRoles = new Role[2]; // TODO Change to arraylist
     private Project[] preferredProjects = new Project[4]; // TODO Change to arraylist
     private Student[] dislikedMembers = new Student[3]; // TODO Change to arraylist
+
+    private Team assignedTeam;
 
     public Student(String id, String firstName, String lastName, String emailID, String userName,
                    String password, String org, double gPA, double experience, char gender, char studentPersonality) {
@@ -52,12 +55,16 @@ public class Student extends User implements Serializable {
     public void setPreferredProjects(Project[] preferredProjects) {
         this.preferredProjects = preferredProjects;
     }
+    public Team getAssignedTeam() { return assignedTeam; }
+
+    public void setAssignedTeam(Team assignedTeam) { this.assignedTeam = assignedTeam; }
 
     public double getgPA() {
         return gPA;
     }
 
     public void setgPA(double gPA) {
+
         this.gPA = gPA;
     }
 
@@ -82,34 +89,121 @@ public class Student extends User implements Serializable {
      * Method to display menu for Student and further navigate to required functionality.
      * @throws IOException
      */
-    public void studentMenu() throws IOException {
-        int choice = 0;
+    public void studentMenu() throws IOException, NullPointerException{
+        DecimalFormat numberFormat = new DecimalFormat("#.00");
         boolean quit = false;
         do {
-            System.out.println(ANSI_YELLOW + "****Student Menu****\n" + ANSI_RESET +
-                    "1.Enter preferred projects\n" +
-                    "2.Enter preferred roles\n" +
-                    "3.Enter disliked members\n" +
-                    "4.Logout ");
-            choice = InputTools.intChecker(1, 4);
+        System.out.println("\n                    ****Hello! " + getFirstName() +"****\n" +
+                "                    Your Details are given below :\n" +
+                "                    Your System ID is " + getId() +"\n" +
+                "                    Name \t\t\t: " + getFirstName() + " " + getLastName() +"\n" +
+                "                    Organisation \t: " + getOrganisation() +"\n" +
+                "                    Email\t\t\t: " + getEmailID() +"\n" +
+                "                    Gender\t\t\t: " + getGender()  +"\n" +
+                "                    GPA\t\t\t\t: " + numberFormat.format(getgPA())  +"\n" +
+                "                    Experience \t\t: " + numberFormat.format(getExperience()) + " Years"  +"\n\n" );
+        System.out.print("                    Project Preferences \t: ");
 
+        ArrayList<Project>preference = new ArrayList<>();
+        for(Project project : preferredProjects)
+        {
+            preference.add(project);
+        }
+
+            if (preference.isEmpty())
+            {
+                for (int i = 0; i < preferredProjects.length; i++)
+                {
+                    System.out.println("                    " +i + 1 + ". ID:\t " + preferredProjects[i].getProjectId() + ". Client:\t " + preferredProjects[i].getClient().getOrganisation() + "Title:\t " + preferredProjects[i].getProjectTitle() + "\n");
+                }
+            }else System.out.print("Not Entered");
+        boolean empty = true;
+        for (int i=0; i<dislikedMembers.length; i++) {
+            if (dislikedMembers[i] != null) {
+                empty = false;
+                break;
+            }
+        }
+        System.out.print("\n                    Disliked Students \t\t: ");
+        if(!empty)
+        {
+            for(int i =0 ; i < dislikedMembers.length; i++)
+            {
+                System.out.println("\n                    " +i+1 + ". ID : " + dislikedMembers[i].getId() + "\tName : " + dislikedMembers[i].getFirstName() + " " + dislikedMembers[i].getLastName());
+            }
+        }
+        else System.out.println("Not Entered");
+        System.out.println("\n\n\n");
+
+        int choice = 0;
+
+
+            System.out.println( "****Student Menu****\n" +
+                    "1.Enter/Change preferred projects\n" +
+                    "2.Enter/Change preferred roles\n" +
+                    "3.Enter/Change Disliked Members\n" +
+                    "4.Change GPA\n" +
+                    "5.Get Team Assignment and Details\n" +
+                    "6.Logout\n");
+            choice = InputTools.intChecker(1, 6);
             switch (choice) {
                 case 1:
-                    if (Project.totalProjects.size() == 0) {
-                        System.out.println(" Sorry no projects have been registered at the moment. " +
+                    if (Project.projectsNotAssigned.size() == 0) {
+                        System.out.println(" Sorry no projects are available at the moment. " +
                                 "Please come back later");
                     } else {
                         enterPreferredProjects();
                     }
-                    // super.start();
                     break;
                 case 2:
                     //enterPreferredRoles();
                     break;
                 case 3:
+                    System.out.println("                    Students that currently signed up are: \n\n ");
+                    int i=1;
+                    for(Student student : allStudents)
+                    {
+                        if(!(student.getId()==getId()))
+                        {
+
+                            System.out.println("                    "+i+". Student ID: " + student.getId() +"\t" +
+                                    "Name \t\t\t: " + student.getFirstName() + " " + student.getLastName() +"\n");
+                            i++;
+                        }
+                    }
                     enterDislikedMembers();
                     break;
                 case 4:
+                    System.out.println("Current GPA: " +numberFormat.format(getgPA()) +"\n");
+                    double input = 0;
+                    do {
+                        try {
+                            System.out.print("\nEnter your new GPA: ");
+                            gPA = Float.parseFloat(Global.scan.next());
+                            input = gPA;
+                        } catch (NumberFormatException e) {
+                            System.err.println("Please enter a number (0 - 4)");
+                        }
+                    } while (input < 0 || input > 5);
+                    System.out.println("\n\n Your GPA is now : " +numberFormat.format(getgPA()) + "\n\n");
+                    break;
+                case 5:
+                    if (assignedTeam == null)
+                    {
+                        System.out.println("\n\nSorry! No Team Assigned Yet, Please Come Back Later.\n\n");
+                    }else
+                    {
+                        System.out.println( "\n\n Your Team ID:\t\t " +assignedTeam.getTeamID() +
+                                "\n Project Assigned to your team:\t" + assignedTeam.getProjectAssigned().getClient() +":" + assignedTeam.getProjectAssigned().getProjectTitle() +
+                                "\n Students in the team: " );
+                        for(Student student : assignedTeam.getStudentsInTeam())
+                        {
+                            System.out.println("ID : " + student.getId() + "\tName : " + student.getFirstName() + " " + student.getLastName() +"\n");
+                        }
+                    }
+
+                    break;
+                case 6:
                     quit = true;
                     break;
                 default:
@@ -123,21 +217,31 @@ public class Student extends User implements Serializable {
     /**
      * Method for students to enter disliked students whom they don't want to team up with.
      */
-    public void enterDislikedMembers() { //TODO Display all student IDs
-        System.out.println(getId() + "! You are allowed to enter 3 members you do not wish to team up with.");
-        for (int i = 0; i < 3; i++) {
+    public void enterDislikedMembers() {
+        System.out.println(getFirstName() + "! You are allowed to enter 3 members you do not wish to team up with.");
+        for (int i = 0; i < 3; i++)
+        {
             boolean studentExists = false;
             //TODO Display all student list
             do {
                 System.out.print(" \nPlease enter the student ID of member number " + (i + 1) + ":");
                 String input = Global.scan.nextLine();
                 boolean dislikedStudExists = false;
-                for (Student dislikedMember: dislikedMembers) {
-                    if (input.equals(dislikedMember.getId())) {
-                        dislikedStudExists = true;
+                boolean empty = true;
+                for (int j=0; i<dislikedMembers.length; i++) {
+                    if (dislikedMembers[j] != null) {
+                        empty = false;
+                        break;
                     }
                 }
-
+                if(!empty)
+                {
+                    for (Student dislikedMember: dislikedMembers) {
+                        if (input.equals(dislikedMember.getId())) {
+                            dislikedStudExists = true;
+                        }
+                    }
+                }
                 if (!dislikedStudExists) {
                     if (input.equals(getId())) {
                         System.out.println("\nYou cannot enter your own ID!!");
@@ -168,12 +272,12 @@ public class Student extends User implements Serializable {
      */
     public void enterPreferredProjects() throws IOException {
         System.out.println(" The List of available projects are ");
-        for (Project a: Project.totalProjects) {
-            System.out.println(a.getProjectId() + " " + a.getProjectTitle() + " Client -" + a.getClient().getId());
+        for (Project a: Project.projectsNotAssigned) {
+            System.out.println("ID:\t"+a.getProjectId() + "\tTitle : " + a.getProjectTitle() + "\t" + "\t\tClient : " + a.getClient().getOrganisation());
         }
 
         String input;
-        System.out.println(" You are allowed to enter 4 projects you would like to work for.");
+        System.out.println(" You are allowed to enter 4 projects you would like to work for:");
         for (int i = 0; i < 4; i++) {
             boolean projectExists = false;
             do {

@@ -222,7 +222,7 @@ public class ProjectManager extends User implements Serializable {
 
     //Method to form teams for projects
     public void createTeams()
-    {
+    { //TODO Create a method for calling Soft Contrainsts Order
         ArrayList<Student> teamCreator = new ArrayList<Student>();
         Integer[] teamSize = getTeamSizeArray();// Calculate all the sizes
         for (int i =0 ; i < teamSize.length ; i ++)
