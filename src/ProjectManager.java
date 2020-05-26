@@ -116,26 +116,27 @@ public class ProjectManager extends User implements Serializable {
 
 
     //Method to assign personality to all students
-    private void enterStudentPersonalities() {
+    private void  enterStudentPersonalities() {
         boolean foundStudent = false, validPersonality = false;
         String studID;
-        char studPersonality = '0';
+        char studPersonality = 0;
 
         do {
             System.out.println("\nEnter assigned student ID:");
             studID = Global.scan.nextLine();
-            for (Student stud : Student.allStudents) {
+            for (Student stud : studentsNotInATeam) {
 
-                if (((Student) stud).getId().compareTo(studID) == 0) {
+                if (stud.getId().compareTo(studID) == 0) {
                     foundStudent = true;
                     System.out.println("\nPlease enter personality of " + studID + " :");
                     studPersonality = Global.scan.nextLine().toUpperCase().charAt(0);
-
+                    System.out.println("Student personality enterred is: " +studPersonality);
                     char[] validPersonalities = {'A', 'B', 'C', 'D', 'E', 'F'};
                     for (int i = 0; i < 6; i++) {
                         if (studPersonality == validPersonalities[i]) {
                             validPersonality = true;
                             stud.setStudentPersonality(studPersonality); // TODO setStudent Personality to Student Class Object
+                            System.out.println(stud.getStudentPersonality());
                         }
                     }
                     if (!validPersonality) {
@@ -147,6 +148,9 @@ public class ProjectManager extends User implements Serializable {
                 System.out.println("Student not found!");
             }
         } while (foundStudent == false || studID.isEmpty() || studPersonality == '0');
+        for(Student st: Student.allStudents){
+            System.out.println(st.getId()+" "+st.getStudentPersonality());
+        }
     }
 
 

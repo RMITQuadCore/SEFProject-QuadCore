@@ -27,8 +27,10 @@ public class Main implements Serializable {
      */
     public static void main(String[] args) throws IOException, ClassNotFoundException ,NullPointerException{
         updateArrays();
-        ProjectManager.studentsNotInATeam.get(2).setGender('F');
+
+
         User user = new User();
         user.mainMenu();
+
     }
 }

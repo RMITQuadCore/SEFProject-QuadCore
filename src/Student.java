@@ -19,12 +19,12 @@ public class Student extends User implements Serializable {
 
 
     public Student(String id, String firstName, String lastName, String emailID, String userName,
-                   String password, String org, double gPA, double experience, char gender, char studentPersonality) {
+                   String password, String org, double gPA, double experience, char gender) {
         super(id, firstName, lastName, emailID, userName, password, org);
         this.gender = gender;
         this.experience = experience;
         this.gPA = gPA;
-        this.studentPersonality = studentPersonality;
+       // this.studentPersonality = studentPersonality;
     }
 
     public Student() {}
@@ -38,8 +38,9 @@ public class Student extends User implements Serializable {
     public char getStudentPersonality() {
         return studentPersonality;
     }
-    public void setStudentPersonality(char studentPersonality) {
-        this.studentPersonality = studentPersonality;
+    public void setStudentPersonality(char studPersonality) {
+        studentPersonality = studPersonality;
+        System.out.println("Student personality set to "+studPersonality);
     }
     public char getGender() {
         return gender;
@@ -94,30 +95,60 @@ public class Student extends User implements Serializable {
         DecimalFormat numberFormat = new DecimalFormat("#.00");
         boolean quit = false;
         do {
-        System.out.println("\n                    ****Hello! " + getFirstName() +"****\n" +
-                "                    Your Details are given below :\n" +
-                "                    Your System ID is " + getId() +"\n" +
-                "                    Name \t\t\t: " + getFirstName() + " " + getLastName() +"\n" +
-                "                    Organisation \t: " + getOrganisation() +"\n" +
-                "                    Email\t\t\t: " + getEmailID() +"\n" +
-                "                    Gender\t\t\t: " + getGender()  +"\n" +
-                "                    GPA\t\t\t\t: " + numberFormat.format(getGpa())  +"\n" +
-                "                    Experience \t\t: " + numberFormat.format(getExperience()) + " Years"  +"\n\n" );
-        System.out.print("                    Project Preferences \t: ");
 
-        ArrayList<Project>preference = new ArrayList<>();
-        for(Project project : preferredProjects)
-        {
-            preference.add(project);
-        }
 
-            if (preference.isEmpty())
-            {
-                for (int i = 0; i < preferredProjects.length; i++)
-                {
-                    System.out.println("                    " +i + 1 + ". ID:\t " + preferredProjects[i].getProjectId() + ". Client:\t " + preferredProjects[i].getClient().getOrganisation() + "Title:\t " + preferredProjects[i].getProjectTitle() + "\n");
+
+
+                    System.out.println("\n                    ****Hello! " + getFirstName() + "****\n" +
+                            "                    Your Details are given below :\n" +
+                            "                    Your System ID is " + getId() + "\n" +
+                            "                    Name \t\t\t: " + getFirstName() + " " + getLastName() + "\n" +
+                            "                    Organisation \t: " + getOrganisation() + "\n" +
+                            "                    Email\t\t\t: " + getEmailID() + "\n" +
+                            "                    Gender\t\t\t: " + getGender() + "\n" +
+                            "                    GPA\t\t\t\t: " + numberFormat.format(getGpa()) + "\n" +
+                            "                    Experience \t\t: " + numberFormat.format(getExperience()) + " Years" + "\n\t\t\t\t\tPersonality Type: " + getStudentPersonality() + "\n\n");
+
+           //for(User st: User.allUserDetails){
+//                System.out.println(st.getId()+" and "+((Student)st).getStudentPersonality());
+//            }
+
+//        ArrayList<Project>preference = new ArrayList<>();
+//
+//            for(int i= 0; i < getPreferredProjects().length ; i++){
+//                System.out.println("in array"+getPreferredProjects()[i]);
+//            }
+//
+//        for(Project project : getPreferredProjects())
+//        {
+//            System.out.println(project);
+//            preference.add(project);
+//        }
+//
+//        for(Project p : preference){
+//            System.out.println(p);
+//        }
+
+            //if (!preference.isEmpty())
+            //{
+            boolean preferencesIsEmpty = true;
+                for (int i = 0; i < preferredProjects.length; i++){
+                  if(preferredProjects[i] != null) {
+                    preferencesIsEmpty = false;
+
+                    break;
+                  }
                 }
-            }else System.out.print("Not Entered");
+            System.out.print("\n                    Preferred Projects \t\t: ");
+                if (!preferencesIsEmpty){
+                    System.out.println();
+                    for(int i =0 ; i < preferredProjects.length; i++)
+                    {
+                        System.out.println("                    " +(i+1) + ". ID : " + preferredProjects[i].getProjectId() + "\tTitle : " + preferredProjects[i].getProjectTitle() + "\tClient: " + preferredProjects[i].getClient().getOrganisation());
+                    }
+                }
+           else System.out.print("Not Entered");
+
         boolean empty = true;
         for (int i=0; i<dislikedMembers.length; i++) {
             if (dislikedMembers[i] != null) {
@@ -241,7 +272,7 @@ public class Student extends User implements Serializable {
                 }
                 if(!empty)
                 {
-                    System.out.println(dislikedMembers.length);
+                    //System.out.println(dislikedMembers.length);
                     for (int a =0 ; a < dislikedMembers.length; a++)
                     {
                         if(dislikedMembers[a] != null)
@@ -299,6 +330,7 @@ public class Student extends User implements Serializable {
                 input = Global.scan.nextLine();
                 boolean preferredProjExists = false;
                 for (int k = 0; k < preferredProjects.length; k++) {
+                    if (preferredProjects[k] != null)
                     if (input.equals(preferredProjects[k].getProjectId())) {
                         preferredProjExists = true;
                     }
@@ -308,7 +340,6 @@ public class Student extends User implements Serializable {
                         if (input.equals(Project.totalProjects.get(j).getProjectId())) {
                             projectExists = true;
                             preferredProjects[i] = Project.totalProjects.get(j);
-                            FileReadWrite.saveStudentDetails(Main.studentsFileName, Student.allStudents);
                             Project.totalProjects.get(j).setPopularityCounter(Project.totalProjects.get(j).getPopularityCounter() + (4 - i));
                         }
                     }
@@ -320,6 +351,11 @@ public class Student extends User implements Serializable {
                 }
             } while (!projectExists);
         }
+        this.setPreferredProjects(preferredProjects);
+        for(int i= 0; i < getPreferredProjects().length ; i++){
+            System.out.println(getPreferredProjects()[i]);
+        }
+        FileReadWrite.saveStudentDetails(Main.studentsFileName, Student.allStudents);
     }
 
 

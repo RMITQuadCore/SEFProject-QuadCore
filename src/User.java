@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -157,6 +158,9 @@ public class User  implements Serializable {
                     break;
 
                 case 3:
+                    FileReadWrite.saveUserDetails(Main.userFileName, allUserDetails);
+                    FileReadWrite.saveStudentDetails(Main.studentsFileName, Student.allStudents);
+                    FileReadWrite.saveStudentDetails(Main.studentsNotInATeamFileName,ProjectManager.studentsNotInATeam);
                     System.out.println("System exited! Thanks for using Project Team Formation System");
                     System.exit(0);
                     break;
@@ -274,26 +278,25 @@ public class User  implements Serializable {
                 float experience = InputTools.floatChecker(0, 80);
 
                 String newStudentID = studentID;
-                if(allUserDetails.size() > 0) {
-                    User lastStudent = null;
-                    for(User u: allUserDetails) {
-                        if(u instanceof Student) {
-                            lastStudent = u;
-                        }
-                    }
-                    newStudentID = lastStudent != null ? lastStudent.getStudentID() : newStudentID;
-                    System.out.println(newStudentID);
-                }
+
+
+
+
+
                 newStudentID = "ST" + String.format("%03d",
-                        (Integer.parseInt(newStudentID.substring(2)) + 1));
+                        (Student.allStudents.size()+1));
 
                 allUserDetails.add(new Student(newStudentID, firstName, lastName, emailID, userName, password, organisation, gpa, experience,
-                        gender, '0'));
+                        gender));
 
                 Student.allStudents.add(new Student(newStudentID, firstName, lastName, emailID, userName, password, organisation, gpa,
-                        experience, gender, '0'));
-                FileReadWrite.saveUserDetails(Main.userFileName, allUserDetails);
-                FileReadWrite.saveStudentDetails(Main.studentsFileName, Student.allStudents);
+                        experience, gender));
+                ProjectManager.studentsNotInATeam.add(new Student(newStudentID, firstName, lastName, emailID, userName, password, organisation, gpa,
+                        experience, gender));
+
+               FileReadWrite.saveUserDetails(Main.userFileName, allUserDetails);
+               FileReadWrite.saveStudentDetails(Main.studentsFileName, Student.allStudents);
+                FileReadWrite.saveStudentDetails(Main.studentsNotInATeamFileName,ProjectManager.studentsNotInATeam);
 
                 System.out.println("You have successfully signed up with ID: " + newStudentID + "!\n");
                 break;
@@ -368,6 +371,7 @@ public class User  implements Serializable {
             loginName = Global.scan.nextLine();
 
             for (User user : allUserDetails) {
+              //  System.out.println("inside login for" + user.getUserName());
                 if (user instanceof ClientRepresentative) {
                     if (loginName.compareTo(user.getUserName()) == 0) {
                         foundUsername = true;
@@ -402,7 +406,12 @@ public class User  implements Serializable {
                             ((ClientRepresentative) user).clientMenu();
                             break;
                         } else if (user instanceof Student) {
-                            ((Student) user).studentMenu();
+                            for(Student st: Student.allStudents) {
+                                if (st.getId().compareTo(user.getId()) == 0) {
+                                    st.studentMenu();
+                                }
+                            }
+
                             break;
                         } else {
                             ((ProjectManager) user).projectManagerMenu();
