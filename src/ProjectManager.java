@@ -116,7 +116,7 @@ public class ProjectManager extends User implements Serializable {
 
 
     //Method to assign personality to all students
-    private void  enterStudentPersonalities() {
+    private void  enterStudentPersonalities() throws IOException {
         boolean foundStudent = false, validPersonality = false;
         String studID;
         char studPersonality = 0;
@@ -124,13 +124,13 @@ public class ProjectManager extends User implements Serializable {
         do {
             System.out.println("\nEnter assigned student ID:");
             studID = Global.scan.nextLine();
-            for (Student stud : studentsNotInATeam) {
+            for (Student stud : Student.allStudents) {
 
                 if (stud.getId().compareTo(studID) == 0) {
                     foundStudent = true;
                     System.out.println("\nPlease enter personality of " + studID + " :");
                     studPersonality = Global.scan.nextLine().toUpperCase().charAt(0);
-                    System.out.println("Student personality enterred is: " +studPersonality);
+                    //System.out.println("Student personality enterred is: " +studPersonality);
                     char[] validPersonalities = {'A', 'B', 'C', 'D', 'E', 'F'};
                     for (int i = 0; i < 6; i++) {
                         if (studPersonality == validPersonalities[i]) {
@@ -148,9 +148,10 @@ public class ProjectManager extends User implements Serializable {
                 System.out.println("Student not found!");
             }
         } while (foundStudent == false || studID.isEmpty() || studPersonality == '0');
-        for(Student st: Student.allStudents){
-            System.out.println(st.getId()+" "+st.getStudentPersonality());
-        }
+//        for(Student st: Student.allStudents){
+//            System.out.println(st.getId()+" "+st.getStudentPersonality());
+//        }
+        FileReadWrite.saveStudentDetails(Main.studentsFileName, Student.allStudents);
     }
 
 

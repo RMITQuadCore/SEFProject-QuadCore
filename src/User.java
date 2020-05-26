@@ -151,6 +151,9 @@ public class User  implements Serializable {
 
                 case 2:
                     try {
+//                        for(User u1:User.allUserDetails){
+//                            System.out.println(u1.getId()+" "+u1.getUserName()+" "+u1.getPassword());
+//                        }
                         login();
                     } catch (IncorrectInputException e) {
                         e.getMessage();
@@ -299,51 +302,40 @@ public class User  implements Serializable {
                 FileReadWrite.saveStudentDetails(Main.studentsNotInATeamFileName,ProjectManager.studentsNotInATeam);
 
                 System.out.println("You have successfully signed up with ID: " + newStudentID + "!\n");
+                setUserName(userName);
+                setPassword(password);
                 break;
 
             case 2: //For Client Representative
                 String newClientID = clientID;
-                if (allUserDetails.size() > 0) {
-                    User lastClient = null;
-                    for (User u: allUserDetails) {
-                        if (u instanceof ClientRepresentative) {
-                            lastClient = u;
-                        }
-                    }
-                    newClientID = lastClient != null ? lastClient.getClientID() : newClientID;
-                }
-                newClientID = "CL" + String.format("%03d", (Integer.parseInt(newClientID.substring(2)) + 1));
+
+                newClientID = "CL" + String.format("%03d", (allUserDetails.size()+ 1));
 
                 allUserDetails.add(
                         new ClientRepresentative(newClientID, firstName, lastName, emailID, userName, password, organisation));
                 FileReadWrite.saveUserDetails(Main.userFileName, allUserDetails);
                 System.out.println("You have successfully signed up with ID: " + newClientID + "!\n");
+                setUserName(userName);
+                setPassword(password);
                 break;
 
             case 3: //For Project Manager
                 String newManagerID = managerID;
-                if(allUserDetails.size() > 0){
-                    User lastManager = null;
-                    for(User u: allUserDetails) {
-                        if(u instanceof ProjectManager){
-                            lastManager = u;
-                        }
-                    }
-                    newManagerID = lastManager != null ? lastManager.getManagerID() : newManagerID;
-                }
-                newManagerID = "PM" + String.format("%03d", (Integer.parseInt(newManagerID.substring(2)) + 1));
+
+                newManagerID = "PM" + String.format("%03d", (allUserDetails.size()+ 1));
 
                 allUserDetails.add(new ProjectManager(newManagerID, firstName, lastName, emailID, userName, password, organisation));
                 FileReadWrite.saveUserDetails(Main.userFileName, allUserDetails);
                 System.out.println("You have successfully signed up with ID: " + newManagerID + "!\n");
+                setUserName(userName);
+                setPassword(password);
                 break;
 
             default:
                 System.err.println("Invalid choice!");
                 break;
         }
-        setUserName(userName);
-        setPassword(password);
+
         mainMenu();
     }
 
@@ -369,25 +361,25 @@ public class User  implements Serializable {
             System.out.println("\n" + ANSI_YELLOW + "****Login****" + ANSI_RESET + "\n" +
                     "Enter username: ");
             loginName = Global.scan.nextLine();
-
+        //    System.out.println("Name: "+loginName);
             for (User user : allUserDetails) {
               //  System.out.println("inside login for" + user.getUserName());
                 if (user instanceof ClientRepresentative) {
                     if (loginName.compareTo(user.getUserName()) == 0) {
                         foundUsername = true;
-                        setUserName(loginName);
+                        //setUserName(loginName);
                     }
 
                 } else if (user instanceof Student) {
                     if (loginName.compareTo(user.getUserName()) == 0) {
                         foundUsername = true;
-                        setUserName(loginName);
+                      // setUserName(loginName);
                     }
 
-                } else {
+                } else if(user instanceof ProjectManager){
                     if (loginName.compareTo(user.getUserName()) == 0) {
                         foundUsername = true;
-                        setUserName(loginName);
+                      // setUserName(loginName);
                     }
                 }
 
@@ -397,7 +389,7 @@ public class User  implements Serializable {
 
                     if (pass.compareTo(user.getPassword()) == 0) {
                         foundPassword = true;
-                        setPassword(pass);
+                       // setPassword(pass);
                         // Verify whether the user has entered corresponding username/email id and password.
 
                         System.out.println("You have successfully logged in!");

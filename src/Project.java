@@ -203,10 +203,11 @@ public class Project implements Serializable {
             Project.totalProjects.remove(i);
         }
         System.out.println("Required Projects:");
-        for (Project p : Project.totalProjects) {
-            System.out.println("\nsrc.Project ID: " + p.getProjectId() + "\nsrc.Project Details: " + p.getProjectDetails()
-                    + "\nsrc.Project Popularity Counter:" + p.getPopularityCounter());
+        for(Project p:projectsNotAssigned){
+            p.displayProject();
         }
+
         return true;
     }
+
 }

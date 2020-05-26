@@ -40,7 +40,7 @@ public class Student extends User implements Serializable {
     }
     public void setStudentPersonality(char studPersonality) {
         studentPersonality = studPersonality;
-        System.out.println("Student personality set to "+studPersonality);
+        //System.out.println("Student personality set to "+studPersonality);
     }
     public char getGender() {
         return gender;
@@ -144,7 +144,7 @@ public class Student extends User implements Serializable {
                     System.out.println();
                     for(int i =0 ; i < preferredProjects.length; i++)
                     {
-                        System.out.println("                    " +(i+1) + ". ID : " + preferredProjects[i].getProjectId() + "\tTitle : " + preferredProjects[i].getProjectTitle() + "\tClient: " + preferredProjects[i].getClient().getOrganisation());
+                        System.out.println("                    " +(i+1) + ". ID : " + preferredProjects[i].getProjectId() + "\tTitle : " + preferredProjects[i].getProjectTitle() + "\t\t\tClient: " + preferredProjects[i].getClient().getOrganisation());
                     }
                 }
            else System.out.print("Not Entered");
@@ -253,7 +253,7 @@ public class Student extends User implements Serializable {
     /**
      * Method for students to enter disliked students whom they don't want to team up with.
      */
-    public void enterDislikedMembers() {
+    public void enterDislikedMembers() throws IOException {
         System.out.println(getFirstName() + "! You are allowed to enter 3 members you do not wish to team up with.");
         for (int i = 0; i < 3; i++)
         {
@@ -308,6 +308,7 @@ public class Student extends User implements Serializable {
                 }
             } while (!studentExists);
         }
+        FileReadWrite.saveStudentDetails(Main.studentsFileName, Student.allStudents);
 
     }
 
@@ -352,9 +353,9 @@ public class Student extends User implements Serializable {
             } while (!projectExists);
         }
         this.setPreferredProjects(preferredProjects);
-        for(int i= 0; i < getPreferredProjects().length ; i++){
-            System.out.println(getPreferredProjects()[i]);
-        }
+//        for(int i= 0; i < getPreferredProjects().length ; i++){
+//            System.out.println(getPreferredProjects()[i]);
+//        }
         FileReadWrite.saveStudentDetails(Main.studentsFileName, Student.allStudents);
     }
 
