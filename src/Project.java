@@ -206,7 +206,7 @@ public class Project implements Serializable {
         for(Project p:projectsNotAssigned){
             p.displayProject();
         }
-
+        ProjectManager.setProjectsDiscarded(true);
         return true;
     }
 

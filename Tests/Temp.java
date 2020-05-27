@@ -42,10 +42,10 @@ public class Temp {
         ArrayList<Student> teamStudent = new ArrayList<Student>();
         ArrayList<Student> tempStudent = new ArrayList<>();
 
-        Student s1 = new Student("S1", "Karan", "Thapar", "karan.234@gmail.com", "karan234", "12345", "RMIT", 3.4, 2.2, 'M', 'A');
-        Student s2 = new Student("S2", "Karan", "Thapar", "karan.234@gmail.com", "karan234", "12345", "RMIT", 3.4, 2.2, 'F', 'A');
-        Student s3 = new Student("S3", "Karan", "Thapar", "karan.234@gmail.com", "karan234", "12345", "RMIT", 3.4, 2.2, 'M', 'A');
-        Student s4 = new Student("S4", "Karan", "Thapar", "karan.234@gmail.com", "karan234", "12345", "RMIT", 3.4, 2.2, 'M', 'A');
+//        Student s1 = new Student("S1", "Karan", "Thapar", "karan.234@gmail.com", "karan234", "12345", "RMIT", 3.4, 2.2, 'M', 'A');
+//        Student s2 = new Student("S2", "Karan", "Thapar", "karan.234@gmail.com", "karan234", "12345", "RMIT", 3.4, 2.2, 'F', 'A');
+//        Student s3 = new Student("S3", "Karan", "Thapar", "karan.234@gmail.com", "karan234", "12345", "RMIT", 3.4, 2.2, 'M', 'A');
+//        Student s4 = new Student("S4", "Karan", "Thapar", "karan.234@gmail.com", "karan234", "12345", "RMIT", 3.4, 2.2, 'M', 'A');
         Project proj1 = new Project();
         Project proj2 = new Project();
         Project proj3 = new Project();
@@ -69,15 +69,15 @@ public class Temp {
         Project[] preference3 = new Project[]{proj1, proj3, proj4, proj2};
         Project[] preference4 = new Project[]{proj4, proj3, proj1, proj2};
 
-        s1.setPreferredProjects(preference1);
-        s2.setPreferredProjects(preference2);
-        s3.setPreferredProjects(preference3);
-        s4.setPreferredProjects(preference4);
+//        s1.setPreferredProjects(preference1);
+//        s2.setPreferredProjects(preference2);
+//        s3.setPreferredProjects(preference3);
+//        s4.setPreferredProjects(preference4);
 
-        teamStudent.add(s1);
-        teamStudent.add(s2);
-        teamStudent.add(s3);
-        teamStudent.add(s4);
+//        teamStudent.add(s1);
+//        teamStudent.add(s2);
+//        teamStudent.add(s3);
+//        teamStudent.add(s4);
 
         Team t1 = setProjectForTeam(teamStudent);
 

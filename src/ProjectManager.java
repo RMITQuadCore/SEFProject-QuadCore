@@ -9,6 +9,7 @@ public class ProjectManager extends User implements Serializable {
     public ArrayList<String> studentPersonalities = new ArrayList<String>();
     public static ArrayList<Student> studentsNotInATeam = new ArrayList<Student>();
     private boolean signUpStatus = true;
+    private static boolean projectsDiscarded = false;
 
     public ProjectManager()
     {
@@ -20,6 +21,13 @@ public class ProjectManager extends User implements Serializable {
 
     }
 
+    public static boolean isProjectsDiscarded() {
+        return projectsDiscarded;
+    }
+
+    public static void setProjectsDiscarded(boolean projectsDiscarded) {
+        ProjectManager.projectsDiscarded = projectsDiscarded;
+    }
 
     public ArrayList<Student> getTempStudent() {
         return studentsNotInATeam;
@@ -91,7 +99,9 @@ public class ProjectManager extends User implements Serializable {
                     break;
 
                 case 7:
+                    if(projectsDiscarded == true)
                     createTeams();
+                    else System.out.println("\n\n You need to discard unpopular projects before creating teams .");
                     break;
 
                 case 8:

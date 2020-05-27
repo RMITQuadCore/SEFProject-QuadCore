@@ -316,10 +316,10 @@ public class Student extends User implements Serializable {
      * Method to enter preferred Projects by student
      * @throws IOException
      */
-    public void enterPreferredProjects() throws IOException {
+    public void enterPreferredProjects() throws IOException, NullPointerException {
         System.out.println(" The List of available projects are ");
         for (Project a: Project.projectsNotAssigned) {
-            System.out.println("ID:\t"+a.getProjectId() + "\t\tClient : " + a.getClient().getOrganisation()+ "\tTitle : " + a.getProjectTitle() + "\t" );
+            System.out.println("ID:\t"+a.getProjectId() + "\t\tClient : " + a.getClient().getOrganisation()+ "\t\t\tTitle : " + a.getProjectTitle() + "\t" );
         }
 
         String input;
