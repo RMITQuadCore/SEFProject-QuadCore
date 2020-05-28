@@ -409,8 +409,7 @@ public class User  implements Serializable {
                             ((ProjectManager) user).projectManagerMenu();
                             break;
                         }
-
-                        // TODO What messages pop up when an invalid login is carried out?
+ //list of messages that pop up when an invalid login is carried out
                     } else {
                         foundPassword = false;
                         System.err.println("Incorrect password!");
