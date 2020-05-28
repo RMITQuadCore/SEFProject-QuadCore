@@ -48,6 +48,12 @@ public class Role implements Serializable {
      */
     public void enterFrameworks(Role role) {
         boolean frameWorkFound = false;
+
+        System.out.println("Available frameworks are :");
+        for (int i = 0; i < role.getFrameworks().size(); i++) {
+            System.out.println(frameworks);
+        }
+
         do { //TODO Display list of frameworks
             System.out.println("Enter the framework : ");
             String input = Global.scan.nextLine();
