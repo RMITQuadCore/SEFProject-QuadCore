@@ -25,6 +25,7 @@ public class Main implements Serializable {
        Project.totalProjects = FileReadWrite.readProjectDetails(projectsFileName);
        Project.projectsNotAssigned = FileReadWrite.readProjectDetails(projectsNotAssignedFileName);//Updating Projects Array List
        Constraint.allSoftConstraints = FileReadWrite.readConstraintDetails(softConstraintFileName);
+       ProjectManager.constraints = FileReadWrite.readConstraintDetails(softConstraintFileName);
    }
 
 

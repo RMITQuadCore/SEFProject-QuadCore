@@ -31,6 +31,7 @@ public class SwapTeamGUI extends Application {
 
         Stage stage = new Stage();
         SwapTeamMembersController.calculateTeamConstraints();
+
         CategoryAxis yAxis = new CategoryAxis();
         ArrayList<String> projectIds = new ArrayList<String>();
         for(Team t :Team.allTeams) {
