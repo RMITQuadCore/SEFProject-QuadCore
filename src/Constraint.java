@@ -5,7 +5,7 @@ public class Constraint {
     String constraintId;
     String constraintDescription;
     private int weightAge;
-    ArrayList < Constraint > constraints = new ArrayList < > ();
+    ArrayList < Constraint > constraintsWeightAge = new ArrayList < > ();
 
     int maxNosOfFemaleStudent;
     float benchmarkStudentGpa;
@@ -14,13 +14,16 @@ public class Constraint {
     float yearsOfExperience;
     int minNosOfStudWithExperience;
     ArrayList <Character> requiredPersonalities = new ArrayList<>();
-    ArrayList <Character> validPersonalities = new ArrayList<>();;
+    ArrayList <Character> validPersonalities = new ArrayList<>();
     //char[] validPersonalities = {'A', 'B', 'C', 'D', 'E', 'F'};
     boolean uniquePersonality;
     int teamSize;
     int uniquePersonalityWeightAge = 0;
     int requiredPersonalityWeightAge = 0;
     int experienceWeightAge = 0;
+    String uniquePersonalityDesc;
+    String requiredPersonalityDesc;
+    String experienceDesc;
 
     public static final String ANSI_YELLOW = "\u001B[33m";
     public static final String ANSI_GREEN = "\u001B[32m";
@@ -30,19 +33,22 @@ public class Constraint {
 
     }
 
-    public Constraint(String constraintId, String constraintDescription) {
+    public Constraint(String constraintId, String constraintDescription, int weightAge) {
         this.constraintId = constraintId;
         this.constraintDescription = constraintDescription;
+        this.weightAge = weightAge;
     }
 
-    public Constraint(String constraintId, String constraintDescription, int maxNosOfFemaleStudent,
-                      float benchmarkStudentGpa, int minNosOfStudWithBenchmarkGpa, float maxAvgGpaOfTeam,
-                      float yearsOfExperience, int minNosOfStudWithExperience,
-                      ArrayList < Character > requiredPersonalities, ArrayList < Character > validPersonalities,
-                      boolean uniquePersonality, int teamSize, int uniquePersonalityWeightAge,
-                      int requiredPersonalityWeightAge, int experienceWeightAge) {
+    public Constraint(String constraintId, String constraintDescription, int weightAge,
+                      ArrayList<Constraint> constraintsWeightAge, int maxNosOfFemaleStudent, float benchmarkStudentGpa,
+                      int minNosOfStudWithBenchmarkGpa, float maxAvgGpaOfTeam, float yearsOfExperience,
+                      int minNosOfStudWithExperience, ArrayList<Character> requiredPersonalities,
+                      ArrayList<Character> validPersonalities, boolean uniquePersonality, int teamSize,
+                      int uniquePersonalityWeightAge, int requiredPersonalityWeightAge, int experienceWeightAge) {
         this.constraintId = constraintId;
         this.constraintDescription = constraintDescription;
+        this.weightAge = weightAge;
+        this.constraintsWeightAge = constraintsWeightAge;
         this.maxNosOfFemaleStudent = maxNosOfFemaleStudent;
         this.benchmarkStudentGpa = benchmarkStudentGpa;
         this.minNosOfStudWithBenchmarkGpa = minNosOfStudWithBenchmarkGpa;
@@ -57,7 +63,6 @@ public class Constraint {
         this.requiredPersonalityWeightAge = requiredPersonalityWeightAge;
         this.experienceWeightAge = experienceWeightAge;
     }
-
 
     /**
      * Getter and Setter Methods
@@ -183,13 +188,32 @@ public class Constraint {
         this.uniquePersonality = uniquePersonality;
     }
 
+    public String getUniquePersonalityDesc() {
+        return uniquePersonalityDesc;
+    }
+
+    public String getRequiredPersonalityDesc() {
+        return requiredPersonalityDesc;
+    }
+
+    public String getExperienceDesc() {
+        return experienceDesc;
+    }
 
     /**
      * Method to generate constraint ID
      */
     public void createConstraint() {
-        constraintId = "CONS" +
-                String.format("%03d", (Integer.parseInt(getConstraintId().substring(4, getConstraintId().length())) + 1));
+        constraintId = "Constraint" +
+                String.format("%03d", (Integer.parseInt(getConstraintId().substring(10)) + 1));
+
+        System.out.println("Enter Soft Constraint description: ");
+        constraintDescription = Global.scan.nextLine();
+
+        System.out.println("Enter Weight age for Soft constraint: ");
+        weightAge = InputTools.intChecker(1,4);
+
+        constraintsWeightAge.add(new Constraint(constraintId,constraintDescription, weightAge));
     }
 
 
@@ -268,24 +292,30 @@ public class Constraint {
             }
         } while (!isExist);
 
-        displayConstraints();
-    }
-
-
-    /**
-     * Method to set weight age for soft constraints
-     */
-    public void setWeightAge() {
-        System.out.println("\nEnter weight age for Soft-Constraints (1-4): ");
+        System.out.println("\nEnter description & weight age for Soft-Constraints (1-4): ");
 
         System.out.println("Unique Personality Soft-Constraint : ");
-        uniquePersonalityWeightAge = InputTools.intChecker(1,4);
+        createConstraint();
 
-        System.out.println("Specific Personality Soft-Constraint : "); //TODO Better name then specific
-        requiredPersonalityWeightAge = InputTools.intChecker(1,4);
+        System.out.println("Required Personality Soft-Constraint : ");
+        createConstraint();
 
         System.out.println("Experience Soft-Constraint : ");
-        experienceWeightAge = InputTools.intChecker(1,4);
+        createConstraint();
+
+//        System.out.println("Unique Personality Soft-Constraint : ");
+//        uniquePersonalityDesc = "All personalities in team should be unique.";
+//        uniquePersonalityWeightAge = InputTools.intChecker(1,4);
+//
+//        System.out.println("Required Personality Soft-Constraint : ");
+//        requiredPersonalityDesc = "One of these personalities should be in a team.";
+//        requiredPersonalityWeightAge = InputTools.intChecker(1,4);
+//
+//        System.out.println("Experience Soft-Constraint : ");
+//        experienceDesc = "One student with 5+ years of experience in a team.";
+//        experienceWeightAge = InputTools.intChecker(1,4);
+
+        displayConstraints();
     }
 
 

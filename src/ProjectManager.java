@@ -79,7 +79,7 @@ public class ProjectManager extends User implements Serializable {
                     break;
 
                 case 3:
-                    constraint.setWeightAge();
+                    //constraint.setWeightAge(); //TODO remove this method and merge with set all constraints
                     break;
 
                 case 4:
@@ -236,8 +236,8 @@ public class ProjectManager extends User implements Serializable {
    }
 
     //Method to form teams for projects
-    public void createTeams() //TODO if consraints and weightage are not set methods shouldn't run.
-    { //TODO Create a method for calling Soft Contrainsts Order
+    public void createTeams() //TODO if constraints and weight age are not set methods shouldn't run.
+    { //TODO Create a method for calling Soft Constraints Order
         ArrayList<Student> teamCreator = new ArrayList<Student>();
         Integer[] teamSize = getTeamSizeArray();// Calculate all the sizes
         for (int i =0 ; i < teamSize.length ; i ++)
@@ -322,6 +322,7 @@ public class ProjectManager extends User implements Serializable {
                                     studentsNotInATeam.add(student);
                                     teamCreator.remove(student);
                                     teamCreator.add(studentsNotInATeam.get(i));
+
                                     studentsNotInATeam.remove(studentsNotInATeam.get(i));
                                 }
                             }
