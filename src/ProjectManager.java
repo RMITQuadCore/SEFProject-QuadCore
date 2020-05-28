@@ -513,11 +513,8 @@ public class ProjectManager extends User implements Serializable {
     public static ArrayList<Student> uniquePersonalityConstraintApplicator(ArrayList<Student> teamCreator) {
         //To check if duplicate personalities are present and removing team. Creating a unique Personality Team
         for (int j = 0; j < teamCreator.size(); j++) {
-            for (int k = 0; k < teamCreator.size(); k++) {
-                k = +j;
-                if (j == k) {
-                    continue;
-                } else if (teamCreator.get(j).getStudentPersonality() == teamCreator.get(k).getStudentPersonality()) {
+            for (int k = j+1; k < teamCreator.size(); k++) {
+                 if (teamCreator.get(j).getStudentPersonality() == teamCreator.get(k).getStudentPersonality()) {
                     if (teamCreator.get(k).getGender() == 'm' || teamCreator.get(k).getGender() == 'M') {
                         for (Student student : studentsNotInATeam) {
                             if ((student.getStudentPersonality() != teamCreator.get(j).getStudentPersonality()) && (student.getGender() == 'm' || student.getGender() == 'M')) {
