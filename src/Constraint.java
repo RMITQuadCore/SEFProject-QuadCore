@@ -1,11 +1,13 @@
+import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Constraint {
+public class Constraint implements Serializable {
 
     String constraintId;
     String constraintDescription;
     private int weightAge;
-    ArrayList < Constraint > constraints = new ArrayList < > ();
+    public static ArrayList  < Constraint > allSoftConstraints = new ArrayList < > ();
 
     int maxNosOfFemaleStudent;
     float benchmarkStudentGpa;
@@ -30,9 +32,10 @@ public class Constraint {
 
     }
 
-    public Constraint(String constraintId, String constraintDescription) {
+    public Constraint(String constraintId, String constraintDescription, int weightAge) {
         this.constraintId = constraintId;
         this.constraintDescription = constraintDescription;
+        this.weightAge = weightAge;
     }
     public int getWeightAge() {
         return weightAge;
@@ -193,16 +196,25 @@ public class Constraint {
     /**
      * Method to generate constraint ID
      */
-    public void createConstraint() {
-        constraintId = "CONS" +
-                String.format("%03d", (Integer.parseInt(getConstraintId().substring(4, getConstraintId().length())) + 1));
+    public void createConstraint() throws IOException {
+        constraintId = "Constraint " +
+                String.format("%03d", (Integer.parseInt(getConstraintId().substring(11)) + 1));
+
+        System.out.println("Enter Description: ");
+        constraintDescription = Global.scan.nextLine();
+
+        System.out.println("Enter weight age for soft constraint: ");
+        weightAge = InputTools.intChecker(1,4);
+
+        allSoftConstraints.add(new Constraint(constraintId, constraintDescription, weightAge));
+        FileReadWrite.saveConstraintDetails(Main.softConstraintFileName, allSoftConstraints);
     }
 
 
     /**
      * Method to define and set value for all constraints by Project Manager.
      */
-    public void setAllConstraints(){
+    public void setAllConstraints() throws IOException {
         System.out.println(" Enter number of students in a team: ");
         teamSize = InputTools.intChecker(1, 100);
 
@@ -274,24 +286,18 @@ public class Constraint {
             }
         } while (!isExist);
 
-        displayConstraints();
-    }
-
-
-    /**
-     * Method to set weight age for soft constraints
-     */
-    public void setWeightAge() {
         System.out.println("\nEnter weight age for Soft-Constraints (1-4): ");
 
         System.out.println("Unique Personality Soft-Constraint : ");
-        uniquePersonalityWeightAge = InputTools.intChecker(1,4);
+        createConstraint();
 
-        System.out.println("Specific Personality Soft-Constraint : "); //TODO Better name then specific
-        requiredPersonalityWeightAge = InputTools.intChecker(1,4);
+        System.out.println("Required Personality Soft-Constraint : ");
+        createConstraint();
 
         System.out.println("Experience Soft-Constraint : ");
-        experienceWeightAge = InputTools.intChecker(1,4);
+        createConstraint();
+
+        displayConstraints();
     }
 
 

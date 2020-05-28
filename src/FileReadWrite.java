@@ -114,4 +114,23 @@ public class FileReadWrite {
         } else {}
         return roleList;
     }
+
+    public static void saveConstraintDetails(String fileName, ArrayList < Constraint > constraintList) throws IOException {
+        FileOutputStream file = new FileOutputStream(fileName);
+        ObjectOutputStream out = new ObjectOutputStream(file); //since the array contains an object
+        out.writeObject(constraintList);
+        out.close();
+        file.close();
+    }
+
+    @SuppressWarnings("unchecked")
+    public static ArrayList < Constraint > readConstraintDetails(String fileName) throws IOException, ClassNotFoundException {
+        f = new File(fileName);
+        ArrayList < Constraint > constraintList = new ArrayList < > ();
+        if (f.exists()) {
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream(fileName));
+            constraintList = (ArrayList < Constraint>  ) in .readObject(); in .close();
+        } else {}
+        return constraintList;
+    }
 }

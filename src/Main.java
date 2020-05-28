@@ -1,6 +1,5 @@
 import java.io.IOException;
 import java.io.Serializable;
-import java.sql.SQLOutput;
 
 public class Main implements Serializable {
 
@@ -12,6 +11,7 @@ public class Main implements Serializable {
     public static String teamsFileName = "Teams.txt";
     public static String tempProjects1 = "TempProjects1.txt"; //totalProjects
     public static String tempProjects2 = "TempProjects2.txt"; //PRojectsnotassigned
+    public static String softConstraintFileName = "SoftConstraint.txt";
 
    public static void updateArrays() throws IOException, ClassNotFoundException {
        User.allUserDetails = FileReadWrite.readUserDetails(userFileName);//Updating User Array List
@@ -24,7 +24,7 @@ public class Main implements Serializable {
 
        Project.totalProjects = FileReadWrite.readProjectDetails(projectsFileName);
        Project.projectsNotAssigned = FileReadWrite.readProjectDetails(projectsNotAssignedFileName);//Updating Projects Array List
-
+       Constraint.allSoftConstraints = FileReadWrite.readConstraintDetails(softConstraintFileName);
    }
 
 
