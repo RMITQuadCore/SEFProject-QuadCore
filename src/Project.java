@@ -144,21 +144,23 @@ public class Project implements Serializable {
      * Method to display all projects for particular client
      */
     public void displayProject() {
-        System.out.println("\nClient Id: " + this.getClient().getId());
-        System.out.println("Project Id: " + this.getProjectId());
-        System.out.println("Project Title: " + this.getProjectTitle());
-        System.out.println("Project Details: " + this.getProjectDetails());
-
-        for (Role r: this.getRolesInProject()) {
-            System.out.println("\nRole: " + r.getRoleName());
-            System.out.println("Frameworks: ");
-            for (String f: r.getFrameworks()) {
-                System.out.println("\t" + f);
+        System.out.println("\nClient Id\t:\t" + this.getClient().getId());
+        System.out.println("Project Id\t:\t" + this.getProjectId());
+        System.out.println("Project Title\t:\t" + this.getProjectTitle());
+        System.out.println("Project Details\t:\t" + this.getProjectDetails());
+        int roleNumber = 1;
+        for (Role role: this.getRolesInProject()) {
+            System.out.println( "Role\t\t:\t"+ roleNumber +")" + role.getRoleName());
+            roleNumber++;
+            System.out.print("Frameworks\t:\t");
+            int frameworkNumber = 1;
+            for (String framework: role.getFrameworks()) {
+                System.out.print(frameworkNumber +")" + framework + "\t");
+                frameworkNumber++;
             }
+            System.out.println();
         }
     }
-//TODO display all projects method
-
 
     /**
      * Method to discard unpopular projects based on popularity vote by students.

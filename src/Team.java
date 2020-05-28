@@ -20,6 +20,14 @@ public class Team implements Serializable {
         this.teamID = teamID;
     }
 
+    public Team(String teamID,ArrayList < Student > studentsInTeam,int teamFitness,ArrayList < Constraint > constraintsMet, Project projectAssigned) {
+        this.teamID = teamID;
+        this.studentsInTeam = studentsInTeam;
+        this.teamFitness = teamFitness;
+        this.constraintsMet = constraintsMet;
+        this.projectAssigned = projectAssigned;
+    }
+
     public String getTeamID() {
         return teamID;
     }
