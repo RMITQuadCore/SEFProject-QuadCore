@@ -440,11 +440,15 @@ public class Constraint {
         int femaleCounter =0 ;
        for(Student student : teamCreator)
        {
-           if (student.getGender() == 'f' || student.getGender() == 'F' )
+           if (student.getGender() == 'f' || student.getGender() == 'F' ) {
                femaleCounter++;
+               System.out.println("Counter: "+femaleCounter);
+           }
        }
+
         if (femaleCounter>1)
-        return false;
-        else return true;
+            return false;
+        else
+            return true;
     }
 }

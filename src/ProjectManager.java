@@ -6,7 +6,7 @@ import java.util.*;
 public class ProjectManager extends User implements Serializable {
     private static final long serialVersionUID = 2437934725196379683L;
 
-    public ArrayList<String> studentPersonalities = new ArrayList<String>();
+    //public ArrayList<String> studentPersonalities = new ArrayList<String>();
     public static ArrayList<Student> studentsNotInATeam = new ArrayList<Student>();
     private boolean signUpStatus = true;
     private static boolean projectsDiscarded = false;
@@ -36,9 +36,9 @@ public class ProjectManager extends User implements Serializable {
         ProjectManager.studentsNotInATeam = tempStudent;
     }
     //Scanner scan = SingletonScanner.getInstance();
-    public ArrayList<String> getStudentPersonalities() {
-        return this.studentPersonalities;
-    }
+//    public ArrayList<String> getStudentPersonalities() {
+//        return this.studentPersonalities;
+//    }
     public boolean getSignUpStatus()
     {
         return signUpStatus;
@@ -239,10 +239,14 @@ public class ProjectManager extends User implements Serializable {
     public void createTeams() //TODO if consraints and weightage are not set methods shouldn't run.
     { //TODO Create a method for calling Soft Contrainsts Order
         ArrayList<Student> teamCreator = new ArrayList<Student>();
+        Project.projectsNotAssigned=Project.totalProjects;
         Integer[] teamSize = getTeamSizeArray();// Calculate all the sizes
         for (int i =0 ; i < teamSize.length ; i ++)
         {   System.out.println("Team size = "+teamSize[i]);
             teamCreator = femaleHardConstraintApplicator(teamCreator, teamSize[i]);//Initial 4/ 3/ 2 students added to the ArrayList
+            for (Student s: teamCreator){
+                System.out.println("Team formed"+s.getFirstName());
+            }
             if(!Constraint.femaleHardConstraintCheck(teamCreator)) // Hard Constraint Check
             {
                 System.out.println("Sorry! A team cannot be formed currently as a hard constraint is not met.\n" +
@@ -251,10 +255,16 @@ public class ProjectManager extends User implements Serializable {
             }
             else System.out.println("Female Hard Constraint Maintained.");
             teamCreator = dislikedMembersRemover(teamCreator);
+            System.out.println("after disliked member");
             teamCreator = uniquePersonalityConstraintApplicator(teamCreator);
+            System.out.println("after unique personality");
             teamCreator = personalityAorBPresentApplicator(teamCreator);
+            System.out.println("after personalityAorBPresentApplicator");
             teamCreator = experienceSoftConstraintApplicator(teamCreator);
+            System.out.println("after experienceSoftConstraintApplicator");
             teamCreator = teamAverageGPAConstraintApplicator(teamCreator);
+            System.out.println("after teamAverageGPAConstraintApplicator");
+
             if(!Constraint.averageGPAHardConstraintCheck(teamCreator))
             {
                 System.out.println("Sorry! A team cannot be formed currently as a hard constraint is not met.\n" +
@@ -420,32 +430,48 @@ public class ProjectManager extends User implements Serializable {
         }
             int k = 0;
             boolean femaleFound = false;
-            while (k < teamSize) {
-                for (int z = 0; z < studentsNotInATeam.size(); z++) {
-                    if (studentsNotInATeam.get(z).getGender() == 'f' || studentsNotInATeam.get(z).getGender() == 'F' && !femaleFound) {
-                        teamCreator.add(studentsNotInATeam.get(z));
-                        femaleFound = true;
-                        femaleCount--;
-                        studentsNotInATeam.remove(studentsNotInATeam.get(z));
-                        k++;
-                        break;
-                    }
-                    if ((studentsNotInATeam.get(z).getGender() == 'm' || studentsNotInATeam.get(z).getGender() == 'M' ) && femaleFound == true) {
-                        teamCreator.add(studentsNotInATeam.get(z));
-                        studentsNotInATeam.remove(studentsNotInATeam.get(z));
-                        k++;
-                        break;
+        if (femaleCount!=studentsNotInATeam.size()) {
+            while (k < teamSize ) {
 
-                    } else {
-                        if (femaleCount == 0) {
+                    for (int z = 0; z < studentsNotInATeam.size(); z++) {
+
+                        if (studentsNotInATeam.get(z).getGender() == 'f' || studentsNotInATeam.get(z).getGender() == 'F' && !femaleFound ) {
                             teamCreator.add(studentsNotInATeam.get(z));
+                            femaleFound = true;
+                            femaleCount--;
                             studentsNotInATeam.remove(studentsNotInATeam.get(z));
                             k++;
                             break;
                         }
+                        if ((studentsNotInATeam.get(z).getGender() == 'm' || studentsNotInATeam.get(z).getGender() == 'M') && femaleFound == true) {
+                            teamCreator.add(studentsNotInATeam.get(z));
+                            studentsNotInATeam.remove(studentsNotInATeam.get(z));
+                            k++;
+                            break;
+
+                        } else {
+                            if (femaleCount == 0) {
+                                teamCreator.add(studentsNotInATeam.get(z));
+                                studentsNotInATeam.remove(studentsNotInATeam.get(z));
+                                k++;                                                    //executed when there are no female
+                                break;
+                            }
+                        }
+
                     }
+                if (femaleCount==studentsNotInATeam.size() && k!=teamSize){
+                    for(Student s:studentsNotInATeam){
+                        teamCreator.add(s);
+                    }
+                    break;
                 }
             }
+        }
+        else {
+            for(Student s:studentsNotInATeam){
+                teamCreator.add(s);
+            }
+        }
         return teamCreator;
     }
     public static ArrayList<Student> experienceSoftConstraintApplicator(ArrayList<Student> teamCreator)
@@ -491,11 +517,8 @@ public class ProjectManager extends User implements Serializable {
     public static ArrayList<Student> uniquePersonalityConstraintApplicator(ArrayList<Student> teamCreator) {
         //To check if duplicate personalities are present and removing team. Creating a unique Personality Team
         for (int j = 0; j < teamCreator.size(); j++) {
-            for (int k = 0; k < teamCreator.size(); k++) {
-                k = +j;
-                if (j == k) {
-                    continue;
-                } else if (teamCreator.get(j).getStudentPersonality() == teamCreator.get(k).getStudentPersonality()) {
+            for (int k = j+1; k < teamCreator.size(); k++) {
+                if (teamCreator.get(j).getStudentPersonality() == teamCreator.get(k).getStudentPersonality()) {
                     if (teamCreator.get(k).getGender() == 'm' || teamCreator.get(k).getGender() == 'M') {
                         for (Student student : studentsNotInATeam) {
                             if ((student.getStudentPersonality() != teamCreator.get(j).getStudentPersonality()) && (student.getGender() == 'm' || student.getGender() == 'M')) {
@@ -551,20 +574,34 @@ public ArrayList<Student> personalityAorBPresentApplicator(ArrayList<Student> te
 
     //Method to assign Project to a team
     public static Team setProjectForTeam(ArrayList<Student> teamCreator) {
+
+
+
         HashMap<Project, Integer> projectPopularity = new HashMap<>();
         for (int i = 0; i < Project.projectsNotAssigned.size(); i++) {
             projectPopularity.put(Project.projectsNotAssigned.get(i), 0);
         }
 
         for (int i = 0; i < teamCreator.size(); i++) {
+
             Project[] preference = new Project[4];
             preference = teamCreator.get(i).getPreferredProjects();
+
+
             for (int j = 0; j < 4; j++) {
-                if (projectPopularity.containsKey(preference[j])) {
-                    projectPopularity.put(preference[j], projectPopularity.get(preference[j]) + (4 - j));
+
+                for (HashMap.Entry<Project, Integer> entry : projectPopularity.entrySet()) {
+                    if (entry.getKey().getProjectId().compareTo(preference[j].getProjectId()) ==0)
+                    {
+                        entry.setValue(entry.getValue()+(4-j));
+                    }
                 }
             }
+
+
         }
+
+
         String search = "TEAM";
         String format =String.format("%03d", (Team.allTeams.size()+1));
         Team team = new Team(search + format);

@@ -200,11 +200,14 @@ public class Project implements Serializable {
             }
         }
         for (int i = numProjects - 1; i >= numProjectReqd; i--) {
+           // System.out.println("Project "+ totalProjects.get(i));
             Project.totalProjects.remove(i);
         }
         System.out.println("Required Projects:");
-        for(Project p:projectsNotAssigned){
+        for(Project p:totalProjects){
             p.displayProject();
+            System.out.println("Popularity: "+p.getPopularityCounter());
+
         }
         ProjectManager.setProjectsDiscarded(true);
         return true;
