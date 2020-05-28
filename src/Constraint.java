@@ -34,7 +34,13 @@ public class Constraint {
         this.constraintId = constraintId;
         this.constraintDescription = constraintDescription;
     }
+    public int getWeightAge() {
+        return weightAge;
+    }
 
+    public void setWeightAge(int weightAge) {
+        this.weightAge = weightAge;
+    }
     public Constraint(String constraintId, String constraintDescription, int maxNosOfFemaleStudent,
                       float benchmarkStudentGpa, int minNosOfStudWithBenchmarkGpa, float maxAvgGpaOfTeam,
                       float yearsOfExperience, int minNosOfStudWithExperience,
@@ -333,15 +339,12 @@ public class Constraint {
     public static boolean uniquePersonalityConstraintCheck(ArrayList<Student> teamCreator)
     {
         boolean noDuplicate = true;
-        for (int j = 0; j < teamCreator.size(); j++)
+        for (int j = 0; j < teamCreator.size()-1; j++)
         {
-            for (int k = 0; k < teamCreator.size(); k++) {
-                k = +j;
-                if (j == k) {
-                    continue;
-                } else if (teamCreator.get(j).getStudentPersonality() == teamCreator.get(k).getStudentPersonality())
+            for (int k = j + 1; k < teamCreator.size(); k++) {
+                if (teamCreator.get(j).getStudentPersonality() == teamCreator.get(k).getStudentPersonality())
                 {
-                   noDuplicate = false;
+                    noDuplicate = false;
                 }
             }
         }

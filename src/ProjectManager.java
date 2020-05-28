@@ -10,6 +10,15 @@ public class ProjectManager extends User implements Serializable {
     public static ArrayList<Student> studentsNotInATeam = new ArrayList<Student>();
     private boolean signUpStatus = true;
     private static boolean projectsDiscarded = false;
+    public static ArrayList < Constraint > constraints = new ArrayList < > ();
+
+    public static ArrayList<Constraint> getConstraints() {
+        return constraints;
+    }
+
+    public static void setConstraints(ArrayList<Constraint> constraints) {
+        ProjectManager.constraints = constraints;
+    }
 
     public ProjectManager()
     {
@@ -110,7 +119,7 @@ public class ProjectManager extends User implements Serializable {
                     break;
 
                 case 9:
-                    System.out.println("Swap Team members");
+                    swapTeamMembers();
                     break;
 
                 case 10:
@@ -306,33 +315,43 @@ public class ProjectManager extends User implements Serializable {
 
     // 1. Check overallGPA hard constraint
 
+
     public static ArrayList<Student> teamAverageGPAConstraintApplicator(ArrayList<Student>teamCreator) {
 
-            double sumOfGPA = 0;
-            for (Student student : teamCreator) {
-                sumOfGPA = sumOfGPA + student.getGpa();
-            }
-            if ((sumOfGPA / 4) > 3.5)
-            {
-                for (int i = 0; i < studentsNotInATeam.size(); i++) {
-                    if ((studentsNotInATeam.get(i).getGender() == 'm' || studentsNotInATeam.get(i).getGender() == 'M')&& studentsNotInATeam.get(i).getGpa() < 3.00) {
-                        for (Student student : teamCreator) {
-                            if ((student.getGender() == 'm' || student.getGender() == 'M')  && student.getGpa() > 3.50) {
-                                if (((sumOfGPA - student.getGpa() + studentsNotInATeam.get(i).getGpa()) / 4) < 3.5) {
-                                    studentsNotInATeam.add(student);
-                                    teamCreator.remove(student);
-                                    teamCreator.add(studentsNotInATeam.get(i));
-                                    studentsNotInATeam.remove(studentsNotInATeam.get(i));
-                                }
-                            }
+        double sumOfGPA = 0;
+        for (Student student : teamCreator) {
+            sumOfGPA = sumOfGPA + student.getGpa();
+        }
+        if ((sumOfGPA / 4) > 3.5) //if hard constraint is violeted then we will first try to meet it by swapping students between teamCreator and studentsNotInATeam
+        {
+            for (int i = 0; i < studentsNotInATeam.size(); i++) {
+                if ((studentsNotInATeam.get(i).getGender() == 'm' || studentsNotInATeam.get(i).getGender() == 'M')&& studentsNotInATeam.get(i).getGpa() < 3.00) {
+                    for (Student student : teamCreator) {
+                        if ((student.getGender() == 'm' || student.getGender() == 'M')  && student.getGpa() > 3.00) {
+                            //swapping students
+                            studentsNotInATeam.add(student);
+                            teamCreator.remove(student);
+                            teamCreator.add(studentsNotInATeam.get(i));
+                            studentsNotInATeam.remove(studentsNotInATeam.get(i));
+                            i--; //removed student from studentsNotInATeam so taking 'for' loop back by one
+                            break;
                         }
                     }
                 }
+                //checking if hard constraint is met immediate after swapping
+                double sumOfNewGPA = 0;
+                for (Student student : teamCreator) {
+                    sumOfNewGPA = sumOfNewGPA + student.getGpa();
+                }
+                if ((sumOfNewGPA / 4) <= 3.5) {
+                    break; //if hard constraint is met
+                }
             }
+        }
         return teamCreator;
     }
 
-    // 2. Check GPA of individual team member
+    // 2. Check GPA of individual team member hard constraint
     private static ArrayList<Student> teamMemberGPAConstraintApplicator(ArrayList<Student> teamCreator)
     {
         int GPAGreaterThanThreeCounter = 0;
@@ -341,27 +360,30 @@ public class ProjectManager extends User implements Serializable {
                 GPAGreaterThanThreeCounter++;
             }
         }
+
+        //considering sumOfGPA here as well so that changes made here should not impact teamAverageGPAConstraint
         double sumOfGPA = 0;
         for (Student student : teamCreator) {
             sumOfGPA = sumOfGPA + student.getGpa();
         }
         double averageGpaOfTeam = sumOfGPA / 4;
 
-        if (GPAGreaterThanThreeCounter < 2) {
+        if (GPAGreaterThanThreeCounter < 2) { //if hard constraint is violeted then we will first try to meet it by swapping students between teamCreator and studentsNotInATeam
             for (int i = 0; i < studentsNotInATeam.size(); i++) {
                 if (studentsNotInATeam.get(i).getGender() == 'm' && studentsNotInATeam.get(i).getGpa() >= 3.00) {
                     for (Student student : teamCreator) {
                         if ((studentsNotInATeam.get(i).getGender() == 'm' && student.getGpa() < 3.00) && (((sumOfGPA + studentsNotInATeam.get(i).getGpa() - student.getGpa()) / 4) < 3.50)) {
+                            //swapping students
                             studentsNotInATeam.add(student);
                             teamCreator.remove(student);
                             teamCreator.add(studentsNotInATeam.get(i));
                             studentsNotInATeam.remove(studentsNotInATeam.get(i));
-                            GPAGreaterThanThreeCounter++;
+                            GPAGreaterThanThreeCounter++; //we got one more student with GPA >= 3
                             break;
                         }
                     }
                     if (GPAGreaterThanThreeCounter == 2) {
-                        break;
+                        break; // if hard constraint is met
                     }
                 }
             }
@@ -581,5 +603,11 @@ public ArrayList<Student> personalityAorBPresentApplicator(ArrayList<Student> te
         }
         team.setStudentsInTeam(teamCreator);
         return team;
+    }
+
+    private void swapTeamMembers() {
+        // GUI call
+        String[] argsArray = new String[0];
+        SwapTeamGUI.main(argsArray);
     }
 }
