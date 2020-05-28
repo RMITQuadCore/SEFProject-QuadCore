@@ -338,6 +338,7 @@ public class Student extends User implements Serializable {
                             projectExists = true;
                             preferredProjects[i] = Project.totalProjects.get(j);
                             Project.totalProjects.get(j).setPopularityCounter(Project.totalProjects.get(j).getPopularityCounter() + (4 - i));
+                            System.out.println("Popularity set");
                         }
                     }
                     if (!projectExists) {

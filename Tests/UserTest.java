@@ -26,7 +26,7 @@
 //        try {
 //            u.signup();
 //        } catch (IncorrectInputException e) {
-//            // TODO Auto-generated catch block
+//            //  Auto-generated catch block
 //            System.err.println(e.getMessage());
 //        }
 //        String[] input = new String[6];
@@ -55,7 +55,7 @@
 //        try {
 //            u.login();
 //        } catch (IncorrectInputException e) {
-//            // TODO Auto-generated catch block
+//            //  Auto-generated catch block
 //            System.err.println(e.getMessage());
 //        }
 //        String[] logininput = new String[2];

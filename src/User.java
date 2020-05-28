@@ -151,9 +151,9 @@ public class User  implements Serializable {
 
                 case 2:
                     try {
-//                        for(User u1:User.allUserDetails){
-//                            System.out.println(u1.getId()+" "+u1.getUserName()+" "+u1.getPassword());
-//                        }
+                        for(User u1:User.allUserDetails){
+                            System.out.println(u1.getId()+" "+u1.getUserName()+" "+u1.getPassword());
+                        }
                         login();
                     } catch (IncorrectInputException e) {
                         e.getMessage();
@@ -161,9 +161,11 @@ public class User  implements Serializable {
                     break;
 
                 case 3:
-                    FileReadWrite.saveUserDetails(Main.userFileName, allUserDetails);
-                    FileReadWrite.saveStudentDetails(Main.studentsFileName, Student.allStudents);
-                    FileReadWrite.saveStudentDetails(Main.studentsNotInATeamFileName,ProjectManager.studentsNotInATeam);
+//                    FileReadWrite.saveUserDetails(Main.userFileName, allUserDetails);
+//                    FileReadWrite.saveStudentDetails(Main.studentsFileName, Student.allStudents);
+//                    FileReadWrite.saveStudentDetails(Main.studentsNotInATeamFileName,ProjectManager.studentsNotInATeam);
+//                    FileReadWrite.saveProjectDetails(Main.projectsFileName, Project.totalProjects);
+//                    FileReadWrite.saveProjectDetails(Main.projectsNotAssignedFileName, Project.projectsNotAssigned);
                     System.out.println("System exited! Thanks for using Project Team Formation System");
                     System.exit(0);
                     break;
@@ -353,7 +355,7 @@ public class User  implements Serializable {
         // Verify the login for both, when the field is blank and the Submit button is clicked.
 
         String loginName;
-        String pass;
+        String pass,savedPassword = null;
         boolean foundUsername = false;
         boolean foundPassword = false;
 
@@ -363,61 +365,70 @@ public class User  implements Serializable {
             loginName = Global.scan.nextLine();
         //    System.out.println("Name: "+loginName);
             for (User user : allUserDetails) {
-              //  System.out.println("inside login for" + user.getUserName());
+                //  System.out.println("inside login for" + user.getUserName());
                 if (user instanceof ClientRepresentative) {
                     if (loginName.compareTo(user.getUserName()) == 0) {
                         foundUsername = true;
+                        savedPassword = user.getPassword();
                         //setUserName(loginName);
                     }
 
                 } else if (user instanceof Student) {
                     if (loginName.compareTo(user.getUserName()) == 0) {
                         foundUsername = true;
-                      // setUserName(loginName);
+                        savedPassword = user.getPassword();
+                        // setUserName(loginName);
                     }
 
-                } else if(user instanceof ProjectManager){
+                } else if (user instanceof ProjectManager) {
                     if (loginName.compareTo(user.getUserName()) == 0) {
                         foundUsername = true;
-                      // setUserName(loginName);
+                        savedPassword = user.getPassword();
+                        // setUserName(loginName);
                     }
                 }
-
+            }
                 if (foundUsername) {
                     System.out.println("\nEnter Password: ");
                     pass = Global.scan.nextLine();
 
-                    if (pass.compareTo(user.getPassword()) == 0) {
+                    if (pass.compareTo(savedPassword) == 0) {
                         foundPassword = true;
-                       // setPassword(pass);
+                        //setPassword(pass);
                         // Verify whether the user has entered corresponding username/email id and password.
 
                         System.out.println("You have successfully logged in!");
+                        for(User user: allUserDetails) {
+                            if (loginName.compareTo(user.getUserName()) == 0) {
+                                if (user instanceof ClientRepresentative) {
+                                    ((ClientRepresentative) user).clientMenu();
+                                    break;
+                                } else if (user instanceof Student) {
+                                    System.out.println("inside student else if");
+                                    for (Student st : Student.allStudents) {
+                                        System.out.println("for "+st.getUserName()+"login: "+loginName);
+                                        if (st.getUserName().compareTo(loginName) == 0) {
+                                            st.studentMenu();
+                                            break;
+                                        }
 
-                        if (user instanceof ClientRepresentative) {
-                            ((ClientRepresentative) user).clientMenu();
-                            break;
-                        } else if (user instanceof Student) {
-                            for(Student st: Student.allStudents) {
-                                if (st.getId().compareTo(user.getId()) == 0) {
-                                    st.studentMenu();
+                                    }
+                                } else {
+                                    ProjectManager pm = new ProjectManager();
+                                    pm.projectManagerMenu();
+                                    break;
                                 }
                             }
-
-                            break;
-                        } else {
-                            ((ProjectManager) user).projectManagerMenu();
-                            break;
                         }
- //list of messages that pop up when an invalid login is carried out
+                    //list of messages that pop up when an invalid login is carried out
                     } else {
                         foundPassword = false;
                         System.err.println("Incorrect password!");
                         break;
                     }
-                }
+                
             }
-            if (!foundUsername) {
+            else if (!foundUsername) {
                 System.err.println("Username not signed up!");
             } else if (!foundUsername && !foundPassword) {
                 throw new IncorrectInputException("Incorrect username or password!");

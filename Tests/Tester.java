@@ -1,12 +1,15 @@
-//import java.util.ArrayList;
-//import java.util.List;
-//
+import java.util.ArrayList;
+
+
+
+
 //public class Tester {
 //
 //    public static void main(String args[]) {
 //        User u1 = new User();
 //        Project p = new Project();
 //        Student s = new Student();
+//
 //        ArrayList<Student> tempStudent = new ArrayList<Student>();
 //        ArrayList<Student> teamStudent = new ArrayList<Student>();
 //        ArrayList<Student> projectGroupStudent = new ArrayList<Student>();
@@ -23,62 +26,88 @@
 //        Project p4 = new Project("CL104", "PROJ204", "xyz4", "xyz4", "xyz4", null, 8);
 //        p.pr.add(p4);
 //
-//        Student s1 = new Student("ST101", "abc1", "abc1", "abc1", "abc1", "abc1", "abc1", 2.8, 1, 'm', null, null, null,
-//                null, null, '0');
+//        Student s1 = new Student("ST101", "abc1", "abc1", "abc1", "abc1", "abc1", "abc1", 2.8, 1, 'm', 'a');
 //        s.allStudents.add(s1);
-//        u1.details.add(s1);
+//        u1.allUserDetails.add(s1);
 //
-//        Student s2 = new Student("ST102", "abc2", "abc2", "abc2", "abc2", "abc2", "abc2", 3.8, 1, 'm', null, null, null,
-//                null, null, '0');
+//        Student s2 = new Student("ST102", "abc2", "abc2", "abc2", "abc2", "abc2", "abc2", 3.8, 1, 'm', 'a');
 //        s.allStudents.add(s2);
-//        u1.details.add(s2);
+//        u1.allUserDetails.add(s2);
 //
-//        Student s3 = new Student("ST103", "abc3", "abc3", "abc3", "abc3", "abc3", "abc3", 2, 4, 'm', null, null, null,
-//                null, null, '0');
+//        Student s3 = new Student("ST103", "abc3", "abc3", "abc3", "abc3", "abc3", "abc3", 2, 4, 'm', 'b');
 //        s.allStudents.add(s3);
-//        u1.details.add(s3);
+//        u1.allUserDetails.add(s3);
 //
-//        Student s4 = new Student("ST104", "abc4", "abc4", "abc4", "abc4", "abc4", "abc4", 3, 1, 'f', null, null, null,
-//                null, null, '0');
+//        Student s4 = new Student("ST104", "abc4", "abc4", "abc4", "abc4", "abc4", "abc4", 3, 1, 'm', 'c');
 //        s.allStudents.add(s4);
-//        u1.details.add(s4);
+//        u1.allUserDetails.add(s4);
 //
-//        Student s5 = new Student("ST105", "abc5", "abc5", "abc5", "abc5", "abc5", "abc5", 4, 6, 'm', null, null, null,
-//                null, null, '0');
+//        Student s5 = new Student("ST105", "abc5", "abc5", "abc5", "abc5", "abc5", "abc5", 4, 6, 'm', 'd');
 //        s.allStudents.add(s5);
-//        u1.details.add(s5);
+//        u1.allUserDetails.add(s5);
 //
-//        Student s6 = new Student("ST106", "abc6", "abc6", "abc6", "abc6", "abc6", "abc6", 3.2, 5, 'f', null, null, null,
-//                null, null, '0');
+//        Student s6 = new Student("ST106", "abc6", "abc6", "abc6", "abc6", "abc6", "abc6", 3.2, 5, 'm', 'd');
 //        s.allStudents.add(s6);
-//        u1.details.add(s6);
+//        u1.allUserDetails.add(s6);
 //
-//        Student s7 = new Student("ST107", "abc7", "abc7", "abc7", "abc7", "abc7", "abc7", 3.5, 6, 'm', null, null, null,
-//                null, null, '0');
+//        Student s7 = new Student("ST107", "abc7", "abc7", "abc7", "abc7", "abc7", "abc7", 3.5, 6, 'm', '0');
 //        s.allStudents.add(s7);
-//        u1.details.add(s7);
+//        u1.allUserDetails.add(s7);
 //
-//        Student s8 = new Student("ST108", "abc8", "abc8", "abc8", "abc8", "abc8", "abc8", 3, 3, 'f', null, null, null,
-//                null, null, '0');
+//        Student s8 = new Student("ST108", "abc8", "abc8", "abc8", "abc8", "abc8", "abc8", 3, 3, 'm', '0');
 //        s.allStudents.add(s8);
-//        u1.details.add(s8);
-////
-////		Student s9 = new Student("ST109", "abc9", "abc9", "abc9", "abc9", "abc9", "abc9", 3.2, 2, 'm', null, null, null,
-////				null, null, '0');
-////		s.allStudents.add(s9);
-////		u1.details.add(s9);
-////
-////		Student s10 = new Student("ST110", "abc10", "abc10", "abc10", "abc10", "abc10", "abc10", 3, 3, 'f', null, null,
-////				null, null, null, '0');
-////		s.allStudents.add(s10);
-////		u1.details.add(s10);
-////
-////		Student s11 = new Student("ST111", "abc10", "abc10", "abc10", "abc10", "abc10", "abc10", 3, 3, 'm', null, null,
-////				null, null, null, '0');
-////		s.allStudents.add(s11);
-////		u1.details.add(s11);
+//        u1.allUserDetails.add(s8);
+//
+//
+//        Student s9 = new Student("ST109", "abc9", "abc9", "abc9", "abc9", "abc9", "abc9", 3.2, 2, 'm', '0');
+//        s.allStudents.add(s9);
+//        u1.allUserDetails.add(s9);
+//
+//        Student s10 = new Student("ST110", "abc10", "abc10", "abc10", "abc10", "abc10", "abc10", 3, 3, 'm',  '0');
+//        s.allStudents.add(s10);
+//        u1.allUserDetails.add(s10);
+//
+//        Student s11 = new Student("ST111", "abc10", "abc10", "abc10", "abc10", "abc10", "abc10", 3, 3, 'm',  '0');
+//        s.allStudents.add(s11);
+//        u1.allUserDetails.add(s11);
+//
+//        Student s12 = new Student("ST112", "abc10", "abc10", "abc10", "abc10", "abc10", "abc10", 3, 3, 'm',  '0');
+//        s.allStudents.add(s12);
+//        u1.allUserDetails.add(s12);
+//
+//        Student s13 = new Student("ST113", "abc10", "abc10", "abc10", "abc10", "abc10", "abc10", 3, 3, 'f',  '0');
+//        s.allStudents.add(s13);
+//        u1.allUserDetails.add(s13);
+//
+//        Student s14 = new Student("ST114", "abc10", "abc10", "abc10", "abc10", "abc10", "abc10", 3, 3, 'f',  '0');
+//        s.allStudents.add(s14);
+//        u1.allUserDetails.add(s14);
 //
 //        tempStudent.addAll(s.allStudents);
+//        teamStudent = ProjectManager.femaleHardConstraintApplicator(teamStudent,tempStudent,4);
+//        for(Student st:teamStudent){
+//            System.out.println("Student "+st.getId());
+//        }
+//
+//
+//        teamStudent = ProjectManager.femaleHardConstraintApplicator(teamStudent,tempStudent,4);
+//        for(Student st:teamStudent){
+//            System.out.println("Student 1 "+st.getId());
+//        }
+//
+//        teamStudent = ProjectManager.femaleHardConstraintApplicator(teamStudent,tempStudent,2);
+//        for(Student st:teamStudent){
+//            System.out.println("Student 2 "+st.getId());
+//        }
+//    }
+//}
+
+//		Student s11 = new Student("ST111", "abc10", "abc10", "abc10", "abc10", "abc10", "abc10", 3, 3, 'm', null, null,
+//				null, null, null, '0');
+//		s.allStudents.add(s11);
+//		u1.details.add(s11);
+//
+
 //        u1.start();
 //
 //        int numOfStudents = Student.allStudents.size();
