@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Constraint implements Serializable {
 
-    String constraintId;
+    String constraintId = "Constraint 0";
     String constraintDescription;
     private int weightAge;
     public static ArrayList  < Constraint > allSoftConstraints = new ArrayList < > ();
@@ -197,8 +197,20 @@ public class Constraint implements Serializable {
      * Method to generate constraint ID
      */
     public void createConstraint() throws IOException {
-        constraintId = "Constraint " +
-                String.format("%03d", (Integer.parseInt(getConstraintId().substring(11)) + 1));
+//        constraintId = "Constraint " +
+//                String.format("%03d", (Integer.parseInt(getConstraintId().substring(11)) + 1));
+
+     //   if (allSoftConstraints.size() > 0) {
+            //Constraint lastConstraint = allSoftConstraints.get(allSoftConstraints.size() - 1);
+//       projectId = "PROJ" + String.format("%03d", (Integer.parseInt(lastProject.getProjectId().substring(4)) + 1));
+            constraintId = "Constraint " + (allSoftConstraints.size()+1);
+            setConstraintId(constraintId);
+                    //"Constraint " +
+                //String.format("%03d", (Integer.parseInt(getConstraintId().substring(11)) + 1));
+//        } else {
+//            constraintId = "Constraint " +
+//                    String.format("%03d", (Integer.parseInt(getConstraintId().substring(11)) + 1));
+//        }
 
         System.out.println("Enter Description: ");
         constraintDescription = Global.scan.nextLine();
@@ -286,6 +298,7 @@ public class Constraint implements Serializable {
             }
         } while (!isExist);
 
+        Constraint.allSoftConstraints.clear();
         System.out.println("\nEnter weight age for Soft-Constraints (1-4): ");
 
         System.out.println("Unique Personality Soft-Constraint : ");
@@ -330,10 +343,17 @@ public class Constraint implements Serializable {
         System.out.println(
                 "3. Every personality on a team should be unique: " + uniquePersonality);
 
-        System.out.println("\n Weight age for Soft constraints : \n" +
-                "1. Unique personality constraint: " + uniquePersonalityWeightAge + "\n" +
-                "2. Required personality in a team constraint: " + requiredPersonalityWeightAge + "\n" +
-                "3. Experience Soft-Constraint : " + experienceWeightAge + "\n");
+        int j = 1;
+        System.out.println("Weight age for Soft constraints : ");
+        for (Constraint c : allSoftConstraints){
+            System.out.println(j + ". "+ c.getConstraintDescription() + ": "+ c.getWeightAge());
+            j++;
+        }
+
+//        System.out.println("\n Weight age for Soft constraints : \n" +
+//                "1. Unique personality constraint: " + uniquePersonalityWeightAge + "\n" +
+//                "2. Required personality in a team constraint: " + requiredPersonalityWeightAge + "\n" +
+//                "3. Experience Soft-Constraint : " + experienceWeightAge + "\n");
     }
 
 

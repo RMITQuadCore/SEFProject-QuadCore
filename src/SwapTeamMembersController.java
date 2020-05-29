@@ -204,6 +204,14 @@ public class SwapTeamMembersController {
                                 //swapping two students
                                 teamTwo.getStudentsInTeam().add(student1);
                                 teamOne.getStudentsInTeam().add(student2);
+                                for(Student student: Student.allStudents){
+                                    if(student.getId().compareTo(student1.getId()) == 0){
+                                        student.setAssignedTeam(teamTwo);
+                                    }
+                                    if(student.getId().compareTo(student2.getId()) == 0){
+                                        student.setAssignedTeam(teamOne);
+                                    }
+                                }
                                 teamOne.getStudentsInTeam().remove(student1);
                                 teamTwo.getStudentsInTeam().remove(student2);
                                 //break main loop once swapped
