@@ -8,13 +8,11 @@ public class Project implements Serializable {
     public static ArrayList<Project> totalProjects = new ArrayList<Project>();
     public static ArrayList<Project> projectsNotAssigned = totalProjects;
     private String projectId = "PROJ000";
-    private ClientRepresentative client;
     private String projectTitle;
     private String projectDetails;
+    private ClientRepresentative client;
     private ArrayList<Role> rolesInProject = new ArrayList<Role>();
-    public static int projectCounter = 0;
     public int popularityCounter;
-
 
     public Project() {
 
@@ -30,22 +28,11 @@ public class Project implements Serializable {
 
     /**
      * Getter and setter methods.
-     * @return
+     * @return project class attributes
      */
-    public static int getProjectCounter() {
-        return projectCounter;
-    }
-
-    public static void setProjectCounter(int projectCounter) {
-        Project.projectCounter = projectCounter;
-    }
 
     public ArrayList < Role > getRolesInProject() {
         return rolesInProject;
-    }
-
-    public void setRolesInProject(ArrayList < Role > rolesInProject) {
-        this.rolesInProject = rolesInProject;
     }
 
     public String getProjectId() {
@@ -60,24 +47,12 @@ public class Project implements Serializable {
         return client;
     }
 
-    public void setClient(ClientRepresentative client) {
-        this.client = client;
-    }
-
     public String getProjectTitle() {
         return projectTitle;
     }
 
-    public void setProjectTitle(String projectTitle) {
-        this.projectTitle = projectTitle;
-    }
-
     public String getProjectDetails() {
         return projectDetails;
-    }
-
-    public void setProjectDetails(String projectDetails) {
-        this.projectDetails = projectDetails;
     }
 
     public int getPopularityCounter() {
@@ -99,6 +74,7 @@ public class Project implements Serializable {
      * @throws IOException
      */
     public void createProject(ClientRepresentative client) throws IOException {
+        //incrementing project Id for new project
         if (totalProjects.size() > 0) {
             Project lastProject = totalProjects.get(totalProjects.size() - 1);
             projectId = "PROJ" + String.format("%03d", (Integer.parseInt(lastProject.getProjectId().substring(4)) + 1));
@@ -164,7 +140,7 @@ public class Project implements Serializable {
 
     /**
      * Method to discard unpopular projects based on popularity vote by students.
-     * @return
+     * @return boolean: method success
      * @throws ProjectMismatchException
      */
     public static boolean discardUnpopularProjects() throws ProjectMismatchException {
@@ -190,7 +166,7 @@ public class Project implements Serializable {
         Project temp;
         if (Project.totalProjects.size() > 1) // check if the number of orders is larger than 1
         {
-            for (int x = 0; x < Project.totalProjects.size(); x++) // bubble sort outer loop
+            for (int x = 0; x < Project.totalProjects.size(); x++) // bubble sort (descending order) outer loop
             {
                 for (int i = 0; i < Project.totalProjects.size() - x - 1; i++) {
                     if (Project.totalProjects.get(i).getPopularityCounter() < (Project.totalProjects.get(i + 1).getPopularityCounter())) {
@@ -201,16 +177,21 @@ public class Project implements Serializable {
                 }
             }
         }
+
+        //delete unpopular projects
         for (int i = numProjects - 1; i >= numProjectReqd; i--) {
-           // System.out.println("Project "+ totalProjects.get(i));
             Project.totalProjects.remove(i);
         }
+
+        //display required projects
         System.out.println("Required Projects:");
         for(Project p:totalProjects){
             p.displayProject();
             System.out.println("Popularity: "+p.getPopularityCounter());
 
         }
+
+        //after discarding, boolean for projects discarded is set  to true
         ProjectManager.setProjectsDiscarded(true);
         return true;
     }

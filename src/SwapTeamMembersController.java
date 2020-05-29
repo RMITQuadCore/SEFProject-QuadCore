@@ -18,12 +18,12 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 
 public class SwapTeamMembersController {
-    public ListView projectListView;
-    public TextField studentOne;
-    public TextField studentTwo;
-    public Label messageLabel;
-    public Button tryButton;
-    public Button cancelButton;
+    @FXML private ListView projectListView;
+    @FXML private TextField studentOne;
+    @FXML private TextField studentTwo;
+    @FXML private Label messageLabel;
+    @FXML private Button tryButton;
+    @FXML private Button cancelButton;
 
     @FXML public void initialize() {
         messageLabel.setText("");
@@ -46,12 +46,14 @@ public class SwapTeamMembersController {
     }
 
 
-    public void tryButtonHandler(ActionEvent actionEvent) {
+    @FXML private void tryButtonHandler(ActionEvent actionEvent) {
         // hiding previous window
         tryButton.getScene().getWindow().hide();
 
         String projectOne = "";
         String projectTwo = "";
+
+        //checking if student one is present and has project assigned
         for (Team team : Team.allTeams) {
             for (Student student : team.getStudentsInTeam()) {
                 if (student.getId().compareToIgnoreCase(studentOne.getText()) == 0) {
@@ -64,6 +66,7 @@ public class SwapTeamMembersController {
             messageLabel.setText("Student id : " + studentOne.getText() + " not found!");
             SwapTeamGUI.displayAllTeamsFitness();
         } else {
+            //checking if student two is present and has project assigned
             for (Team team : Team.allTeams) {
                 for (Student student : team.getStudentsInTeam()) {
                     if (student.getId().compareToIgnoreCase(studentTwo.getText()) == 0) {
@@ -102,26 +105,26 @@ public class SwapTeamMembersController {
                 StackedBarChart<Number, String> fitnessBarChart = new StackedBarChart<>(xAxis, yAxis);
                 fitnessBarChart.setTitle("Predicted Team Fitness");
 
-                XYChart.Series<Number, String> constraint1 = new XYChart.Series<>();
-                XYChart.Series<Number, String> constraint2 = new XYChart.Series<>();
-                XYChart.Series<Number, String> constraint3 = new XYChart.Series<>();
+                XYChart.Series<Number, String> constraintOne = new XYChart.Series<>();
+                XYChart.Series<Number, String> constraintTwo = new XYChart.Series<>();
+                XYChart.Series<Number, String> constraintThree = new XYChart.Series<>();
 
                 //first constraint data for chart
-                constraint1.setName("Constraint 1");
-                SwapTeamGUI.constarintOneSetData(constraint1);
+                constraintOne.setName("Constraint 1");
+                SwapTeamGUI.constraintOneSetData(constraintOne);
 
                 //Second constraint data for chart
-                constraint2.setName("Constraint 2");
-                SwapTeamGUI.constarintTwoSetData(constraint2);
+                constraintTwo.setName("Constraint 2");
+                SwapTeamGUI.constraintTwoSetData(constraintTwo);
 
                 //Second constraint data for chart
-                constraint3.setName("Constraint 3");
-                SwapTeamGUI.constarintThreeSetData(constraint3);
+                constraintThree.setName("Constraint 3");
+                SwapTeamGUI.constraintThreeSetData(constraintThree);
 
                 //adding all constraints to bar chart
-                fitnessBarChart.getData().addAll(constraint1, constraint2, constraint3);
+                fitnessBarChart.getData().addAll(constraintOne, constraintTwo, constraintThree);
                 if (projectIdsList.size() == 2) {
-                    fitnessBarChart.setCategoryGap(100);
+                    fitnessBarChart.setCategoryGap(80);
                 }
 
                 Group chart = new Group(fitnessBarChart);
@@ -129,6 +132,8 @@ public class SwapTeamMembersController {
                 confirmButton.setText("CONFIRM");
                 confirmButton.setOnAction(new EventHandler<ActionEvent>() {
                     public void handle(ActionEvent event) {
+                        //if Project Manager confirms swapping, swapping will retain
+                            // and he will be directed to main GUI
                         confirmButton.getScene().getWindow().hide();
                         SwapTeamGUI.displayAllTeamsFitness();
                     }
@@ -161,7 +166,7 @@ public class SwapTeamMembersController {
     }
 
     //Method to calculate all team constraint
-    protected static void calculateTeamConstraints() {
+    @FXML protected static void calculateTeamConstraints() {
         for (Team team : Team.allTeams) {
             ArrayList<Constraint> constraints = new ArrayList<>();
 
@@ -193,27 +198,28 @@ public class SwapTeamMembersController {
     }
 
     //Method to swap team members
-    private void membersSwap() {
+    @FXML private void membersSwap() {
         loop:
         for (Team teamOne : Team.allTeams) {
-            for (Student student1 : teamOne.getStudentsInTeam()) {
-                if (student1.getId().compareToIgnoreCase(studentOne.getText()) == 0) {
+            for (Student firstStudent : teamOne.getStudentsInTeam()) {
+                if (firstStudent.getId().compareToIgnoreCase(studentOne.getText()) == 0) {
                     for (Team teamTwo : Team.allTeams) {
-                        for (Student student2 : teamTwo.getStudentsInTeam()) {
-                            if (student2.getId().compareToIgnoreCase(studentTwo.getText()) == 0) {
+                        for (Student secondStudent : teamTwo.getStudentsInTeam()) {
+                            if (secondStudent.getId().compareToIgnoreCase(studentTwo.getText()) == 0) {
                                 //swapping two students
-                                teamTwo.getStudentsInTeam().add(student1);
-                                teamOne.getStudentsInTeam().add(student2);
+                                teamTwo.getStudentsInTeam().add(firstStudent);
+                                teamOne.getStudentsInTeam().add(secondStudent);
+                                //changing assigned teams for swapped students
                                 for(Student student: Student.allStudents){
-                                    if(student.getId().compareTo(student1.getId()) == 0){
+                                    if(student.getId().compareTo(firstStudent.getId()) == 0){
                                         student.setAssignedTeam(teamTwo);
                                     }
-                                    if(student.getId().compareTo(student2.getId()) == 0){
+                                    if(student.getId().compareTo(secondStudent.getId()) == 0){
                                         student.setAssignedTeam(teamOne);
                                     }
                                 }
-                                teamOne.getStudentsInTeam().remove(student1);
-                                teamTwo.getStudentsInTeam().remove(student2);
+                                teamOne.getStudentsInTeam().remove(firstStudent);
+                                teamTwo.getStudentsInTeam().remove(secondStudent);
                                 //break main loop once swapped
                                 break loop;
                             }
@@ -224,7 +230,8 @@ public class SwapTeamMembersController {
         }
     }
 
-    public void cancelButtonHandler(ActionEvent actionEvent) {
+    //Method to return back to Main GUI if CANCEL is pressed
+    @FXML private void cancelButtonHandler(ActionEvent actionEvent) {
         cancelButton.getScene().getWindow().hide();
         SwapTeamGUI.displayAllTeamsFitness();
     }

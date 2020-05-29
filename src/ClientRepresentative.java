@@ -4,13 +4,8 @@ import java.util.ArrayList;
 
 public class ClientRepresentative extends User implements Serializable {
     private static final long serialVersionUID = -7506201449608946074L;
-    //    Project project = new Project(); //TODO Array of projects
-    public ArrayList < Project > projects = Project.totalProjects;
 
-    public ClientRepresentative() {
-    }
-
-
+    //constructor
     public ClientRepresentative(String id, String firstName, String lastName, String emailID, String userName,
                                 String password, String org) {
         super(id, firstName, lastName, emailID, userName, password, org);
@@ -19,7 +14,7 @@ public class ClientRepresentative extends User implements Serializable {
 
 
     /**
-     * Method display Client representative it's menu and further navigate to required functionality.
+     * Method displays Client representative it's menu and further navigate to required functionality.
      * @throws IOException
      * @throws ClassNotFoundException
      */
@@ -36,13 +31,13 @@ public class ClientRepresentative extends User implements Serializable {
 
             switch (choice) {
                 case 1:
-                    Project project = new Project();
-                    project.createProject(this);
+                    Project newProject = new Project();
+                    newProject.createProject(this);
                     break;
                 case 2:
-                    for (Project p: Project.totalProjects) {
-                        if (p.getClient().getClientID().equals(this.getClientID())) {
-                            p.displayProject();
+                    for (Project project: Project.totalProjects) {
+                        if (project.getClient().getClientID().equals(this.getClientID())) {
+                            project.displayProject();
                         }
                     }
                     break;
