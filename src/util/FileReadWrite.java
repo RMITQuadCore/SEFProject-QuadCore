@@ -1,9 +1,7 @@
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+package util;
+import model.*;
+
+import java.io.*;
 import java.util.ArrayList;
 
 public class FileReadWrite {
@@ -26,7 +24,7 @@ public class FileReadWrite {
         ArrayList < User > userList = new ArrayList < > ();
         if (f.exists()) {
             ObjectInputStream in = new ObjectInputStream(new FileInputStream(fileName));
-            userList = (ArrayList < User > ) in .readObject(); in .close();
+            userList = (ArrayList <User> ) in .readObject(); in .close();
         } else {}
         return userList;
     }
@@ -34,7 +32,6 @@ public class FileReadWrite {
     //This Class aids in writing and reading data from a text file
 
     /**
-     *
      * @param fileName
      * @param studentList
      * @throws IOException
@@ -48,7 +45,7 @@ public class FileReadWrite {
     }
 
     @SuppressWarnings("unchecked")
-    public static ArrayList < Student > readStudentDetails(String fileName) throws IOException, ClassNotFoundException {
+    public static ArrayList <Student> readStudentDetails(String fileName) throws IOException, ClassNotFoundException {
         f = new File(fileName);
         ArrayList < Student > studentList = new ArrayList < > ();
         if (f.exists()) {
@@ -67,7 +64,7 @@ public class FileReadWrite {
     }
 
     @SuppressWarnings("unchecked")
-    public static ArrayList < Project > readProjectDetails(String fileName) throws IOException, ClassNotFoundException {
+    public static ArrayList <Project> readProjectDetails(String fileName) throws IOException, ClassNotFoundException {
         f = new File(fileName);
         ArrayList < Project > projectList = new ArrayList < > ();
         if (f.exists()) {
@@ -86,7 +83,7 @@ public class FileReadWrite {
     }
 
     @SuppressWarnings("unchecked")
-    public static ArrayList < Team > readTeamDetails(String fileName) throws IOException, ClassNotFoundException {
+    public static ArrayList <Team> readTeamDetails(String fileName) throws IOException, ClassNotFoundException {
         f = new File(fileName);
         ArrayList < Team > teamList = new ArrayList < > ();
         if (f.exists()) {
@@ -110,7 +107,7 @@ public class FileReadWrite {
         ArrayList < Role > roleList = new ArrayList < > ();
         if (f.exists()) {
             ObjectInputStream in = new ObjectInputStream(new FileInputStream(fileName));
-            roleList = (ArrayList < Role > ) in .readObject(); in .close();
+            roleList = (ArrayList <Role> ) in .readObject(); in .close();
         } else {}
         return roleList;
     }
@@ -129,7 +126,7 @@ public class FileReadWrite {
         ArrayList < Constraint > constraintList = new ArrayList < > ();
         if (f.exists()) {
             ObjectInputStream in = new ObjectInputStream(new FileInputStream(fileName));
-            constraintList = (ArrayList < Constraint>  ) in .readObject(); in .close();
+            constraintList = (ArrayList < Constraint > ) in .readObject(); in .close();
         } else {}
         return constraintList;
     }

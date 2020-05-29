@@ -1,32 +1,39 @@
+package model;
+
+import main.Main;
+import util.FileReadWrite;
+import util.Global;
+import util.InputTools;
+
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Constraint implements Serializable {
 
-    String constraintId = "Constraint 0";
+    public static final String ANSI_BLUE = "\u001B[34m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_RESET = "\u001B[0m";
+
+    public static ArrayList < Constraint > allSoftConstraints = new ArrayList < > ();
+    String constraintId = "model.Constraint 0";
     String constraintDescription;
     private int weightAge;
-    public static ArrayList  < Constraint > allSoftConstraints = new ArrayList < > ();
 
+    ArrayList < Character > requiredPersonalities = new ArrayList < > ();
+    ArrayList < Character > validPersonalities = new ArrayList < > ();
     int maxNosOfFemaleStudent;
     float benchmarkStudentGpa;
     int minNosOfStudWithBenchmarkGpa;
     float maxAvgGpaOfTeam;
     float yearsOfExperience;
     int minNosOfStudWithExperience;
-    ArrayList <Character> requiredPersonalities = new ArrayList<>();
-    ArrayList <Character> validPersonalities = new ArrayList<>();;
-    //char[] validPersonalities = {'A', 'B', 'C', 'D', 'E', 'F'};
     boolean uniquePersonality;
     int teamSize;
     int uniquePersonalityWeightAge = 0;
     int requiredPersonalityWeightAge = 0;
     int experienceWeightAge = 0;
 
-    public static final String ANSI_YELLOW = "\u001B[33m";
-    public static final String ANSI_GREEN = "\u001B[32m";
-    public static final String ANSI_RESET = "\u001B[0m";
 
     public Constraint() {
 
@@ -37,41 +44,17 @@ public class Constraint implements Serializable {
         this.constraintDescription = constraintDescription;
         this.weightAge = weightAge;
     }
+
+    /**
+     * Getter and Setter Methods
+     *
+     * @return
+     */
+
     public int getWeightAge() {
         return weightAge;
     }
 
-    public void setWeightAge(int weightAge) {
-        this.weightAge = weightAge;
-    }
-    public Constraint(String constraintId, String constraintDescription, int maxNosOfFemaleStudent,
-                      float benchmarkStudentGpa, int minNosOfStudWithBenchmarkGpa, float maxAvgGpaOfTeam,
-                      float yearsOfExperience, int minNosOfStudWithExperience,
-                      ArrayList < Character > requiredPersonalities, ArrayList < Character > validPersonalities,
-                      boolean uniquePersonality, int teamSize, int uniquePersonalityWeightAge,
-                      int requiredPersonalityWeightAge, int experienceWeightAge) {
-        this.constraintId = constraintId;
-        this.constraintDescription = constraintDescription;
-        this.maxNosOfFemaleStudent = maxNosOfFemaleStudent;
-        this.benchmarkStudentGpa = benchmarkStudentGpa;
-        this.minNosOfStudWithBenchmarkGpa = minNosOfStudWithBenchmarkGpa;
-        this.maxAvgGpaOfTeam = maxAvgGpaOfTeam;
-        this.yearsOfExperience = yearsOfExperience;
-        this.minNosOfStudWithExperience = minNosOfStudWithExperience;
-        this.requiredPersonalities = requiredPersonalities;
-        this.validPersonalities = validPersonalities;
-        this.uniquePersonality = uniquePersonality;
-        this.teamSize = teamSize;
-        this.uniquePersonalityWeightAge = uniquePersonalityWeightAge;
-        this.requiredPersonalityWeightAge = requiredPersonalityWeightAge;
-        this.experienceWeightAge = experienceWeightAge;
-    }
-
-
-    /**
-     * Getter and Setter Methods
-     * @return
-     */
     public String getConstraintId() {
         return constraintId;
     }
@@ -82,10 +65,6 @@ public class Constraint implements Serializable {
 
     public String getConstraintDescription() {
         return constraintDescription;
-    }
-
-    public void setConstraintDescription(String constraintDescription) {
-        this.constraintDescription = constraintDescription;
     }
 
     public int getTeamSize() {
@@ -192,45 +171,125 @@ public class Constraint implements Serializable {
         this.uniquePersonality = uniquePersonality;
     }
 
-
     /**
-     * Method to generate constraint ID
+     * Checking if unique personality constraint is being applied or not.
+     *
+     * @param teamCreator arraylist containing details of students who can form a team.
+     * @return boolean value to determine duplicate personality exists or not in a team.
      */
-    public void createConstraint() throws IOException {
-//        constraintId = "Constraint " +
-//                String.format("%03d", (Integer.parseInt(getConstraintId().substring(11)) + 1));
-
-     //   if (allSoftConstraints.size() > 0) {
-            //Constraint lastConstraint = allSoftConstraints.get(allSoftConstraints.size() - 1);
-//       projectId = "PROJ" + String.format("%03d", (Integer.parseInt(lastProject.getProjectId().substring(4)) + 1));
-            constraintId = "Constraint " + (allSoftConstraints.size()+1);
-            setConstraintId(constraintId);
-                    //"Constraint " +
-                //String.format("%03d", (Integer.parseInt(getConstraintId().substring(11)) + 1));
-//        } else {
-//            constraintId = "Constraint " +
-//                    String.format("%03d", (Integer.parseInt(getConstraintId().substring(11)) + 1));
-//        }
-
-        System.out.println("Enter Description: ");
-        constraintDescription = Global.scan.nextLine();
-
-        System.out.println("Enter weight age for soft constraint: ");
-        weightAge = InputTools.intChecker(1,4);
-
-        allSoftConstraints.add(new Constraint(constraintId, constraintDescription, weightAge));
-        FileReadWrite.saveConstraintDetails(Main.softConstraintFileName, allSoftConstraints);
+    public static boolean uniquePersonalityConstraintCheck(ArrayList < Student > teamCreator) {
+        boolean noDuplicate = true;
+        for (int j = 0; j < teamCreator.size() - 1; j++) {
+            for (int k = j + 1; k < teamCreator.size(); k++) {
+                if (teamCreator.get(j).getStudentPersonality() == teamCreator.get(k).getStudentPersonality()) {
+                    noDuplicate = false;
+                    break;
+                }
+            }
+        }
+        return noDuplicate;
     }
 
+    /**
+     * Checking if required personality constraint exists on the team or not.
+     *
+     * @param teamCreator arraylist containing details of students who can form a team.
+     * @return boolean value to determine required personality exists or not in the team.
+     */
+    public static boolean requiredPersonalityConstraintCheck(ArrayList < Student > teamCreator) {
+        boolean requiredPersonalityPresent = false;
+        for (Student student: teamCreator) {
+            if (student.getStudentPersonality() == 'A' || student.getStudentPersonality() == 'B' ||
+                    student.getStudentPersonality() == 'a' || student.getStudentPersonality() == 'b') {
+                requiredPersonalityPresent = true;
+                break;
+            }
+        }
+        return requiredPersonalityPresent;
+    }
 
     /**
-     * Method to define and set value for all constraints by Project Manager.
+     * Checking average GPA of team, hard constraint is met or not.
+     *
+     * @param teamCreator arraylist containing details of students who can form a team.
+     * @return boolean value to determine Hard constraint is met or not.
+     */
+    public static boolean averageGPAHardConstraintCheck(ArrayList < Student > teamCreator) {
+        double sumOfGPA = 0;
+        for (Student student: teamCreator) {
+            sumOfGPA = sumOfGPA + student.getGpa();
+        }
+        if ((sumOfGPA / 4) > 3.5)
+            return false;
+        else return true;
+    }
+
+    /**
+     * Checking individual student benchmark GPA hard constraint is met or not.
+     *
+     * @param teamCreator arraylist containing details of students who can form a team.
+     * @return boolean value to determine Hard constraint is met or not.
+     */
+    public static boolean twoMembersWith3GPAHardConstraintCheck(ArrayList < Student > teamCreator) //TODO better name
+    {
+        int GPAGreaterThanThreeCounter = 0;
+        for (int i = 0; i < teamCreator.size(); i++) {
+            if (teamCreator.get(i).getGpa() >= 3.00) {
+                GPAGreaterThanThreeCounter++;
+            }
+        }
+        if (GPAGreaterThanThreeCounter > 2) {
+            return true;
+        } else return false;
+    }
+
+    /**
+     * Checking Experience of student in team soft constraint
+     *
+     * @param teamCreator arraylist containing details of students who can form a team.
+     * @return boolean value to determine soft constraint is met or not.
+     */
+    public static boolean memberWith5YearExperienceConstraintCheck(ArrayList < Student > teamCreator) {
+        boolean experienceCriteria = false;
+        for (Student student: teamCreator) {
+            if (student.getExperience() >= 5) {
+                experienceCriteria = true;
+                break;
+            }
+        }
+        return experienceCriteria;
+    }
+
+    /**
+     * Checking female student hard constraint is met for not.
+     *
+     * @param teamCreator arraylist containing details of students who can form a team.
+     * @return boolean value to determine soft constraint is met or not.
+     */
+    public static boolean femaleHardConstraintCheck(ArrayList <Student> teamCreator) {
+        int femaleCounter = 0;
+        for (Student student: teamCreator) {
+            if (student.getGender() == 'f' || student.getGender() == 'F') {
+                femaleCounter++;
+                System.out.println("Counter: " + femaleCounter);
+            }
+        }
+
+        if (femaleCounter > 1)
+            return false;
+        else
+            return true;
+    }
+
+    /**
+     * Method to define and set value for all constraints by the model.Project Manager.
+     *
      */
     public void setAllConstraints() throws IOException {
         System.out.println(" Enter number of students in a team: ");
         teamSize = InputTools.intChecker(1, 100);
 
-        System.out.println(ANSI_YELLOW + "Hard Constraints : " + ANSI_RESET);
+        System.out.println(ANSI_BLUE + "Hard Constraints : " + ANSI_RESET);
         System.out.println("1. Maximum number of female student per team: ");
         maxNosOfFemaleStudent = InputTools.intChecker(0, teamSize);
 
@@ -301,27 +360,46 @@ public class Constraint implements Serializable {
         Constraint.allSoftConstraints.clear();
         System.out.println("\nEnter weight age for Soft-Constraints (1-4): ");
 
-        System.out.println("Unique Personality Soft-Constraint : ");
+        System.out.println("Unique Personality Soft-model.Constraint : ");
         createConstraint();
 
-        System.out.println("Required Personality Soft-Constraint : ");
+        System.out.println("Required Personality Soft-model.Constraint : ");
         createConstraint();
 
-        System.out.println("Experience Soft-Constraint : ");
+        System.out.println("Experience Soft-model.Constraint : ");
         createConstraint();
 
         displayConstraints();
     }
 
+    /**
+     * Generate constraint ID and taking input for description and weightage for all soft constraints and
+     * saving it in arraylist "allSoftConstraints" and later in file "SoftConstraint.txt"
+     *
+     */
+    public void createConstraint() throws IOException {
+        constraintId = "model.Constraint " + (allSoftConstraints.size() + 1);
+        setConstraintId(constraintId);
+
+        System.out.println("Enter Description: ");
+        constraintDescription = Global.scan.nextLine();
+
+        System.out.println("Enter weight age for soft constraint: ");
+        weightAge = InputTools.intChecker(1, 4);
+
+        allSoftConstraints.add(new Constraint(constraintId, constraintDescription, weightAge));
+        FileReadWrite.saveConstraintDetails(Main.softConstraintFileName, allSoftConstraints);
+    }
 
     /**
-     * Method to display all set constraints.
+     * Method to display all set constraints and weightage.
+     *
      */
     public void displayConstraints() {
         System.out.println("Number of students in a team: " + teamSize);
         System.out.println("Currently Set Constraints are: ");
 
-        System.out.println("\n Hard Constraint: \n" +
+        System.out.println("\n Hard model.Constraint: \n" +
                 "1. Maximum number of female student per team: " + maxNosOfFemaleStudent + "\n" +
 
                 "2. Minimum number of student with at least " + benchmarkStudentGpa +
@@ -334,8 +412,8 @@ public class Constraint implements Serializable {
                 "+ year(s) of experience per team: " + minNosOfStudWithExperience + "\n" +
 
                 "2. Any of these Personality type should be in every team: ");
-        for (Character c : requiredPersonalities ) {
-            int k =0;
+        for (Character c: requiredPersonalities) {
+            int k = 0;
             System.out.println(k++);
             System.out.print(" " + c.toString() + ",");
         }
@@ -344,140 +422,10 @@ public class Constraint implements Serializable {
                 "3. Every personality on a team should be unique: " + uniquePersonality);
 
         int j = 1;
-        System.out.println("Weight age for Soft constraints : ");
-        for (Constraint c : allSoftConstraints){
-            System.out.println(j + ". "+ c.getConstraintDescription() + ": "+ c.getWeightAge());
+        System.out.println("\nWeight age for Soft constraints : \n");
+        for (Constraint c: allSoftConstraints) {
+            System.out.println(j + ". " + c.getConstraintDescription() + ": " + c.getWeightAge());
             j++;
         }
-
-//        System.out.println("\n Weight age for Soft constraints : \n" +
-//                "1. Unique personality constraint: " + uniquePersonalityWeightAge + "\n" +
-//                "2. Required personality in a team constraint: " + requiredPersonalityWeightAge + "\n" +
-//                "3. Experience Soft-Constraint : " + experienceWeightAge + "\n");
-    }
-
-
-    /**
-     * Method to check unique personality constraint is being applied or not.
-     * @param teamCreator
-     * @return
-     */
-    public static boolean uniquePersonalityConstraintCheck(ArrayList<Student> teamCreator)
-    {
-        boolean noDuplicate = true;
-        for (int j = 0; j < teamCreator.size()-1; j++)
-        {
-            for (int k = j + 1; k < teamCreator.size(); k++) {
-                if (teamCreator.get(j).getStudentPersonality() == teamCreator.get(k).getStudentPersonality())
-                {
-                    noDuplicate = false;
-                }
-            }
-        }
-        return noDuplicate;
-    }
-
-
-    /**
-     * Method to check required personality constraint exists on the team or not
-     * @param teamCreator
-     * @return
-     */
-    public static boolean requiredPersonalityConstraintCheck(ArrayList<Student> teamCreator)
-    {
-        boolean persoAOrBPresent = false;
-        for (Student student : teamCreator) {
-            if (student.getStudentPersonality() == 'A' || student.getStudentPersonality() == 'B' || student.getStudentPersonality() == 'a' || student.getStudentPersonality() == 'b') {
-                //if A or B personality is present in team
-                persoAOrBPresent = true;
-                break;
-            }
-        }
-        return persoAOrBPresent;
-    }
-
-
-    /**
-     * Method to check average GPA of team, hard constraint met or not.
-     * @param teamCreator
-     * @return
-     */
-    public static boolean averageGPAHardConstraintCheck(ArrayList<Student> teamCreator)
-    {
-        double sumOfGPA = 0;
-        for (Student student : teamCreator) {
-            sumOfGPA = sumOfGPA + student.getGpa();
-        }
-        if ((sumOfGPA / 4) > 3.5)
-            return false;
-        else return true;
-    }
-
-
-    /**
-     * Method to check GPA hard constraint is met or not.
-     * @param teamCreator
-     * @return
-     */
-    public static boolean twoMembersWith3GPAHardConstraintCheck(ArrayList<Student> teamCreator) //TODO better name
-    {
-        int GPAGreaterThanThreeCounter = 0;
-        for (int i = 0; i < teamCreator.size(); i++)
-        {
-            if (teamCreator.get(i).getGpa() >= 3.00)
-            {
-                GPAGreaterThanThreeCounter++;
-            }
-        }
-        if(GPAGreaterThanThreeCounter > 2)
-        {
-            return true;
-        }
-        else return false;
-
-    }
-
-
-    /**
-     * Method to check experience soft constraint
-     * @param teamCreator
-     * @return
-     */
-    public static boolean memberWith5YearExperienceConstraintCheck(ArrayList<Student> teamCreator)
-    {
-        boolean experienceCriteria = false;
-        for (Student student : teamCreator)
-        {
-            if (student.getExperience() >= 5)
-            {
-                experienceCriteria = true;
-                break;
-            }
-        }
-
-        return experienceCriteria;
-    }
-
-
-    /**
-     * Method to check female student hard constraint is met for not.
-     * @param teamCreator
-     * @return
-     */
-    public static boolean femaleHardConstraintCheck(ArrayList<Student> teamCreator)
-    {
-        int femaleCounter =0 ;
-       for(Student student : teamCreator)
-       {
-           if (student.getGender() == 'f' || student.getGender() == 'F' ) {
-               femaleCounter++;
-               System.out.println("Counter: "+femaleCounter);
-           }
-       }
-
-        if (femaleCounter>1)
-            return false;
-        else
-            return true;
     }
 }
