@@ -9,30 +9,30 @@
 //
 //    @BeforeEach
 //    void setUp() throws Exception {
-//        Student s = new Student();
+//        model.Student s = new model.Student();
 //
-//        Student s1 = new Student("ST101", "abc1", "abc1", "abc1", "abc1", "abc1", "abc1", 4, 3, 'm', '0');
+//        model.Student s1 = new model.Student("ST101", "abc1", "abc1", "abc1", "abc1", "abc1", "abc1", 4, 3, 'm', '0');
 //        s.allStudents.add(s1);
 //
-//        Student s2 = new Student("ST102", "abc2", "abc2", "abc2", "abc2", "abc2", "abc2", 4, 3, 'm', '0');
+//        model.Student s2 = new model.Student("ST102", "abc2", "abc2", "abc2", "abc2", "abc2", "abc2", 4, 3, 'm', '0');
 //        s.allStudents.add(s2);
 //
-//        Student s3 = new Student("ST103", "abc3", "abc3", "abc3", "abc3", "abc3", "abc3", 4, 3, 'm', '0');
+//        model.Student s3 = new model.Student("ST103", "abc3", "abc3", "abc3", "abc3", "abc3", "abc3", 4, 3, 'm', '0');
 //        s.allStudents.add(s3);
 //
-//        Student s4 = new Student("ST104", "abc4", "abc4", "abc4", "abc4", "abc4", "abc4", 4, 3, 'm', '0');
+//        model.Student s4 = new model.Student("ST104", "abc4", "abc4", "abc4", "abc4", "abc4", "abc4", 4, 3, 'm', '0');
 //        s.allStudents.add(s4);
 //
-//        Student s5 = new Student("ST105", "abc5", "abc5", "abc5", "abc5", "abc5", "abc5", 3.7, 3,'m', '0');
+//        model.Student s5 = new model.Student("ST105", "abc5", "abc5", "abc5", "abc5", "abc5", "abc5", 3.7, 3,'m', '0');
 //        s.allStudents.add(s5);
 //
-//        Student s6 = new Student("ST106", "abc6", "abc6", "abc6", "abc6", "abc6", "abc6", 3.7, 3, 'm', '0');
+//        model.Student s6 = new model.Student("ST106", "abc6", "abc6", "abc6", "abc6", "abc6", "abc6", 3.7, 3, 'm', '0');
 //        s.allStudents.add(s6);
 //
-//        Student s7 = new Student("ST107", "abc7", "abc7", "abc7", "abc7", "abc7", "abc7", 2, 3, 'm',  '0');
+//        model.Student s7 = new model.Student("ST107", "abc7", "abc7", "abc7", "abc7", "abc7", "abc7", 2, 3, 'm',  '0');
 //        s.allStudents.add(s7);
 //
-//        Student s8 = new Student("ST108", "abc8", "abc8", "abc8", "abc8", "abc8", "abc8", 3.7, 3, 'm', '0');
+//        model.Student s8 = new model.Student("ST108", "abc8", "abc8", "abc8", "abc8", "abc8", "abc8", 3.7, 3, 'm', '0');
 //        s.allStudents.add(s8);
 //
 //    }
@@ -44,10 +44,10 @@
 //    @Test
 //    void test() {
 //
-//        ProjectManager.overallTeamGPACheck();
+//        model.ProjectManager.overallTeamGPACheck();
 //        double sumOfGPA = 0;
 //        for (int i = 4; i < 8; i++) {
-//            sumOfGPA = sumOfGPA + ProjectManager.getTeamStudent().get(i).getGPA();
+//            sumOfGPA = sumOfGPA + model.ProjectManager.getTeamStudent().get(i).getGPA();
 //        }
 //
 //        int check = 0;
@@ -60,10 +60,10 @@
 //    @Test
 //    void test1() {
 //
-//        ProjectManager.overallTeamGPACheck();
+//        model.ProjectManager.overallTeamGPACheck();
 //        double sumOfGPA = 0;
 //        for (int i = 0; i < 4; i++) {
-//            sumOfGPA = sumOfGPA + ProjectManager.getTeamStudent().get(i).getGPA();
+//            sumOfGPA = sumOfGPA + model.ProjectManager.getTeamStudent().get(i).getGPA();
 //        }
 //
 //        int check = 0;

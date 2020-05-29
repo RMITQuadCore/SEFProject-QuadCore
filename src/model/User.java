@@ -1,14 +1,19 @@
-import java.io.File;
+package model;
+
+import main.Main;
+import util.*;
+
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class User  implements Serializable {
-    private static final long serialVersionUID =1L;
-    public static ArrayList<User> allUserDetails = new ArrayList<User>();
-
+public class User implements Serializable {
+    public static final String ANSI_BLUE = "\u001B[34m";
+    public static final String ANSI_RESET = "\u001B[0m";
+    private static final long serialVersionUID = 1L;
+    public static ArrayList < User > allUserDetails = new ArrayList < User > ();
     private String id;
     private String firstName;
     private String lastName;
@@ -19,11 +24,8 @@ public class User  implements Serializable {
     private String studentID = "ST000";
     private String clientID = "CL000";
     private String managerID = "PM000";
-    public static final String ANSI_YELLOW = "\u001B[33m";
-    public static final String ANSI_RESET = "\u001B[0m";
 
-    public User() {
-    }
+    public User() {}
 
     public User(String id, String firstName, String lastName, String emailID, String userName, String password,
                 String organisation) {
@@ -34,52 +36,32 @@ public class User  implements Serializable {
         this.userName = userName;
         this.password = password;
         this.organisation = organisation;
-
     }
 
 
     /**
      * Getter and setter methods.
+     *
      * @return
      */
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public String getFirstName() {
         return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
     }
 
     public String getLastName() {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
     public String getOrganisation() {
         return organisation;
     }
 
-    public void setOrganisation(String organisation) {
-        this.organisation = organisation;
-    }
-
     public String getEmailID() {
         return emailID;
-    }
-
-    public void setEmailID(String emailID) {
-        this.emailID = emailID;
     }
 
     public String getUserName() {
@@ -98,14 +80,6 @@ public class User  implements Serializable {
         this.password = password;
     }
 
-    public String getStudentID() {
-        return studentID;
-    }
-
-    public void setStudentID(String studentID) {
-        this.studentID = studentID;
-    }
-
     public String getClientID() {
         return clientID;
     }
@@ -114,19 +88,11 @@ public class User  implements Serializable {
         this.clientID = clientID;
     }
 
-    public String getManagerID() {
-        return managerID;
-    }
-
-    public void setManagerID(String managerID) {
-        this.managerID = managerID;
-    }
-
-
     /**
      * The Main Menu
-     *
+     * <p>
      * First thing users see when they execute the program.
+     *
      * @throws IOException
      * @throws ClassNotFoundException
      */
@@ -134,7 +100,7 @@ public class User  implements Serializable {
         int choice = 0;
         do {
             System.out.println(
-                    ANSI_YELLOW + "\n**** Main Menu ****" + ANSI_RESET + "\n" +
+                    ANSI_BLUE + "\n**** Main Menu ****" + ANSI_RESET + "\n" +
                             "1.Sign Up\n" +
                             "2.Login\n" +
                             "3.Exit");
@@ -151,8 +117,8 @@ public class User  implements Serializable {
 
                 case 2:
                     try {
-                        for(User u1:User.allUserDetails){
-                            System.out.println(u1.getId()+" "+u1.getUserName()+" "+u1.getPassword());
+                        for (User u1: User.allUserDetails) {
+                            System.out.println(u1.getId() + " " + u1.getUserName() + " " + u1.getPassword());
                         }
                         login();
                     } catch (IncorrectInputException e) {
@@ -161,12 +127,12 @@ public class User  implements Serializable {
                     break;
 
                 case 3:
-//                    FileReadWrite.saveUserDetails(Main.userFileName, allUserDetails);
-//                    FileReadWrite.saveStudentDetails(Main.studentsFileName, Student.allStudents);
-//                    FileReadWrite.saveStudentDetails(Main.studentsNotInATeamFileName,ProjectManager.studentsNotInATeam);
-//                    FileReadWrite.saveProjectDetails(Main.projectsFileName, Project.totalProjects);
-//                    FileReadWrite.saveProjectDetails(Main.projectsNotAssignedFileName, Project.projectsNotAssigned);
-                    System.out.println("System exited! Thanks for using Project Team Formation System");
+                    //                    util.FileReadWrite.saveUserDetails(Main.userFileName, allUserDetails);
+                    //                    util.FileReadWrite.saveStudentDetails(Main.studentsFileName, model.Student.allStudents);
+                    //                    util.FileReadWrite.saveStudentDetails(Main.studentsNotInATeamFileName,model.ProjectManager.studentsNotInATeam);
+                    //                    util.FileReadWrite.saveProjectDetails(Main.projectsFileName, model.Project.totalProjects);
+                    //                    util.FileReadWrite.saveProjectDetails(Main.projectsNotAssignedFileName, model.Project.projectsNotAssigned);
+                    System.out.println("System exited! Thanks for using model.Project model.Team Formation System");
                     System.exit(0);
                     break;
 
@@ -180,20 +146,21 @@ public class User  implements Serializable {
 
     /**
      * Method to Sign Up
-     *
+     * <p>
      * For new user, where they enter their required personal details and sign up into the program.
      * Method validates the details and save them for future use and assigns them an Unique ID.
-     * @throws IncorrectInputException
-     * @throws IOException
-     * @throws ClassNotFoundException
+     *
+     * @throws IncorrectInputException if desired input is not entered
+     * @throws IOException if an I/O error occurs
+     * @throws ClassNotFoundException if the class of a serialized object could not be found
      */
     public void signUp() throws IncorrectInputException, IOException, ClassNotFoundException {
 
         ProjectManager pm = new ProjectManager();
-        //If Project Manager disables signUp, no new sign ups are allowed
+        //If model.Project Manager disables signUp, no new sign ups are allowed
         if (!pm.getSignUpStatus()) {
-            System.out.println("Sign Up is disable by Project Manager." +
-                    "Please Contact Project Manager.");
+            System.out.println("Sign Up is disable by model.Project Manager." +
+                    "Please Contact model.Project Manager.");
             return;
         }
 
@@ -202,7 +169,7 @@ public class User  implements Serializable {
         boolean foundOrg = false;
         int choice = 0;
 
-        System.out.print("****Sign Up****\n");
+        System.out.print(ANSI_BLUE + "\n****Sign Up****\n" + ANSI_RESET);
         do {
             try {
                 // First & Last name field should not contain special characters.
@@ -264,7 +231,7 @@ public class User  implements Serializable {
         } while (userName.isEmpty() || password.isEmpty());
 
         // ID generation
-        System.out.println("\nAre you a: \n1.Student\n2.Client Representative\n3.Project Manager\n");
+        System.out.println("\nAre you a: \n1.model.Student\n2.Client Representative\n3.model.Project Manager\n");
         choice = InputTools.intChecker(1, 3);
 
         switch (choice) {
@@ -285,11 +252,8 @@ public class User  implements Serializable {
                 String newStudentID = studentID;
 
 
-
-
-
                 newStudentID = "ST" + String.format("%03d",
-                        (Student.allStudents.size()+1));
+                        (Student.allStudents.size() + 1));
 
                 allUserDetails.add(new Student(newStudentID, firstName, lastName, emailID, userName, password, organisation, gpa, experience,
                         gender));
@@ -299,9 +263,9 @@ public class User  implements Serializable {
                 ProjectManager.studentsNotInATeam.add(new Student(newStudentID, firstName, lastName, emailID, userName, password, organisation, gpa,
                         experience, gender));
 
-               FileReadWrite.saveUserDetails(Main.userFileName, allUserDetails);
-               FileReadWrite.saveStudentDetails(Main.studentsFileName, Student.allStudents);
-                FileReadWrite.saveStudentDetails(Main.studentsNotInATeamFileName,ProjectManager.studentsNotInATeam);
+                FileReadWrite.saveUserDetails(Main.userFileName, allUserDetails);
+                FileReadWrite.saveStudentDetails(Main.studentsFileName, Student.allStudents);
+                FileReadWrite.saveStudentDetails(Main.studentsNotInATeamFileName, ProjectManager.studentsNotInATeam);
 
                 System.out.println("You have successfully signed up with ID: " + newStudentID + "!\n");
                 setUserName(userName);
@@ -311,7 +275,7 @@ public class User  implements Serializable {
             case 2: //For Client Representative
                 String newClientID = clientID;
 
-                newClientID = "CL" + String.format("%03d", (allUserDetails.size()+ 1));
+                newClientID = "CL" + String.format("%03d", (allUserDetails.size() + 1));
 
                 allUserDetails.add(
                         new ClientRepresentative(newClientID, firstName, lastName, emailID, userName, password, organisation));
@@ -321,10 +285,10 @@ public class User  implements Serializable {
                 setPassword(password);
                 break;
 
-            case 3: //For Project Manager
+            case 3: //For model.Project Manager
                 String newManagerID = managerID;
 
-                newManagerID = "PM" + String.format("%03d", (allUserDetails.size()+ 1));
+                newManagerID = "PM" + String.format("%03d", (allUserDetails.size() + 1));
 
                 allUserDetails.add(new ProjectManager(newManagerID, firstName, lastName, emailID, userName, password, organisation));
                 FileReadWrite.saveUserDetails(Main.userFileName, allUserDetails);
@@ -344,8 +308,9 @@ public class User  implements Serializable {
 
     /**
      * Method to Login for already signed up users.
+     * <p>
+     * model.User can sign up using their username and password where they are further directed to their respective Menu.
      *
-     * User can sign up using their username and password where they are further directed to their respective Menu.
      * @throws IncorrectInputException
      * @throws IOException
      * @throws ClassNotFoundException
@@ -355,16 +320,16 @@ public class User  implements Serializable {
         // Verify the login for both, when the field is blank and the Submit button is clicked.
 
         String loginName;
-        String pass,savedPassword = null;
+        String pass, savedPassword = null;
         boolean foundUsername = false;
         boolean foundPassword = false;
 
         do {
-            System.out.println("\n" + ANSI_YELLOW + "****Login****" + ANSI_RESET + "\n" +
+            System.out.println("\n" + ANSI_BLUE + "****Login****" + ANSI_RESET + "\n" +
                     "Enter username: ");
             loginName = Global.scan.nextLine();
-        //    System.out.println("Name: "+loginName);
-            for (User user : allUserDetails) {
+            //    System.out.println("Name: "+loginName);
+            for (User user: allUserDetails) {
                 //  System.out.println("inside login for" + user.getUserName());
                 if (user instanceof ClientRepresentative) {
                     if (loginName.compareTo(user.getUserName()) == 0) {
@@ -388,47 +353,46 @@ public class User  implements Serializable {
                     }
                 }
             }
-                if (foundUsername) {
-                    System.out.println("\nEnter Password: ");
-                    pass = Global.scan.nextLine();
+            if (foundUsername) {
+                System.out.println("\nEnter Password: ");
+                pass = Global.scan.nextLine();
 
-                    if (pass.compareTo(savedPassword) == 0) {
-                        foundPassword = true;
-                        //setPassword(pass);
-                        // Verify whether the user has entered corresponding username/email id and password.
+                if (pass.compareTo(savedPassword) == 0) {
+                    foundPassword = true;
+                    //setPassword(pass);
+                    // Verify whether the user has entered corresponding username/email id and password.
 
-                        System.out.println("You have successfully logged in!");
-                        for(User user: allUserDetails) {
-                            if (loginName.compareTo(user.getUserName()) == 0) {
-                                if (user instanceof ClientRepresentative) {
-                                    ((ClientRepresentative) user).clientMenu();
-                                    break;
-                                } else if (user instanceof Student) {
-                                    System.out.println("inside student else if");
-                                    for (Student st : Student.allStudents) {
-                                        System.out.println("for "+st.getUserName()+"login: "+loginName);
-                                        if (st.getUserName().compareTo(loginName) == 0) {
-                                            st.studentMenu();
-                                            break;
-                                        }
-
+                    System.out.println("You have successfully logged in!");
+                    for (User user: allUserDetails) {
+                        if (loginName.compareTo(user.getUserName()) == 0) {
+                            if (user instanceof ClientRepresentative) {
+                                ((ClientRepresentative) user).clientMenu();
+                                break;
+                            } else if (user instanceof Student) {
+                                System.out.println("inside student else if");
+                                for (Student st: Student.allStudents) {
+                                    System.out.println("for " + st.getUserName() + "login: " + loginName);
+                                    if (st.getUserName().compareTo(loginName) == 0) {
+                                        st.studentMenu();
+                                        break;
                                     }
-                                } else {
-                                    ProjectManager pm = new ProjectManager();
-                                    pm.projectManagerMenu();
-                                    break;
+
                                 }
+                            } else {
+                                ProjectManager pm = new ProjectManager();
+                                pm.projectManagerMenu();
+                                break;
                             }
                         }
-                    //list of messages that pop up when an invalid login is carried out
-                    } else {
-                        foundPassword = false;
-                        System.err.println("Incorrect password!");
-                        break;
                     }
-                
-            }
-            else if (!foundUsername) {
+                    //list of messages that pop up when an invalid login is carried out
+                } else {
+                    foundPassword = false;
+                    System.err.println("Incorrect password!");
+                    break;
+                }
+
+            } else if (!foundUsername) {
                 System.err.println("Username not signed up!");
             } else if (!foundUsername && !foundPassword) {
                 throw new IncorrectInputException("Incorrect username or password!");
@@ -441,7 +405,8 @@ public class User  implements Serializable {
 
     /**
      * Method to validate names to make sure it doesn't have any special characters.
-     * @param input
+     *
+     * @param input input entered by the user
      * @return results
      */
     public boolean inputValidations(String input) {

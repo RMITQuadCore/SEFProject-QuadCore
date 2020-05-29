@@ -1,5 +1,8 @@
+package model;
+
 import java.io.Serializable;
 import java.util.ArrayList;
+
 
 public class Team implements Serializable {
     private static final long serialVersionUID = -1323766548602603946L;
@@ -7,20 +10,20 @@ public class Team implements Serializable {
     private String teamID;
     private ArrayList < Student > studentsInTeam = new ArrayList < > ();
     private int teamFitness;
-    private ArrayList < Constraint > constraintsMet = new ArrayList < > ();
+    private ArrayList <Constraint> constraintsMet = new ArrayList < > ();
     private Project projectAssigned;
 
-    // TODO displayTeam Method should be added
 
     /**
      * Getter and setter methods.
+     *
      * @param teamID
      */
     public Team(String teamID) {
         this.teamID = teamID;
     }
 
-    public Team(String teamID,ArrayList < Student > studentsInTeam,int teamFitness,ArrayList < Constraint > constraintsMet, Project projectAssigned) {
+    public Team(String teamID, ArrayList < Student > studentsInTeam, int teamFitness, ArrayList <Constraint> constraintsMet, Project projectAssigned) {
         this.teamID = teamID;
         this.studentsInTeam = studentsInTeam;
         this.teamFitness = teamFitness;
@@ -30,10 +33,6 @@ public class Team implements Serializable {
 
     public String getTeamID() {
         return teamID;
-    }
-
-    public void setTeamID(String teamID) {
-        this.teamID = teamID;
     }
 
     public ArrayList < Student > getStudentsInTeam() {
@@ -52,11 +51,11 @@ public class Team implements Serializable {
         this.teamFitness = teamFitness;
     }
 
-    public ArrayList < Constraint > getConstraintsMet() {
+    public ArrayList <Constraint> getConstraintsMet() {
         return constraintsMet;
     }
 
-    public void setConstraintsMet(ArrayList < Constraint > constraintsMet) {
+    public void setConstraintsMet(ArrayList <Constraint> constraintsMet) {
         this.constraintsMet = constraintsMet;
     }
 
@@ -67,5 +66,4 @@ public class Team implements Serializable {
     public void setProjectAssigned(Project projectAssigned) {
         this.projectAssigned = projectAssigned;
     }
-
 }

@@ -1,3 +1,8 @@
+package model;
+
+import main.Main;
+import util.*;
+
 import java.io.IOException;
 import java.io.Serializable;
 import java.text.DecimalFormat;
@@ -5,18 +10,17 @@ import java.util.ArrayList;
 
 public class Student extends User implements Serializable {
     private static final long serialVersionUID = -1640510881420655396L;
-    public static ArrayList < Student > allStudents = new ArrayList < > (); // TODO Maybe remove
+    public static ArrayList < Student > allStudents = new ArrayList < > ();
     private double gPA;
     private double experience;
     private char gender;
-    private char studentPersonality; // Changes made according to Class diagram
-    private Role[] preferredRoles = new Role[2]; // TODO Change to arraylist
-    private Project[] preferredProjects = new Project[4]; // TODO Change to arraylist
-    private Student[] dislikedMembers = new Student[3]; // TODO Change to arraylist
-
+    private char studentPersonality;
+    private Role[] preferredRoles = new Role[2];
+    private Project[] preferredProjects = new Project[4];
+    private Student[] dislikedMembers = new Student[3];
     private Team assignedTeam;
 
-
+    public Student() {}
 
     public Student(String id, String firstName, String lastName, String emailID, String userName,
                    String password, String org, double gPA, double experience, char gender) {
@@ -26,164 +30,134 @@ public class Student extends User implements Serializable {
         this.gPA = gPA;
     }
 
-    public Student() {}
-
-
     /**
      * Getter and setter methods.
-     * @return
+     *
      */
 
     public char getStudentPersonality() {
         return studentPersonality;
     }
+
     public void setStudentPersonality(char studPersonality) {
         studentPersonality = studPersonality;
-        //System.out.println("Student personality set to "+studPersonality);
     }
+
     public char getGender() {
         return gender;
     }
+
     public double getExperience() {
         return experience;
     }
+
     public Project[] getPreferredProjects() {
         return preferredProjects;
     }
+
     public void setPreferredProjects(Project[] preferredProjects) {
         this.preferredProjects = preferredProjects;
     }
+
     public Student[] getDislikedMembers() {
         return dislikedMembers;
     }
-    public void setExperience(double experience) {
-        this.experience = experience;
-    }
 
-    public void setGender(char gender) {
-        this.gender = gender;
+    public void setAssignedTeam(Team assignedTeam) {
+        this.assignedTeam = assignedTeam;
     }
-    public void setDislikedMembers(Student[] dislikedMembers) {
-        this.dislikedMembers = dislikedMembers;
-    }
-    public Team getAssignedTeam() { return assignedTeam; }
-
-    public void setAssignedTeam(Team assignedTeam) { this.assignedTeam = assignedTeam; }
 
     public double getGpa() {
         return gPA;
     }
 
-    public void setgPA(double gPA) {
-
-        this.gPA = gPA;
-    }
-    public Role[] getPreferredRoles() {
-        return preferredRoles;
-    }
-
-    public void setPreferredRoles(Role[] preferredRoles) {
-        this.preferredRoles = preferredRoles;
-    }
 
     /**
-     * Method to display menu for Student and further navigate to required functionality.
-     * @throws IOException
+     * Method to display menu for model.Student and further navigate to required functionality.
+     *
+     * @throws IOException if an I/O error occurs
      */
-    public void studentMenu() throws IOException, NullPointerException{
+    public void studentMenu() throws IOException, NullPointerException {
         DecimalFormat numberFormat = new DecimalFormat("#.00");
         boolean quit = false;
         do {
 
 
-
-
-                    System.out.println("\n                    ****Hello! " + getFirstName() + "****\n" +
-                            "                    Your Details are given below :\n" +
-                            "                    Your System ID is " + getId() + "\n" +
-                            "                    Name \t\t\t: " + getFirstName() + " " + getLastName() + "\n" +
-                            "                    Organisation \t: " + getOrganisation() + "\n" +
-                            "                    Email\t\t\t: " + getEmailID() + "\n" +
-                            "                    Gender\t\t\t: " + getGender() + "\n" +
-                            "                    GPA\t\t\t\t: " + numberFormat.format(getGpa()) + "\n" +
-                            "                    Experience \t\t: " + numberFormat.format(getExperience()) + " Years" + "\n\t\t\t\t\tPersonality Type: " + getStudentPersonality() + "\n\n");
+            System.out.println("\n                    ****Hello! " + getFirstName() + "****\n" +
+                    "                    Your Details are given below :\n" +
+                    "                    Your System ID is " + getId() + "\n" +
+                    "                    Name \t\t\t: " + getFirstName() + " " + getLastName() + "\n" +
+                    "                    Organisation \t: " + getOrganisation() + "\n" +
+                    "                    Email\t\t\t: " + getEmailID() + "\n" +
+                    "                    Gender\t\t\t: " + getGender() + "\n" +
+                    "                    GPA\t\t\t\t: " + numberFormat.format(getGpa()) + "\n" +
+                    "                    Experience \t\t: " + numberFormat.format(getExperience()) + " Years" + "\n\t\t\t\t\tPersonality Type: " + getStudentPersonality() + "\n\n");
 
             boolean preferencesIsEmpty = true;
-                for (int i = 0; i < preferredProjects.length; i++){
-                  if(preferredProjects[i] != null) {
+            for (int i = 0; i < preferredProjects.length; i++) {
+                if (preferredProjects[i] != null) {
                     preferencesIsEmpty = false;
 
                     break;
-                  }
                 }
+            }
             System.out.print("\n                    Preferred Projects \t\t: ");
-                if (!preferencesIsEmpty){
-                    System.out.println();
-                    for(int i =0 ; i < preferredProjects.length; i++)
-                    {
-                        System.out.println("                    " +(i+1) + ". ID : " + preferredProjects[i].getProjectId() +  "\tClient: " + preferredProjects[i].getClient().getOrganisation() + "\t\t\t\t\tTitle : " + preferredProjects[i].getProjectTitle());
-                    }
+            if (!preferencesIsEmpty) {
+                System.out.println();
+                for (int i = 0; i < preferredProjects.length; i++) {
+                    System.out.println("                    " + (i + 1) + ". ID : " + preferredProjects[i].getProjectId() + "\tClient: " + preferredProjects[i].getClient().getOrganisation() + "\t\t\t\t\tTitle : " + preferredProjects[i].getProjectTitle());
                 }
-           else System.out.print("Not Entered");
+            } else System.out.print("Not Entered");
 
             boolean preferenceRoleIsEmpty = true;
-            for (int i = 0; i < preferredRoles.length; i++){
-                if(preferredRoles[i] != null) {
+            for (int i = 0; i < preferredRoles.length; i++) {
+                if (preferredRoles[i] != null) {
                     preferenceRoleIsEmpty = false;
                     break;
                 }
             }
             System.out.print("\n                    Preferred Roles \t\t: ");
-            if (!preferenceRoleIsEmpty){
+            if (!preferenceRoleIsEmpty) {
                 System.out.println();
-                for(int i =0 ; i < preferredRoles.length; i++)
-                {
-                    System.out.println("                    " +(i+1) + ". Project ID : " + preferredRoles[i].getId() +  "\tRole Name: " + preferredRoles[i].getRoleName());
+                for (int i = 0; i < preferredRoles.length; i++) {
+                    System.out.println("                    " + (i + 1) + ". model.Project ID : " + preferredRoles[i].getId() + "\tmodel.Role Name: " + preferredRoles[i].getRoleName());
                 }
-            }
-            else System.out.print("Not Entered");
+            } else System.out.print("Not Entered");
 
             System.out.print("\n                    Frameworks Known: \t\t: ");
-            if (!preferenceRoleIsEmpty){
+            if (!preferenceRoleIsEmpty) {
                 System.out.println();
-                int j=0;
-                for(int i =0 ; i < preferredRoles.length; i++)
-                {
-                    for(String framework : preferredRoles[i].getFrameworks())
-                    {
+                int j = 0;
+                for (int i = 0; i < preferredRoles.length; i++) {
+                    for (String framework: preferredRoles[i].getFrameworks()) {
                         System.out.println("                    " + (j + 1) + ". Name : " + framework);
                         j++;
                     }
 
                 }
-            }
-            else System.out.print("Not Entered");
+            } else System.out.print("Not Entered");
 
-        boolean empty = true;
-        for (int i=0; i<dislikedMembers.length; i++) {
-            if (dislikedMembers[i] != null) {
-                empty = false;
-                break;
+            boolean empty = true;
+            for (int i = 0; i < dislikedMembers.length; i++) {
+                if (dislikedMembers[i] != null) {
+                    empty = false;
+                    break;
+                }
             }
-        }
-        System.out.print("\n                    Disliked Students \t\t: ");
-        if(!empty)
-        {
-            System.out.println();
-            for(int i =0 ; i < dislikedMembers.length; i++)
-            {
-                System.out.println("                    " +(i+1) + ". ID : " + dislikedMembers[i].getId() + "\tName : " + dislikedMembers[i].getFirstName() + " " + dislikedMembers[i].getLastName());
-            }
-        }
-        else System.out.println("Not Entered");
-        System.out.println("\n\n\n");
+            System.out.print("\n                    Disliked Students \t\t: ");
+            if (!empty) {
+                System.out.println();
+                for (int i = 0; i < dislikedMembers.length; i++) {
+                    System.out.println("                    " + (i + 1) + ". ID : " + dislikedMembers[i].getId() + "\tName : " + dislikedMembers[i].getFirstName() + " " + dislikedMembers[i].getLastName());
+                }
+            } else System.out.println("Not Entered");
+            System.out.println("\n\n\n");
 
-
-        int choice = 0;
-            System.out.println( "****Student Menu****\n" +
+            int choice = 0;
+            System.out.println(Constraint.ANSI_BLUE + "\n****model.Student Menu****\n" + Constraint.ANSI_RESET +
                     "1.Enter/Change Preferred Projects and Roles\n" +
                     "2.Enter/Change Disliked Members\n" +
-                    "3.Get Team Assignment and Details\n" +
+                    "3.Get model.Team Assignment and Details\n" +
                     "4.Logout\n");
             choice = InputTools.intChecker(1, 4);
 
@@ -198,39 +172,34 @@ public class Student extends User implements Serializable {
                     break;
 
                 case 2:
-                    if(Student.allStudents.size() <4 )
-                    {
-                    System.out.println(" Sorry no students to select at the moment. \n" +
-                            " Please come back later");
-                    } else
-                        {
-                            System.out.println("                    Students that currently signed up are: \n\n ");
-                            int i = 1;
-                            for (Student student : allStudents) {
-                                if (!(student.getId() == getId())) {
+                    if (Student.allStudents.size() < 4) {
+                        System.out.println(" Sorry no students to select at the moment. \n" +
+                                " Please come back later");
+                    } else {
+                        System.out.println("                    Students that currently signed up are: \n\n ");
+                        int i = 1;
+                        for (Student student: allStudents) {
+                            if (!(student.getId() == getId())) {
 
-                                    System.out.println("                    " + i + ". Student ID: " + student.getId() + "\t" +
-                                            "Name \t\t\t: " + student.getFirstName() + " " + student.getLastName() );
-                                    i++;
-                                }
+                                System.out.println("                    " + i + ". model.Student ID: " + student.getId() + "\t" +
+                                        "Name \t\t\t: " + student.getFirstName() + " " + student.getLastName());
+                                i++;
                             }
-                            enterDislikedMembers();
-                            break;
                         }
+                        enterDislikedMembers();
+                        break;
+                    }
 
                 case 3:
-                    if (assignedTeam == null)
-                    {
-                        System.out.println("\n\nSorry! No Team Assigned Yet, Please Come Back Later.\n\n");
-                    }else
-                    {
-                        System.out.println( "\n\n Your Team ID:\t\t " +assignedTeam.getTeamID() +
-                                "\n Project Assigned to your team:\t" + assignedTeam.getProjectAssigned().getClient().getOrganisation()
-                                +": " + assignedTeam.getProjectAssigned().getProjectTitle() +
-                                "\n Students in the team: " );
-                        for(Student student : assignedTeam.getStudentsInTeam())
-                        {
-                            System.out.println("ID : " + student.getId() + "\tName : " + student.getFirstName() + " " + student.getLastName() +"\n");
+                    if (assignedTeam == null) {
+                        System.out.println("\n\nSorry! No model.Team Assigned Yet, Please Come Back Later.\n\n");
+                    } else {
+                        System.out.println("\n\n Your model.Team ID:\t\t " + assignedTeam.getTeamID() +
+                                "\n model.Project Assigned to your team:\t" + assignedTeam.getProjectAssigned().getClient().getOrganisation() +
+                                ": " + assignedTeam.getProjectAssigned().getProjectTitle() +
+                                "\n Students in the team: ");
+                        for (Student student: assignedTeam.getStudentsInTeam()) {
+                            System.out.println("ID : " + student.getId() + "\tName : " + student.getFirstName() + " " + student.getLastName() + "\n");
                         }
                     }
                     break;
@@ -252,27 +221,22 @@ public class Student extends User implements Serializable {
      */
     public void enterDislikedMembers() throws IOException {
         System.out.println(getFirstName() + "! You are allowed to enter 3 members you do not wish to team up with.");
-        for (int i = 0; i < 3; i++)
-        {
+        for (int i = 0; i < 3; i++) {
             boolean studentExists = false;
             do {
-                System.out.print(" \nPlease enter the student ID of member number " + (i+1) + ":");
+                System.out.print(" \nPlease enter the student ID of member number " + (i + 1) + ":");
                 String input = Global.scan.nextLine();
                 boolean dislikedStudExists = false;
                 boolean empty = true;
-                for (int j=0; j<dislikedMembers.length; j++)
-                {
+                for (int j = 0; j < dislikedMembers.length; j++) {
                     if (dislikedMembers[j] != null) {
                         empty = false;
                         break;
                     }
                 }
-                if(!empty)
-                {
-                    for (int a =0 ; a < dislikedMembers.length; a++)
-                    {
-                        if(dislikedMembers[a] != null)
-                        {
+                if (!empty) {
+                    for (int a = 0; a < dislikedMembers.length; a++) {
+                        if (dislikedMembers[a] != null) {
                             if (input.equalsIgnoreCase(dislikedMembers[a].getId())) {
                                 dislikedStudExists = true;
                                 break;
@@ -283,12 +247,9 @@ public class Student extends User implements Serializable {
                 if (!dislikedStudExists) {
                     if (input.equalsIgnoreCase(getId())) {
                         System.out.println("\nYou cannot enter your own ID!!");
-                    } else
-                        {
-                        for (Student student : allStudents)
-                        {
-                            if (input.equalsIgnoreCase(student.getId()))
-                            {
+                    } else {
+                        for (Student student: allStudents) {
+                            if (input.equalsIgnoreCase(student.getId())) {
                                 studentExists = true;
                                 dislikedMembers[i] = student;
                             }
@@ -298,29 +259,27 @@ public class Student extends User implements Serializable {
                         }
                     }
                 } else {
-
                     System.out.println("You have already registered this student ID as disliked Member!!");
                 }
             } while (!studentExists);
         }
         FileReadWrite.saveStudentDetails(Main.studentsFileName, Student.allStudents);
-
     }
 
     /**
      * Method to enter preferred Projects by student
-     * @throws IOException
+     *
+     * @throws IOException if an I/O error occurs
      */
     public void enterPreferredProjects() throws IOException, NullPointerException {
         System.out.println(" The List of available projects are ");
         for (Project a: Project.projectsNotAssigned) {
-            System.out.println("ID:\t"+a.getProjectId() + "\t\tClient : " + a.getClient().getOrganisation()+ "\t\t\tTitle : " + a.getProjectTitle() + "\t" );
+            System.out.println("ID:\t" + a.getProjectId() + "\t\tClient : " + a.getClient().getOrganisation() + "\t\t\tTitle : " + a.getProjectTitle() + "\t");
         }
 
         String input, input2;
         System.out.println(" You are allowed to enter 4 projects you would like to work for:");
-        for (int i = 0; i < 4; i++)
-        {
+        for (int i = 0; i < 4; i++) {
             boolean projectExists = false;
             do {
                 System.out.print("\n Please enter the ID of your preferred project number " + (i + 1) + ":");
@@ -328,9 +287,9 @@ public class Student extends User implements Serializable {
                 boolean preferredProjExists = false;
                 for (int k = 0; k < preferredProjects.length; k++) {
                     if (preferredProjects[k] != null)
-                    if (input.equals(preferredProjects[k].getProjectId())) {
-                        preferredProjExists = true;
-                    }
+                        if (input.equals(preferredProjects[k].getProjectId())) {
+                            preferredProjExists = true;
+                        }
                 }
                 if (!preferredProjExists) {
                     for (int j = 0; j < Project.totalProjects.size(); j++) {
@@ -342,49 +301,43 @@ public class Student extends User implements Serializable {
                         }
                     }
                     if (!projectExists) {
-                        System.out.println("\n No Project found. Please enter a Project Exists Project's ID");
+                        System.out.println("\n No model.Project found. Please enter a model.Project Exists model.Project's ID");
                     }
                 } else {
-                    System.out.println("You have already registered this Project as a Preference!!");
+                    System.out.println("You have already registered this model.Project as a Preference!!");
                 }
             } while (!projectExists);
         }
         this.setPreferredProjects(preferredProjects);
-        ArrayList<Role>allRolesInPreferredProjects = new ArrayList<>();
+        ArrayList < Role > allRolesInPreferredProjects = new ArrayList < > ();
         System.out.println("                    ****Your Preferred Projects and the Roles that are available!****\n\n" +
-        "                    The Details are given below :\n" );
-        for (Project project : preferredProjects)
-        {
+                "                    The Details are given below :\n");
+        for (Project project: preferredProjects) {
             System.out.println(
-                    "\n                    Project ID is " + project.getProjectId() + "\n" +
-                    "                    Title \t\t\t: " + project.getProjectTitle()+ "\n" );
+                    "\n                    model.Project ID is " + project.getProjectId() + "\n" +
+                            "                    Title \t\t\t: " + project.getProjectTitle() + "\n");
 
-         for (Role role : project.getRolesInProject())
-           {
-             System.out.print("                    Role name : " + role.getRoleName() + "\t\t\t Frameworks : ");
-             for(String framework : role.getFrameworks())
-             {
-                 System.out.print(framework + " ");
-             }
-               allRolesInPreferredProjects.add(role);
-               System.out.print("\n");
-           }
+            for (Role role: project.getRolesInProject()) {
+                System.out.print("                    model.Role name : " + role.getRoleName() + "\t\t\t Frameworks : ");
+                for (String framework: role.getFrameworks()) {
+                    System.out.print(framework + " ");
+                }
+                allRolesInPreferredProjects.add(role);
+                System.out.print("\n");
+            }
         }
         System.out.println(" You are allowed to enter 2 roles you would like to work as:");
-        for (int i = 0; i < 2; i++)
-        {
+        for (int i = 0; i < 2; i++) {
             boolean roleExists = false;
             do {
-                System.out.print("\n Please enter the ID of Project that your preferred role "+(i + 1)+" belongs to : ");
+                System.out.print("\n Please enter the ID of model.Project that your preferred role " + (i + 1) + " belongs to : ");
                 input2 = Global.scan.nextLine();
                 boolean projectFound = false;
-                for(Project project : preferredProjects)
-                {
-                    if(project.getProjectId().equalsIgnoreCase(input2))
-                       projectFound=true;
+                for (Project project: preferredProjects) {
+                    if (project.getProjectId().equalsIgnoreCase(input2))
+                        projectFound = true;
                 }
-                if (projectFound)
-                {
+                if (projectFound) {
                     System.out.print("\n Please enter the name your preferred role number " + (i + 1) + ":");
                     input = Global.scan.nextLine();
                     boolean preferredRoleExists = false;
@@ -402,26 +355,24 @@ public class Student extends User implements Serializable {
                             }
                         }
                         if (!roleExists) {
-                            System.out.println("\n No Such Role found. Please enter a Role from the List");
+                            System.out.println("\n No Such model.Role found. Please enter a model.Role from the List");
                         }
                     } else {
-                        System.out.println("You have already registered this Role as a Preference!!");
+                        System.out.println("You have already registered this model.Role as a Preference!!");
                     }
-                }else System.out.println( "\n\n You have not entered this project as a preference!!\n\n");
+                } else System.out.println("\n\n You have not entered this project as a preference!!\n\n");
             } while (!roleExists);
         }
-
-        //FileReadWrite.saveStudentDetails(Main.studentsFileName, Student.allStudents);
     }
 
 
     /**
      * Method to enter preferred roles for a project by student.
+     *
      * @param project
      */
     public void enterPreferredRoles(Project project) {
         String input;
-        //TODO Display list of roles
         System.out.println(" You are allowed to enter 2 Roles you would like to apply for.");
         for (int i = 0; i < 2; i++) {
             boolean roleExists = false;
@@ -461,10 +412,10 @@ public class Student extends User implements Serializable {
                         }
                     }
                     if (!roleExists) {
-                        System.out.println("\n No Role found. Please enter an preferredRoleExists Project's ID");
+                        System.out.println("\n No model.Role found. Please enter an preferredRoleExists model.Project's ID");
                     }
                 } else {
-                    System.out.println("You have already registered this Role as a Preference!!");
+                    System.out.println("You have already registered this model.Role as a Preference!!");
                 }
             } while (!roleExists);
         }

@@ -1,16 +1,19 @@
+package model;
+
+import util.Global;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
 
 public class Role implements Serializable {
     private static final long serialVersionUID = -8977434449646607064L;
-    private String id;// ID can be both for student or Project
+    private String id; // ID can be both for student or model.Project
     private String roleName;
-    private ArrayList<String> frameworks = new ArrayList<>();
+    private ArrayList < String > frameworks = new ArrayList < > ();
 
 
-    public Role(String id, String roleName, ArrayList<String> frameworks) //  frameworks are needed in constructor
-    {
+    public Role(String id, String roleName, ArrayList < String > frameworks) {
         this.id = id;
         this.roleName = roleName;
         this.frameworks = frameworks;
@@ -19,9 +22,10 @@ public class Role implements Serializable {
 
     /**
      * Getter and setter methods.
+     *
      * @return
      */
-    public ArrayList<String> getFrameworks() {
+    public ArrayList < String > getFrameworks() {
         return frameworks;
     }
 
@@ -44,7 +48,8 @@ public class Role implements Serializable {
 
     /**
      * Method to enter preferred frameworks by student
-     * @param role
+     *
+     * @param role preferred role
      */
     public void enterFrameworks(Role role) {
         boolean frameWorkFound = false;
