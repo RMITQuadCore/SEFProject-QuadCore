@@ -11,7 +11,6 @@ public class ProjectManager extends User implements Serializable {
     private static boolean projectsDiscarded = false;
     public static ArrayList < Constraint > constraints = new ArrayList < > ();
 
-
     public static ArrayList<Constraint> getConstraints() {
         return constraints;
     }

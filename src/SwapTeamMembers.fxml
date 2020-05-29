@@ -16,6 +16,7 @@
         <ListView fx:id="projectListView" layoutX="-1.0" prefHeight="200.0" prefWidth="600.0" />
         <VBox alignment="CENTER" layoutY="200.0" prefHeight="200.0" prefWidth="600.0">
             <children>
+            <Label text="Enter Two Student IDs for swapping" />
                 <GridPane alignment="CENTER" prefHeight="159.0" prefWidth="600.0">
                     <columnConstraints>
                         <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -47,10 +48,7 @@
                   <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#cancelButtonHandler" prefHeight="25.0" prefWidth="91.0" text="Cancel" GridPane.rowIndex="2" />
                     </children>
                 </GridPane>
-                <Label fx:id="messageLabel" text="Label">
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin></Label>
+            <Label fx:id="messageLabel" text="Label" />
             </children>
         </VBox>
     </children>
