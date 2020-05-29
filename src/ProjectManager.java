@@ -64,7 +64,7 @@ public class ProjectManager extends User implements Serializable {
         int choice;
         do {
             System.out.println(Constraint.ANSI_YELLOW + "\n*** Project Manager Menu ***\n" + Constraint.ANSI_RESET+
-                    "1. Set all Constraints\n" +
+                    "1. Set all Constraints & change weightage\n" +
                     "2. Display Current Constraint\n" +
                     "3. Enter Personality of students\n" +
                     "4. Change Sign up status\n" +
@@ -283,12 +283,42 @@ public class ProjectManager extends User implements Serializable {
             else System.out.println("Female Hard Constraint Maintained.");
             teamCreator = dislikedMembersRemover(teamCreator);
             System.out.println("after disliked member");
-            teamCreator = uniquePersonalityConstraintApplicator(teamCreator);
-            System.out.println("after unique personality");
-            teamCreator = personalityAorBPresentApplicator(teamCreator);
-            System.out.println("after personalityAorBPresentApplicator");
-            teamCreator = experienceSoftConstraintApplicator(teamCreator);
-            System.out.println("after experienceSoftConstraintApplicator");
+
+            for (int x = 0; x < Constraint.allSoftConstraints.size(); x++) // bubble sort outer loop
+            {
+                for (int y = 0; y < Constraint.allSoftConstraints.size() - x - 1; y++) {
+                    if (Constraint.allSoftConstraints.get(y).getWeightAge() > (Constraint.allSoftConstraints.get(y + 1).getWeightAge())) {
+                        Constraint temp = Constraint.allSoftConstraints.get(y);
+                        Constraint.allSoftConstraints.set(y, Constraint.allSoftConstraints.get(y + 1));
+                        Constraint.allSoftConstraints.set(y + 1, temp);
+                    }
+                }
+            }
+
+
+
+            for(Constraint c: Constraint.allSoftConstraints){
+                System.out.println("Substring num: " + c.getConstraintId().substring(11,12));
+                switch (Integer.parseInt(c.getConstraintId().substring(11,12))) {
+                    case 1:
+                        teamCreator = uniquePersonalityConstraintApplicator(teamCreator);
+                        System.out.println("after unique personality");
+                        break;
+                    case 2:
+                        teamCreator = personalityAorBPresentApplicator(teamCreator);
+                        System.out.println("after personalityAorBPresentApplicator");
+                        break;
+                    case 3:
+                        teamCreator = experienceSoftConstraintApplicator(teamCreator);
+                        System.out.println("after exp");
+                        break;
+                    default:
+                        System.out.println("Default:  ");
+                        break;
+                }
+                System.out.println(" id: " + c.getConstraintId() + "weightage: " +c.getWeightAge() );
+            }
+
             teamCreator = teamAverageGPAConstraintApplicator(teamCreator);
             System.out.println("after teamAverageGPAConstraintApplicator");
 
@@ -319,7 +349,19 @@ public class ProjectManager extends User implements Serializable {
                 System.out.print(student.getId() + "  Name: " + student.getFirstName() + "\t  Gender : " + student.getGender() + "\n");
             }
             Team.allTeams.add(team);
-            //teamCreator.clear();
+            for (Student student : teamCreator)
+            {
+                for(Student student1 : Student.allStudents){
+                    if(student.getId().compareTo(student1.getId()) ==0){
+                        student.setAssignedTeam(team);
+                        student1.setAssignedTeam(team);
+                    }
+                }
+//                if(teamCreator.contains(student)){
+//                student.setAssignedTeam(team);
+//            }
+            }
+            teamCreator.clear();
             team = null;
 
             int choice = 0;
@@ -564,10 +606,10 @@ public class ProjectManager extends User implements Serializable {
                     if (teamCreator.get(k).getGender() == 'm' || teamCreator.get(k).getGender() == 'M') {
                         for (Student student : studentsNotInATeam) {
                             if ((student.getStudentPersonality() != teamCreator.get(j).getStudentPersonality()) && (student.getGender() == 'm' || student.getGender() == 'M')) {
-                                teamCreator.remove(teamCreator.get(k));
                                 teamCreator.add(student);
-                                studentsNotInATeam.remove(student);
                                 studentsNotInATeam.add(teamCreator.get(k));
+                                teamCreator.remove(teamCreator.get(k));
+                                studentsNotInATeam.remove(student);
                                 break;
                             }
                         }
@@ -654,16 +696,12 @@ public ArrayList<Student> personalityAorBPresentApplicator(ArrayList<Student> te
                 Project.projectsNotAssigned.remove(entry.getKey());
             }
         }
-        for (Student student : team.getStudentsInTeam())
-        {
-            student.setAssignedTeam(team);
-        }
 
         for (Student s : teamCreator){
             team.getStudentsInTeam().add(s);
         }
         //team.setStudentsInTeam(teamCreator);
-        teamCreator.clear();
+        //teamCreator.clear();
 //        for (int i = 0; i < teamCreator.size(); i++) {
 //            teamCreator.remove(i);
 //        }

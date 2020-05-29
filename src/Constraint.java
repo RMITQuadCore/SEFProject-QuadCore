@@ -227,77 +227,78 @@ public class Constraint implements Serializable {
      * Method to define and set value for all constraints by Project Manager.
      */
     public void setAllConstraints() throws IOException {
-//        System.out.println(" Enter number of students in a team: ");
-//        teamSize = InputTools.intChecker(1, 100);
-//
-//        System.out.println(ANSI_YELLOW + "Hard Constraints : " + ANSI_RESET);
-//        System.out.println("1. Maximum number of female student per team: ");
-//        maxNosOfFemaleStudent = InputTools.intChecker(0, teamSize);
-//
-//        System.out.println("2. Benchmark GPA of individual student: ");
-//        benchmarkStudentGpa = InputTools.floatChecker(0, 4);
-//
-//        System.out.println("3. Minimum number of student with at least benchmark GPA in a team: ");
-//        minNosOfStudWithBenchmarkGpa = InputTools.intChecker(0, teamSize);
-//
-//        System.out.println("4. Maximum average GPA of a team: ");
-//        maxAvgGpaOfTeam = InputTools.floatChecker(0, 4);
-//
-//
-//        System.out.println("\n" + ANSI_GREEN + "Soft Constraints: " + ANSI_RESET);
-//        System.out.println("1. Number of years of experience benchmark: ");
-//        yearsOfExperience = InputTools.floatChecker(0, 80);
-//
-//        System.out.println("2. Minimum number of student with " + yearsOfExperience +
-//                "+ year(s) of experience per team: ");
-//        minNosOfStudWithExperience = InputTools.intChecker(0, teamSize);
-//
-//        System.out.println("3. Define valid Personality types of students (A-Z): ");
-//        int i = 1;
-//        char input;
-//        do {
-//            System.out.println("Personality " + i++ + ":");
-//            input = Global.scan.nextLine().toUpperCase().charAt(0);
-//            validPersonalities.add(input);
-//            System.out.println("Do you want to add more personality: (Y/N)");
-//            input = Global.scan.nextLine().toUpperCase().charAt(0);
-//        } while (input == 'Y');
-//
-//        System.out.println("4. Enter Personality(s) type should be present in every team : ");
-//        int j = 1;
-//        String choice;
-//        do {
-//            System.out.println("Personality " + j + ":");
-//            choice = Global.scan.nextLine().toUpperCase();
-//            boolean isExist = false;
-//            for (Character c: validPersonalities) {
-//                if (choice.equals(c.toString())) {
-//                    requiredPersonalities.add(choice.charAt(0));
-//                    j++;
-//                    isExist = true;
-//                    break;
-//                }
-//            }
-//            if (!isExist) {
-//                System.err.println("Invalid personality ");
-//            }
-//            System.out.println("Do you want enter more personality(s): (Y/N)");
-//            choice = Global.scan.nextLine().toUpperCase();
-//        } while (choice.charAt(0) == 'Y');
-//
-//
-//        boolean isExist = false;
-//        do {
-//            System.out.println("5. Should every personality in a team should be unique? (Y/N): ");
-//            if (Global.scan.nextLine().toUpperCase().charAt(0) == 'Y') {
-//                setUniquePersonality(true);
-//                isExist = true;
-//            } else if (Global.scan.nextLine().toUpperCase().charAt(0) == 'N') {
-//                setUniquePersonality(false);
-//                isExist = true;
-//            }
-//        } while (!isExist);
+        System.out.println(" Enter number of students in a team: ");
+        teamSize = InputTools.intChecker(1, 100);
 
+        System.out.println(ANSI_YELLOW + "Hard Constraints : " + ANSI_RESET);
+        System.out.println("1. Maximum number of female student per team: ");
+        maxNosOfFemaleStudent = InputTools.intChecker(0, teamSize);
+
+        System.out.println("2. Benchmark GPA of individual student: ");
+        benchmarkStudentGpa = InputTools.floatChecker(0, 4);
+
+        System.out.println("3. Minimum number of student with at least benchmark GPA in a team: ");
+        minNosOfStudWithBenchmarkGpa = InputTools.intChecker(0, teamSize);
+
+        System.out.println("4. Maximum average GPA of a team: ");
+        maxAvgGpaOfTeam = InputTools.floatChecker(0, 4);
+
+
+        System.out.println("\n" + ANSI_GREEN + "Soft Constraints: " + ANSI_RESET);
+        System.out.println("1. Number of years of experience benchmark: ");
+        yearsOfExperience = InputTools.floatChecker(0, 80);
+
+        System.out.println("2. Minimum number of student with " + yearsOfExperience +
+                "+ year(s) of experience per team: ");
+        minNosOfStudWithExperience = InputTools.intChecker(0, teamSize);
+
+        System.out.println("3. Define valid Personality types of students (A-Z): ");
+        int i = 1;
+        char input;
+        do {
+            System.out.println("Personality " + i++ + ":");
+            input = Global.scan.nextLine().toUpperCase().charAt(0);
+            validPersonalities.add(input);
+            System.out.println("Do you want to add more personality: (Y/N)");
+            input = Global.scan.nextLine().toUpperCase().charAt(0);
+        } while (input == 'Y');
+
+        System.out.println("4. Enter Personality(s) type should be present in every team : ");
+        int j = 1;
+        String choice;
+        do {
+            System.out.println("Personality " + j + ":");
+            choice = Global.scan.nextLine().toUpperCase();
+            boolean isExist = false;
+            for (Character c: validPersonalities) {
+                if (choice.equals(c.toString())) {
+                    requiredPersonalities.add(choice.charAt(0));
+                    j++;
+                    isExist = true;
+                    break;
+                }
+            }
+            if (!isExist) {
+                System.err.println("Invalid personality ");
+            }
+            System.out.println("Do you want enter more personality(s): (Y/N)");
+            choice = Global.scan.nextLine().toUpperCase();
+        } while (choice.charAt(0) == 'Y');
+
+
+        boolean isExist = false;
+        do {
+            System.out.println("5. Should every personality in a team should be unique? (Y/N): ");
+            if (Global.scan.nextLine().toUpperCase().charAt(0) == 'Y') {
+                setUniquePersonality(true);
+                isExist = true;
+            } else if (Global.scan.nextLine().toUpperCase().charAt(0) == 'N') {
+                setUniquePersonality(false);
+                isExist = true;
+            }
+        } while (!isExist);
+
+        Constraint.allSoftConstraints.clear();
         System.out.println("\nEnter weight age for Soft-Constraints (1-4): ");
 
         System.out.println("Unique Personality Soft-Constraint : ");

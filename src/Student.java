@@ -1,6 +1,5 @@
 import java.io.IOException;
 import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -226,7 +225,8 @@ public class Student extends User implements Serializable {
                     }else
                     {
                         System.out.println( "\n\n Your Team ID:\t\t " +assignedTeam.getTeamID() +
-                                "\n Project Assigned to your team:\t" + assignedTeam.getProjectAssigned().getClient() +":" + assignedTeam.getProjectAssigned().getProjectTitle() +
+                                "\n Project Assigned to your team:\t" + assignedTeam.getProjectAssigned().getClient().getOrganisation()
+                                +": " + assignedTeam.getProjectAssigned().getProjectTitle() +
                                 "\n Students in the team: " );
                         for(Student student : assignedTeam.getStudentsInTeam())
                         {
