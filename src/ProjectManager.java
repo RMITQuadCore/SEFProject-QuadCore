@@ -6,7 +6,6 @@ import java.util.*;
 public class ProjectManager extends User implements Serializable {
     private static final long serialVersionUID = 2437934725196379683L;
 
-    //public ArrayList<String> studentPersonalities = new ArrayList<String>();
     public static ArrayList<Student> studentsNotInATeam = new ArrayList<Student>();
     private boolean signUpStatus = true;
     private static boolean projectsDiscarded = false;
@@ -115,7 +114,6 @@ public class ProjectManager extends User implements Serializable {
 
                 case 8:
                     displayTeams();
-                    //TODO write function
                     break;
 
                 case 9:
@@ -131,15 +129,15 @@ public class ProjectManager extends User implements Serializable {
 
     private void displayTeams() {
         SwapTeamMembersController.calculateTeamConstraints();
-        System.out.println("Teams formed are:");
+        System.out.println("\nTeams formed are:");
         for (Team team : Team.allTeams){
-            System.out.println("The team ID is : \t\t\t" + team.getTeamID() +
-                    "\nThe Project Assigned to this team is \t: " + team.getProjectAssigned().getProjectTitle() +
-                    "\nThe team's fitness is \t\t\t: " + team.getTeamFitness()+"\n");
-            System.out.print("The Students IDs of students in this team are: \n\n");
+            System.out.println("\nThe team ID is : \t\t\t" + team.getTeamID() +
+                    "\nThe Project Assigned to this team is \t: " + team.getProjectAssigned().getProjectId() + ": "+team.getProjectAssigned().getProjectTitle() +
+                    "\nThe team's fitness is \t\t\t: " + team.getTeamFitness());
+            System.out.print("The Students IDs of students in this team are: \n");
             for (Student student : team.getStudentsInTeam())
             {
-                System.out.print(student.getId() + "  Name: " + student.getFirstName() + "\t  Gender : " + student.getGender() + "\n");
+                System.out.print(student.getId() + "  Name: " + student.getFirstName() + "\t  Gender : " + student.getGender() + "\t  Experience : " + student.getExperience() + " years\n");
             }
             int j = 1;
             System.out.println(" Constraints met are:");
