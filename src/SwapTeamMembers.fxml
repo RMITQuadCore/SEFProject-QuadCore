@@ -16,7 +16,7 @@
         <ListView fx:id="projectListView" layoutX="-1.0" prefHeight="200.0" prefWidth="600.0" />
         <VBox alignment="CENTER" layoutY="200.0" prefHeight="200.0" prefWidth="600.0">
             <children>
-            <Label text="Enter Two Student IDs for swapping" />
+            <Label text="Enter Two Student IDs for the SWAP" />
                 <GridPane alignment="CENTER" prefHeight="159.0" prefWidth="600.0">
                     <columnConstraints>
                         <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
