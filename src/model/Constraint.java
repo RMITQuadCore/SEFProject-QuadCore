@@ -11,13 +11,14 @@ import java.util.ArrayList;
 
 public class Constraint implements Serializable {
 
+    private static final long serialVersionUID = -1366816070884184218L;
     public static final String ANSI_BLUE = "\u001B[34m";
     public static final String ANSI_GREEN = "\u001B[32m";
     public static final String ANSI_RESET = "\u001B[0m";
 
     public static ArrayList<Constraint> allSoftConstraints = new ArrayList < > ();
     public static ArrayList<Constraint> allConstraints = new ArrayList<>();
-    String constraintId = "Constraint 0";
+    private String constraintId = "Constraint 0";
     String constraintDescription;
     private int weightAge;
 
