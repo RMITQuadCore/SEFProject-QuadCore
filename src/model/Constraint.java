@@ -24,17 +24,17 @@ public class Constraint implements Serializable {
 
     ArrayList < Character > requiredPersonalities = new ArrayList < > ();
     ArrayList < Character > validPersonalities = new ArrayList < > ();
-    int maxNosOfFemaleStudent;
-    float benchmarkStudentGpa;
-    int minNosOfStudWithBenchmarkGpa;
-    float maxAvgGpaOfTeam;
-    float yearsOfExperience;
-    int minNosOfStudWithExperience;
-    boolean uniquePersonality;
-    int teamSize;
-    int uniquePersonalityWeightAge = 0;
-    int requiredPersonalityWeightAge = 0;
-    int experienceWeightAge = 0;
+    private int maxNosOfFemaleStudent;
+    private float benchmarkStudentGpa;
+    private int minNosOfStudWithBenchmarkGpa;
+    private float maxAvgGpaOfTeam;
+    private float yearsOfExperience;
+    private int minNosOfStudWithExperience;
+    private boolean uniquePersonality;
+    private int teamSize;
+    private int uniquePersonalityWeightAge = 0;
+    private int requiredPersonalityWeightAge = 0;
+    private int experienceWeightAge = 0;
 
 
     public Constraint() {
@@ -302,29 +302,29 @@ public class Constraint implements Serializable {
      */
     public void setAllConstraints() throws IOException {
         System.out.println(" Enter number of students in a team: ");
-        teamSize = InputTools.intChecker(1, 100);
+        setTeamSize(InputTools.intChecker(1, 100));
 
         System.out.println(ANSI_BLUE + "Hard Constraints : " + ANSI_RESET);
         System.out.println("1. Maximum number of female student per team: ");
-        maxNosOfFemaleStudent = InputTools.intChecker(0, teamSize);
+        setMaxNosOfFemaleStudent(InputTools.intChecker(0, teamSize));
 
         System.out.println("2. Benchmark GPA of individual student: ");
-        benchmarkStudentGpa = InputTools.floatChecker(0, 4);
+        setBenchmarkStudentGpa(InputTools.floatChecker(0, 4));
 
         System.out.println("3. Minimum number of student with at least benchmark GPA in a team: ");
-        minNosOfStudWithBenchmarkGpa = InputTools.intChecker(0, teamSize);
+        setMinNosOfStudWithBenchmarkGpa(InputTools.intChecker(0, teamSize));
 
         System.out.println("4. Maximum average GPA of a team: ");
-        maxAvgGpaOfTeam = InputTools.floatChecker(0, 4);
+        setMaxAvgGpaOfTeam(InputTools.floatChecker(0, 4));
 
 
         System.out.println("\n" + ANSI_GREEN + "Soft Constraints: " + ANSI_RESET);
         System.out.println("1. Number of years of experience benchmark: ");
-        yearsOfExperience = InputTools.floatChecker(0, 80);
+        setYearsOfExperience(InputTools.floatChecker(0, 80));
 
         System.out.println("2. Minimum number of student with " + yearsOfExperience +
                 "+ year(s) of experience per team: ");
-        minNosOfStudWithExperience = InputTools.intChecker(0, teamSize);
+        setMinNosOfStudWithExperience(InputTools.intChecker(0, teamSize));
 
         System.out.println("3. Define valid Personality types of students (A-Z): ");
         int i = 1;
@@ -375,19 +375,19 @@ public class Constraint implements Serializable {
         allConstraints.add(new Constraint(maxNosOfFemaleStudent,benchmarkStudentGpa, minNosOfStudWithBenchmarkGpa,
                 maxAvgGpaOfTeam, yearsOfExperience, minNosOfStudWithExperience,
                 uniquePersonality, teamSize));
-        FileReadWrite.saveConstraintDetails(Main.allConstraintFileName, allConstraints);
+        //FileReadWrite.saveConstraintDetails(Main.allConstraintFileName, allConstraints);
 
         Constraint.allSoftConstraints.clear();
         System.out.println("\nEnter weight age for Soft-Constraints (1-4): ");
 
         System.out.println("Unique Personality Soft-Constraint : ");
-        createConstraint();
+        createSoftConstraint();
 
         System.out.println("Required Personality Soft-Constraint : ");
-        createConstraint();
+        createSoftConstraint();
 
         System.out.println("Experience Soft-Constraint : ");
-        createConstraint();
+        createSoftConstraint();
 
         displayConstraints();
     }
@@ -397,7 +397,7 @@ public class Constraint implements Serializable {
      * saving it in arraylist "allSoftConstraints" and later in file "SoftConstraint.txt"
      *
      */
-    public void createConstraint() throws IOException {
+    public void createSoftConstraint() throws IOException {
         constraintId = "Constraint " + (allSoftConstraints.size() + 1);
         setConstraintId(constraintId);
 
@@ -416,33 +416,30 @@ public class Constraint implements Serializable {
      *
      */
     public void displayConstraints() {
-        System.out.println("Number of students in a team: " + teamSize);
-        System.out.println("Currently Set Constraints are: ");
+        for(Constraint c : allConstraints) {
+            System.out.println("Number of students in a team: " + c.getTeamSize());
 
-        System.out.println("\n Hard Constraint: \n" +
-                "1. Maximum number of female student per team: " + maxNosOfFemaleStudent + "\n" +
+            System.out.println("\nCurrently Set Constraints are: ");
 
-                "2. Minimum number of student with at least " + benchmarkStudentGpa +
-                " GPA per team: " + minNosOfStudWithBenchmarkGpa + "\n" +
+            System.out.println("\n Hard Constraint: \n" +
+                    "1. Maximum number of female student per team: " + c.getMaxNosOfFemaleStudent() + "\n" +
 
-                "3. Maximum average GPA of a team: " + maxAvgGpaOfTeam + " GPA");
+                    "2. Minimum number of student with at least " + c.getBenchmarkStudentGpa() +
+                    " GPA per team: " + c.getMinNosOfStudWithBenchmarkGpa() + "\n" +
 
-        System.out.println("\n Soft Constraints: \n" +
-                "1. Minimum number of student with " + yearsOfExperience +
-                "+ year(s) of experience per team: " + minNosOfStudWithExperience + "\n" +
+                    "3. Maximum average GPA of a team: " + c.getMaxAvgGpaOfTeam() + " GPA");
 
-                "2. Any of these Personality type should be in every team: ");
-        for (Character c: requiredPersonalities) {
-            int k = 0;
-            System.out.println(k++);
-            System.out.print(" " + c.toString() + ",");
+            System.out.println("\n Soft Constraints: \n" +
+                    "1. Minimum number of student with " + c.getYearsOfExperience() +
+                    "+ year(s) of experience per team: " + c.getMinNosOfStudWithExperience() + "\n" +
+
+                    "2. Any of these Personality type should be in every team: A, B");
+
+            System.out.println(
+                    "3. Every personality on a team should be unique: " + c.isUniquePersonality());
         }
-
-        System.out.println(
-                "3. Every personality on a team should be unique: " + uniquePersonality);
-
         int j = 1;
-        System.out.println("\nWeight age for Soft constraints : \n");
+        System.out.println("\nWeight age for Soft constraints : ");
         for (Constraint c: allSoftConstraints) {
             System.out.println(j + ". " + c.getConstraintDescription() + ": " + c.getWeightAge());
             j++;
