@@ -709,7 +709,7 @@ public class ProjectManager extends User implements Serializable {
             preference = teamCreator.get(i).getPreferredProjects();
 
             for (int j = 0; j < 4; j++) {
-                for (HashMap.Entry < Project, Integer > entry: projectPopularity.entrySet()) {
+                for (HashMap.Entry < Project, Integer > entry:projectPopularity.entrySet()) {
                     if (entry.getKey().getProjectId().compareTo(preference[j].getProjectId()) == 0) {
                         entry.setValue(entry.getValue() + (4 - j));
                     }

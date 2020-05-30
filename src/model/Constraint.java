@@ -16,6 +16,7 @@ public class Constraint implements Serializable {
     public static final String ANSI_RESET = "\u001B[0m";
 
     public static ArrayList<Constraint> allSoftConstraints = new ArrayList < > ();
+    public static ArrayList<Constraint> allConstraints = new ArrayList<>();
     String constraintId = "Constraint 0";
     String constraintDescription;
     private int weightAge;
@@ -43,6 +44,19 @@ public class Constraint implements Serializable {
         this.constraintId = constraintId;
         this.constraintDescription = constraintDescription;
         this.weightAge = weightAge;
+    }
+
+    public Constraint(int maxNosOfFemaleStudent, float benchmarkStudentGpa, int minNosOfStudWithBenchmarkGpa,
+                      float maxAvgGpaOfTeam, float yearsOfExperience, int minNosOfStudWithExperience,
+                      boolean uniquePersonality, int teamSize) {
+        this.maxNosOfFemaleStudent = maxNosOfFemaleStudent;
+        this.benchmarkStudentGpa = benchmarkStudentGpa;
+        this.minNosOfStudWithBenchmarkGpa = minNosOfStudWithBenchmarkGpa;
+        this.maxAvgGpaOfTeam = maxAvgGpaOfTeam;
+        this.yearsOfExperience = yearsOfExperience;
+        this.minNosOfStudWithExperience = minNosOfStudWithExperience;
+        this.uniquePersonality = uniquePersonality;
+        this.teamSize = teamSize;
     }
 
     /**
@@ -356,6 +370,11 @@ public class Constraint implements Serializable {
                 isExist = true;
             }
         } while (!isExist);
+
+        allConstraints.add(new Constraint(maxNosOfFemaleStudent,benchmarkStudentGpa, minNosOfStudWithBenchmarkGpa,
+                maxAvgGpaOfTeam, yearsOfExperience, minNosOfStudWithExperience,
+                uniquePersonality, teamSize));
+        FileReadWrite.saveConstraintDetails(Main.allConstraintFileName, allConstraints);
 
         Constraint.allSoftConstraints.clear();
         System.out.println("\nEnter weight age for Soft-Constraints (1-4): ");

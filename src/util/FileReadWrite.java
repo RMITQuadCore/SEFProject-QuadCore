@@ -147,4 +147,25 @@ public class FileReadWrite {
         }
         return constraintList;
     }
+
+    public static void saveAllConstraintDetails(String fileName, ArrayList<Constraint> allConstraintList) throws IOException {
+        FileOutputStream file = new FileOutputStream(fileName);
+        ObjectOutputStream out = new ObjectOutputStream(file); //since the array contains an object
+        out.writeObject(allConstraintList);
+        out.close();
+        file.close();
+    }
+
+    @SuppressWarnings("unchecked")
+    public static ArrayList<Constraint> readAllConstraintDetails(String fileName) throws IOException, ClassNotFoundException {
+        f = new File(fileName);
+        ArrayList<Constraint> allConstraintList = new ArrayList<>();
+        if (f.exists()) {
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream(fileName));
+            allConstraintList = (ArrayList<Constraint>) in.readObject();
+            in.close();
+        } else {
+        }
+        return allConstraintList;
+    }
 }

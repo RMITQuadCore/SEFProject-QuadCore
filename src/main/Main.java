@@ -15,6 +15,7 @@ public class Main implements Serializable {
     public static String projectsNotAssignedFileName = "ProjectsNotAssigned.txt";
     public static String teamsFileName = "Teams.txt";
     public static String softConstraintFileName = "SoftConstraint.txt";
+    public static String allConstraintFileName = "Constraint.txt";
 
     /**
      * Reads from saved files to update corresponding array list, used when main method is executed.
@@ -31,6 +32,7 @@ public class Main implements Serializable {
         Project.projectsNotAssigned = FileReadWrite.readProjectDetails(projectsNotAssignedFileName); //Updating Projects not yet assigned to any team
         Constraint.allSoftConstraints = FileReadWrite.readConstraintDetails(softConstraintFileName); //Updating all soft constraints
         ProjectManager.constraints = FileReadWrite.readConstraintDetails(softConstraintFileName); //Updating all constraints
+        Constraint.allConstraints = FileReadWrite.readConstraintDetails(allConstraintFileName);//Updating all constraints
     }
 
     /**
