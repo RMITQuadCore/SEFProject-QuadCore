@@ -1,108 +1,103 @@
-import java.util.ArrayList;
-
-
-
-
 //public class Tester {
 //
 //    public static void main(String args[]) {
-//        model.User u1 = new model.User();
-//        model.Project p = new model.Project();
-//        model.Student s = new model.Student();
+//        User u1 = new User();
+//        Project p = new Project();
+//        Student s = new Student();
 //
-//        ArrayList<model.Student> tempStudent = new ArrayList<model.Student>();
-//        ArrayList<model.Student> teamStudent = new ArrayList<model.Student>();
-//        ArrayList<model.Student> projectGroupStudent = new ArrayList<model.Student>();
+//        ArrayList<Student> tempStudent = new ArrayList<Student>();
+//        ArrayList<Student> teamStudent = new ArrayList<Student>();
+//        ArrayList<Student> projectGroupStudent = new ArrayList<Student>();
 //
-//        model.Project p1 = new model.Project("CL101", "PROJ201", "xyz1", "xyz1", "xyz1", null, 7);
+//        Project p1 = new Project("CL101", "PROJ201", "xyz1", "xyz1", "xyz1", null, 7);
 //        p.pr.add(p1);
 //
-//        model.Project p2 = new model.Project("CL102", "PROJ202", "xyz2", "xyz2", "xyz2", null, 3);
+//        Project p2 = new Project("CL102", "PROJ202", "xyz2", "xyz2", "xyz2", null, 3);
 //        p.pr.add(p2);
 //
-//        model.Project p3 = new model.Project("CL103", "PROJ203", "xyz3", "xyz3", "xyz3", null, 5);
+//        Project p3 = new Project("CL103", "PROJ203", "xyz3", "xyz3", "xyz3", null, 5);
 //        p.pr.add(p3);
 //
-//        model.Project p4 = new model.Project("CL104", "PROJ204", "xyz4", "xyz4", "xyz4", null, 8);
+//        Project p4 = new Project("CL104", "PROJ204", "xyz4", "xyz4", "xyz4", null, 8);
 //        p.pr.add(p4);
 //
-//        model.Student s1 = new model.Student("ST101", "abc1", "abc1", "abc1", "abc1", "abc1", "abc1", 2.8, 1, 'm', 'a');
+//        Student s1 = new Student("ST101", "abc1", "abc1", "abc1", "abc1", "abc1", "abc1", 2.8, 1, 'm', 'a');
 //        s.allStudents.add(s1);
 //        u1.allUserDetails.add(s1);
 //
-//        model.Student s2 = new model.Student("ST102", "abc2", "abc2", "abc2", "abc2", "abc2", "abc2", 3.8, 1, 'm', 'a');
+//        Student s2 = new Student("ST102", "abc2", "abc2", "abc2", "abc2", "abc2", "abc2", 3.8, 1, 'm', 'a');
 //        s.allStudents.add(s2);
 //        u1.allUserDetails.add(s2);
 //
-//        model.Student s3 = new model.Student("ST103", "abc3", "abc3", "abc3", "abc3", "abc3", "abc3", 2, 4, 'm', 'b');
+//        Student s3 = new Student("ST103", "abc3", "abc3", "abc3", "abc3", "abc3", "abc3", 2, 4, 'm', 'b');
 //        s.allStudents.add(s3);
 //        u1.allUserDetails.add(s3);
 //
-//        model.Student s4 = new model.Student("ST104", "abc4", "abc4", "abc4", "abc4", "abc4", "abc4", 3, 1, 'm', 'c');
+//        Student s4 = new Student("ST104", "abc4", "abc4", "abc4", "abc4", "abc4", "abc4", 3, 1, 'm', 'c');
 //        s.allStudents.add(s4);
 //        u1.allUserDetails.add(s4);
 //
-//        model.Student s5 = new model.Student("ST105", "abc5", "abc5", "abc5", "abc5", "abc5", "abc5", 4, 6, 'm', 'd');
+//        Student s5 = new Student("ST105", "abc5", "abc5", "abc5", "abc5", "abc5", "abc5", 4, 6, 'm', 'd');
 //        s.allStudents.add(s5);
 //        u1.allUserDetails.add(s5);
 //
-//        model.Student s6 = new model.Student("ST106", "abc6", "abc6", "abc6", "abc6", "abc6", "abc6", 3.2, 5, 'm', 'd');
+//        Student s6 = new Student("ST106", "abc6", "abc6", "abc6", "abc6", "abc6", "abc6", 3.2, 5, 'm', 'd');
 //        s.allStudents.add(s6);
 //        u1.allUserDetails.add(s6);
 //
-//        model.Student s7 = new model.Student("ST107", "abc7", "abc7", "abc7", "abc7", "abc7", "abc7", 3.5, 6, 'm', '0');
+//        Student s7 = new Student("ST107", "abc7", "abc7", "abc7", "abc7", "abc7", "abc7", 3.5, 6, 'm', '0');
 //        s.allStudents.add(s7);
 //        u1.allUserDetails.add(s7);
 //
-//        model.Student s8 = new model.Student("ST108", "abc8", "abc8", "abc8", "abc8", "abc8", "abc8", 3, 3, 'm', '0');
+//        Student s8 = new Student("ST108", "abc8", "abc8", "abc8", "abc8", "abc8", "abc8", 3, 3, 'm', '0');
 //        s.allStudents.add(s8);
 //        u1.allUserDetails.add(s8);
 //
 //
-//        model.Student s9 = new model.Student("ST109", "abc9", "abc9", "abc9", "abc9", "abc9", "abc9", 3.2, 2, 'm', '0');
+//        Student s9 = new Student("ST109", "abc9", "abc9", "abc9", "abc9", "abc9", "abc9", 3.2, 2, 'm', '0');
 //        s.allStudents.add(s9);
 //        u1.allUserDetails.add(s9);
 //
-//        model.Student s10 = new model.Student("ST110", "abc10", "abc10", "abc10", "abc10", "abc10", "abc10", 3, 3, 'm',  '0');
+//        Student s10 = new Student("ST110", "abc10", "abc10", "abc10", "abc10", "abc10", "abc10", 3, 3, 'm',  '0');
 //        s.allStudents.add(s10);
 //        u1.allUserDetails.add(s10);
 //
-//        model.Student s11 = new model.Student("ST111", "abc10", "abc10", "abc10", "abc10", "abc10", "abc10", 3, 3, 'm',  '0');
+//        Student s11 = new Student("ST111", "abc10", "abc10", "abc10", "abc10", "abc10", "abc10", 3, 3, 'm',  '0');
 //        s.allStudents.add(s11);
 //        u1.allUserDetails.add(s11);
 //
-//        model.Student s12 = new model.Student("ST112", "abc10", "abc10", "abc10", "abc10", "abc10", "abc10", 3, 3, 'm',  '0');
+//        Student s12 = new Student("ST112", "abc10", "abc10", "abc10", "abc10", "abc10", "abc10", 3, 3, 'm',  '0');
 //        s.allStudents.add(s12);
 //        u1.allUserDetails.add(s12);
 //
-//        model.Student s13 = new model.Student("ST113", "abc10", "abc10", "abc10", "abc10", "abc10", "abc10", 3, 3, 'f',  '0');
+//        Student s13 = new Student("ST113", "abc10", "abc10", "abc10", "abc10", "abc10", "abc10", 3, 3, 'f',  '0');
 //        s.allStudents.add(s13);
 //        u1.allUserDetails.add(s13);
 //
-//        model.Student s14 = new model.Student("ST114", "abc10", "abc10", "abc10", "abc10", "abc10", "abc10", 3, 3, 'f',  '0');
+//        Student s14 = new Student("ST114", "abc10", "abc10", "abc10", "abc10", "abc10", "abc10", 3, 3, 'f',  '0');
 //        s.allStudents.add(s14);
 //        u1.allUserDetails.add(s14);
 //
 //        tempStudent.addAll(s.allStudents);
-//        teamStudent = model.ProjectManager.femaleHardConstraintApplicator(teamStudent,tempStudent,4);
-//        for(model.Student st:teamStudent){
-//            System.out.println("model.Student "+st.getId());
+//        teamStudent = ProjectManager.femaleHardConstraintApplicator(teamStudent,tempStudent,4);
+//        for(Student st:teamStudent){
+//            System.out.println("Student "+st.getId());
 //        }
 //
 //
-//        teamStudent = model.ProjectManager.femaleHardConstraintApplicator(teamStudent,tempStudent,4);
-//        for(model.Student st:teamStudent){
-//            System.out.println("model.Student 1 "+st.getId());
+//        teamStudent = ProjectManager.femaleHardConstraintApplicator(teamStudent,tempStudent,4);
+//        for(Student st:teamStudent){
+//            System.out.println("Student 1 "+st.getId());
 //        }
 //
-//        teamStudent = model.ProjectManager.femaleHardConstraintApplicator(teamStudent,tempStudent,2);
-//        for(model.Student st:teamStudent){
-//            System.out.println("model.Student 2 "+st.getId());
+//        teamStudent = ProjectManager.femaleHardConstraintApplicator(teamStudent,tempStudent,2);
+//        for(Student st:teamStudent){
+//            System.out.println("Student 2 "+st.getId());
 //        }
 //    }
 //}
 
-//		model.Student s11 = new model.Student("ST111", "abc10", "abc10", "abc10", "abc10", "abc10", "abc10", 3, 3, 'm', null, null,
+//		Student s11 = new Student("ST111", "abc10", "abc10", "abc10", "abc10", "abc10", "abc10", 3, 3, 'm', null, null,
 //				null, null, null, '0');
 //		s.allStudents.add(s11);
 //		u1.details.add(s11);
@@ -110,7 +105,7 @@ import java.util.ArrayList;
 
 //        u1.start();
 //
-//        int numOfStudents = model.Student.allStudents.size();
+//        int numOfStudents = Student.allStudents.size();
 //        int numOfTempTeams = numOfStudents / 4;
 //        int numOfextraStudents = numOfStudents % 4; // extra students
 //        int i, j = 0, femaleCount = 0, experienceCounter = 0;
@@ -151,7 +146,7 @@ import java.util.ArrayList;
 //            System.out.println(" " + numOfStudentsInATeam[y]);
 //        }
 //
-//        for (model.Student t : tempStudent) {
+//        for (Student t : tempStudent) {
 //            if (t.getgender() == 'f') {
 //                femaleCount++;
 //            }
@@ -205,18 +200,18 @@ import java.util.ArrayList;
 //
 //            }
 //
-//            for (model.Student t : tempStudent) {
+//            for (Student t : tempStudent) {
 //                System.out.println(t.getId());
 //            }
 //            experienceCounter = 0;
 //            System.out.println("*************************\nTeam " + j);
-//            for (model.Student tm : teamStudent) {
+//            for (Student tm : teamStudent) {
 //                // System.out.println(tm.getId());
 //                if (tm.getexperience() >= 5) {
 //                    experienceCounter++;
 //                }
 //            }
-//            for (model.Student tm : teamStudent) {
+//            for (Student tm : teamStudent) {
 //                if (experienceCounter == 0) {
 //                    if (tm.getgender() == 'm') {
 //                        for (int a = 0; a < tempStudent.size(); a++) {
@@ -255,7 +250,7 @@ import java.util.ArrayList;
 //                break;
 //            }
 //
-//            for (model.Student newTeam : teamStudent) {
+//            for (Student newTeam : teamStudent) {
 //
 //                System.out.println(newTeam.getId());
 //            }

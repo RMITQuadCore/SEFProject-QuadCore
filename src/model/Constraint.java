@@ -15,8 +15,8 @@ public class Constraint implements Serializable {
     public static final String ANSI_GREEN = "\u001B[32m";
     public static final String ANSI_RESET = "\u001B[0m";
 
-    public static ArrayList < Constraint > allSoftConstraints = new ArrayList < > ();
-    String constraintId = "model.Constraint 0";
+    public static ArrayList<Constraint> allSoftConstraints = new ArrayList < > ();
+    String constraintId = "Constraint 0";
     String constraintDescription;
     private int weightAge;
 
@@ -282,7 +282,7 @@ public class Constraint implements Serializable {
     }
 
     /**
-     * Method to define and set value for all constraints by the model.Project Manager.
+     * Method to define and set value for all constraints by the Project Manager.
      *
      */
     public void setAllConstraints() throws IOException {
@@ -360,13 +360,13 @@ public class Constraint implements Serializable {
         Constraint.allSoftConstraints.clear();
         System.out.println("\nEnter weight age for Soft-Constraints (1-4): ");
 
-        System.out.println("Unique Personality Soft-model.Constraint : ");
+        System.out.println("Unique Personality Soft-Constraint : ");
         createConstraint();
 
-        System.out.println("Required Personality Soft-model.Constraint : ");
+        System.out.println("Required Personality Soft-Constraint : ");
         createConstraint();
 
-        System.out.println("Experience Soft-model.Constraint : ");
+        System.out.println("Experience Soft-Constraint : ");
         createConstraint();
 
         displayConstraints();
@@ -378,7 +378,7 @@ public class Constraint implements Serializable {
      *
      */
     public void createConstraint() throws IOException {
-        constraintId = "model.Constraint " + (allSoftConstraints.size() + 1);
+        constraintId = "Constraint " + (allSoftConstraints.size() + 1);
         setConstraintId(constraintId);
 
         System.out.println("Enter Description: ");
@@ -399,7 +399,7 @@ public class Constraint implements Serializable {
         System.out.println("Number of students in a team: " + teamSize);
         System.out.println("Currently Set Constraints are: ");
 
-        System.out.println("\n Hard model.Constraint: \n" +
+        System.out.println("\n Hard Constraint: \n" +
                 "1. Maximum number of female student per team: " + maxNosOfFemaleStudent + "\n" +
 
                 "2. Minimum number of student with at least " + benchmarkStudentGpa +

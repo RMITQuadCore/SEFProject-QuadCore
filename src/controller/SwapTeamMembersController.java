@@ -73,7 +73,7 @@ public class SwapTeamMembersController {
         ArrayList < String > projectList = new ArrayList < String > ();
 
         //creating project list to be given to ListView for display
-        projectList.add("Available model.Project Teams: ");
+        projectList.add("Available Project Teams: ");
         for (Team team: Team.allTeams) {
             String students = "";
             for (Student student: team.getStudentsInTeam()) {
@@ -106,7 +106,7 @@ public class SwapTeamMembersController {
         }
 
         if (projectOne == "") {
-            messageLabel.setText("model.Student id : " + studentOne.getText() + " not found!");
+            messageLabel.setText("Student id : " + studentOne.getText() + " not found!");
             SwapTeamGUI.displayAllTeamsFitness();
         } else {
             //checking if student two is present and has project assigned
@@ -118,22 +118,22 @@ public class SwapTeamMembersController {
                 }
             }
             if (projectTwo == "") {
-                messageLabel.setText("model.Student id : " + studentTwo.getText() + " not found!");
+                messageLabel.setText("Student id : " + studentTwo.getText() + " not found!");
                 SwapTeamGUI.displayAllTeamsFitness();
             } else if (projectOne.compareToIgnoreCase(projectTwo) == 0) {
                 messageLabel.setText("Students from same team cannot be swapped!");
                 SwapTeamGUI.displayAllTeamsFitness();
             } else {
                 //swap members for predicted fitness chart
-                //if model.Project Manager confirms swapping then keep it
-                //if model.Project Manager cancels swapping then in cancel button action,
+                //if Project Manager confirms swapping then keep it
+                //if Project Manager cancels swapping then in cancel button action,
                 // we will swap students again to take them back into their original teams
                 membersSwap();
 
                 //calculate predicted team constraints after swapping
                 calculateTeamConstraints();
 
-                //GUI for Predicted model.Team Fitness
+                //GUI for Predicted Team Fitness
                 CategoryAxis yAxis = new CategoryAxis();
                 ArrayList < String > projectIdsList = new ArrayList < String > ();
                 for (Team team: Team.allTeams) {
@@ -141,27 +141,27 @@ public class SwapTeamMembersController {
                 }
                 yAxis.setCategories(FXCollections. < String > observableArrayList(projectIdsList));
 
-                yAxis.setLabel("model.Project Teams");
+                yAxis.setLabel("Project Teams");
                 NumberAxis xAxis = new NumberAxis();
                 xAxis.setLabel("Fitness");
 
                 StackedBarChart < Number, String > fitnessBarChart = new StackedBarChart < > (xAxis, yAxis);
-                fitnessBarChart.setTitle("Predicted model.Team Fitness");
+                fitnessBarChart.setTitle("Predicted Team Fitness");
 
                 XYChart.Series < Number, String > constraintOne = new XYChart.Series < > ();
                 XYChart.Series < Number, String > constraintTwo = new XYChart.Series < > ();
                 XYChart.Series < Number, String > constraintThree = new XYChart.Series < > ();
 
                 //first constraint data for chart
-                constraintOne.setName("model.Constraint 1");
+                constraintOne.setName("Constraint 1");
                 SwapTeamGUI.constraintOneSetData(constraintOne);// Access changed to public
 
                 //Second constraint data for chart
-                constraintTwo.setName("model.Constraint 2");
+                constraintTwo.setName("Constraint 2");
                 SwapTeamGUI.constraintTwoSetData(constraintTwo);
 
                 //Second constraint data for chart
-                constraintThree.setName("model.Constraint 3");
+                constraintThree.setName("Constraint 3");
                 SwapTeamGUI.constraintThreeSetData(constraintThree);
 
                 //adding all constraints to bar chart
@@ -175,7 +175,7 @@ public class SwapTeamMembersController {
                 confirmButton.setText("CONFIRM");
                 confirmButton.setOnAction(new EventHandler < ActionEvent > () {
                     public void handle(ActionEvent event) {
-                        //if model.Project Manager confirms swapping, swapping will retain
+                        //if Project Manager confirms swapping, swapping will retain
                         // and he will be directed to main GUI
                         confirmButton.getScene().getWindow().hide();
                         SwapTeamGUI.displayAllTeamsFitness();
@@ -201,7 +201,7 @@ public class SwapTeamMembersController {
                 chart.getChildren().add(cancelButton);
                 Scene scene = new Scene(chart, 550, 400);
                 Stage stage = new Stage();
-                stage.setTitle("model.Team Fitness");
+                stage.setTitle("Team Fitness");
                 stage.setScene(scene);
                 stage.show();
             }

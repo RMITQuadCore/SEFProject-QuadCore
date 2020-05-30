@@ -3,7 +3,9 @@ package model;
 import controller.SwapTeamMembersController;
 import main.Main;
 import main.SwapTeamGUI;
-import util.*;
+import util.FileReadWrite;
+import util.Global;
+import util.InputTools;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -55,23 +57,23 @@ public class ProjectManager extends User implements Serializable {
     }
 
     /**
-     * model.Project Manger Menu
+     * Project Manger Menu
      *
-     * Displays model.Project Manager, it's menu and further navigate to required functionality.
+     * Displays Project Manager, it's menu and further navigate to required functionality.
      * @throws IOException if an I/O error occurs
      * @throws ClassNotFoundException if the class of a serialized object
      */
     public void projectManagerMenu() throws IOException, ClassNotFoundException {
         int choice;
         do {
-            System.out.println(Constraint.ANSI_BLUE + "\n*** model.Project Manager Menu ***\n" + Constraint.ANSI_RESET +
+            System.out.println(Constraint.ANSI_BLUE + "\n*** Project Manager Menu ***\n" + Constraint.ANSI_RESET +
                     "1. Set all Constraints & weightage\n" +
-                    "2. Display Current model.Constraint\n" +
+                    "2. Display Current Constraint\n" +
                     "3. Enter Personality of students\n" +
                     "4. Change Sign up status\n" +
                     "5. Discard Unpopular projects\n" +
                     "6. Display all projects\n" +
-                    "7. Run model.Project model.Team formation\n" +
+                    "7. Run Project Team formation\n" +
                     "8. Display Teams and their fitness\n" +
                     "9. Swap team members\n" +
                     "10. Logout");
@@ -134,7 +136,7 @@ public class ProjectManager extends User implements Serializable {
      * Method to assign personality to all students
      *
      * <p>
-     *     model.Project Manger assign each student with a personality based
+     *     Project Manger assign each student with a personality based
      *     on his/staff's observations and class test.
      * </p>
      * @throws IOException if an I/O error occurs
@@ -174,14 +176,14 @@ public class ProjectManager extends User implements Serializable {
                 }
             }
             if (!foundStudent) {
-                System.out.println("model.Student not found!");
+                System.out.println("Student not found!");
             }
         } while (foundStudent == false || studID.isEmpty() || studPersonality == '0');
         FileReadWrite.saveStudentDetails(Main.studentsFileName, Student.allStudents);
     }
 
     /**
-     * model.Project Manger can unable or disable Sign Up
+     * Project Manger can unable or disable Sign Up
      * Usually sign up is disabled before discarding unpopular projects
      *
      */
@@ -224,17 +226,17 @@ public class ProjectManager extends User implements Serializable {
         Project.projectsNotAssigned = Project.totalProjects;
         Integer[] teamSize = getTeamSizeArray(); // Calculate all the sizes
         for (int i = 0; i < teamSize.length; i++) {
-            System.out.println("model.Team size = " + teamSize[i]);
+            System.out.println("Team size = " + teamSize[i]);
             teamCreator = femaleHardConstraintApplicator(teamCreator, teamSize[i]); //Initial 4/ 3/ 2 students added to the ArrayList
             for (Student s: teamCreator) {
-                System.out.println("model.Team formed" + s.getFirstName());
+                System.out.println("Team formed" + s.getFirstName());
             }
-            if (!Constraint.femaleHardConstraintCheck(teamCreator)) // Hard model.Constraint Check
+            if (!Constraint.femaleHardConstraintCheck(teamCreator)) // Hard Constraint Check
             {
                 System.out.println("Sorry! A team cannot be formed currently as a hard constraint is not met.\n" +
-                        "Hard model.Constraint : Maximum of one woman per team cannot be met currently");
+                        "Hard Constraint : Maximum of one woman per team cannot be met currently");
                 break;
-            } else System.out.println("Female Hard model.Constraint Maintained.");
+            } else System.out.println("Female Hard Constraint Maintained.");
             teamCreator = dislikedMembersRemover(teamCreator);
 
             for (int x = 0; x < Constraint.allSoftConstraints.size(); x++) // bubble sort outer loop
@@ -276,20 +278,20 @@ public class ProjectManager extends User implements Serializable {
 
             if (!Constraint.averageGPAHardConstraintCheck(teamCreator)) {
                 System.out.println("Sorry! A team cannot be formed currently as a hard constraint is not met.\n" +
-                        "Hard model.Constraint : Average team GPA should be less than 3.5.");
+                        "Hard Constraint : Average team GPA should be less than 3.5.");
                 break;
             }
             teamCreator = teamMemberGPAConstraintApplicator(teamCreator);
             if (!Constraint.twoMembersWith3GPAHardConstraintCheck(teamCreator) && !Constraint.averageGPAHardConstraintCheck(teamCreator)) {
                 System.out.println("Sorry! A team cannot be formed currently as a hard constraint is not met.\n" +
-                        "Hard model.Constraint : Two Members needed with GPA 3 or Above.");
+                        "Hard Constraint : Two Members needed with GPA 3 or Above.");
                 break;
             } else System.out.println(" GPA Hard Constraints Maintained.\n\n");
             Team team = setProjectForTeam(teamCreator);
-            System.out.println("\n\nmodel.Team Created");
+            System.out.println("\n\nTeam Created");
             System.out.println("\nCongratulations! A team has been formed!!.\n" +
                     "The team ID is : \t\t\t" + team.getTeamID() +
-                    "\nThe model.Project Assigned to this team is \t: " + team.getProjectAssigned().getProjectTitle() +
+                    "\nThe Project Assigned to this team is \t: " + team.getProjectAssigned().getProjectTitle() +
                     "\nThe team's fitness is \t\t\t: " + team.getTeamFitness() + "\n");
             System.out.print("The Students IDs of students in this team are: \n\n");
             for (Student student: teamCreator) {
@@ -365,7 +367,7 @@ public class ProjectManager extends User implements Serializable {
     }
 
     /**
-     * Female Hard model.Constraint is applied
+     * Female Hard Constraint is applied
      *
      * <p>
      * Female hard constraint is applied on a group of student who can potentially form a team
@@ -484,7 +486,7 @@ public class ProjectManager extends User implements Serializable {
      * @return students whom can form a team
      */
     public static ArrayList < Student > uniquePersonalityConstraintApplicator(ArrayList < Student > teamCreator) {
-        //To check if duplicate personalities are present and removing team. Creating a unique Personality model.Team
+        //To check if duplicate personalities are present and removing team. Creating a unique Personality Team
         for (int j = 0; j < teamCreator.size(); j++) {
             for (int k = j + 1; k < teamCreator.size(); k++) {
                 if (teamCreator.get(j).getStudentPersonality() == teamCreator.get(k).getStudentPersonality()) {
@@ -688,9 +690,9 @@ public class ProjectManager extends User implements Serializable {
     }
 
     /**
-     * Method to assign model.Project to a team
+     * Method to assign Project to a team
      *
-     * <p> model.Team is passed to method and a project will be assigned
+     * <p> Team is passed to method and a project will be assigned
      * according to student preferences for the projects.
      * Also a team ID is assigned to team.
      * @param teamCreator arraylist containing details of students who can form a team.
@@ -741,7 +743,7 @@ public class ProjectManager extends User implements Serializable {
         System.out.println("\nTeams formed are:");
         for (Team team: Team.allTeams) {
             System.out.println("\nThe team ID is : \t\t\t" + team.getTeamID() +
-                    "\nThe model.Project Assigned to this team is \t: " + team.getProjectAssigned().getProjectId() + ": " + team.getProjectAssigned().getProjectTitle() +
+                    "\nThe Project Assigned to this team is \t: " + team.getProjectAssigned().getProjectId() + ": " + team.getProjectAssigned().getProjectTitle() +
                     "\nThe team's fitness is \t\t\t: " + team.getTeamFitness());
             System.out.print("The Students IDs of students in this team are: \n");
             for (Student student: team.getStudentsInTeam()) {

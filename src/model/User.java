@@ -127,12 +127,13 @@ public class User implements Serializable {
                     break;
 
                 case 3:
-                    //                    util.FileReadWrite.saveUserDetails(Main.userFileName, allUserDetails);
-                    //                    util.FileReadWrite.saveStudentDetails(Main.studentsFileName, model.Student.allStudents);
-                    //                    util.FileReadWrite.saveStudentDetails(Main.studentsNotInATeamFileName,model.ProjectManager.studentsNotInATeam);
-                    //                    util.FileReadWrite.saveProjectDetails(Main.projectsFileName, model.Project.totalProjects);
-                    //                    util.FileReadWrite.saveProjectDetails(Main.projectsNotAssignedFileName, model.Project.projectsNotAssigned);
-                    System.out.println("System exited! Thanks for using model.Project model.Team Formation System");
+//                    FileReadWrite.saveUserDetails(Main.userFileName, allUserDetails);
+//                    FileReadWrite.saveStudentDetails(Main.studentsFileName, Student.allStudents);
+//                    FileReadWrite.saveStudentDetails(Main.studentsNotInATeamFileName,ProjectManager.studentsNotInATeam);
+//                    FileReadWrite.saveProjectDetails(Main.projectsFileName, Project.totalProjects);
+//                    FileReadWrite.saveProjectDetails(Main.projectsNotAssignedFileName, Project.projectsNotAssigned);
+//                    FileReadWrite.saveTeamDetails(Main.teamsFileName, Team.allTeams);
+                    System.out.println("System exited! Thanks for using Project Team Formation System");
                     System.exit(0);
                     break;
 
@@ -157,10 +158,10 @@ public class User implements Serializable {
     public void signUp() throws IncorrectInputException, IOException, ClassNotFoundException {
 
         ProjectManager pm = new ProjectManager();
-        //If model.Project Manager disables signUp, no new sign ups are allowed
+        //If Project Manager disables signUp, no new sign ups are allowed
         if (!pm.getSignUpStatus()) {
-            System.out.println("Sign Up is disable by model.Project Manager." +
-                    "Please Contact model.Project Manager.");
+            System.out.println("Sign Up is disable by Project Manager." +
+                    "Please Contact Project Manager.");
             return;
         }
 
@@ -231,7 +232,7 @@ public class User implements Serializable {
         } while (userName.isEmpty() || password.isEmpty());
 
         // ID generation
-        System.out.println("\nAre you a: \n1.model.Student\n2.Client Representative\n3.model.Project Manager\n");
+        System.out.println("\nAre you a: \n1.Student\n2.Client Representative\n3.Project Manager\n");
         choice = InputTools.intChecker(1, 3);
 
         switch (choice) {
@@ -274,8 +275,14 @@ public class User implements Serializable {
 
             case 2: //For Client Representative
                 String newClientID = clientID;
+                int totalClients = 0;
 
-                newClientID = "CL" + String.format("%03d", (allUserDetails.size() + 1));
+                for (User user: allUserDetails) {
+                    if (user instanceof ClientRepresentative) {
+                        ++totalClients;
+                    }
+                }
+                newClientID = "CL" + String.format("%03d", (totalClients + 1));
 
                 allUserDetails.add(
                         new ClientRepresentative(newClientID, firstName, lastName, emailID, userName, password, organisation));
@@ -285,10 +292,15 @@ public class User implements Serializable {
                 setPassword(password);
                 break;
 
-            case 3: //For model.Project Manager
+            case 3: //For Project Manager
                 String newManagerID = managerID;
-
-                newManagerID = "PM" + String.format("%03d", (allUserDetails.size() + 1));
+                int totalMangers = 0;
+                for (User user: allUserDetails) {
+                    if (user instanceof ClientRepresentative) {
+                        ++totalMangers;
+                    }
+                }
+                newManagerID = "PM" + String.format("%03d", (totalMangers+ 1));
 
                 allUserDetails.add(new ProjectManager(newManagerID, firstName, lastName, emailID, userName, password, organisation));
                 FileReadWrite.saveUserDetails(Main.userFileName, allUserDetails);
@@ -309,7 +321,7 @@ public class User implements Serializable {
     /**
      * Method to Login for already signed up users.
      * <p>
-     * model.User can sign up using their username and password where they are further directed to their respective Menu.
+     * User can sign up using their username and password where they are further directed to their respective Menu.
      *
      * @throws IncorrectInputException
      * @throws IOException

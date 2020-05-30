@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class Role implements Serializable {
     private static final long serialVersionUID = -8977434449646607064L;
-    private String id; // ID can be both for student or model.Project
+    private String id; // ID can be both for student or Project
     private String roleName;
     private ArrayList < String > frameworks = new ArrayList < > ();
 

@@ -39,27 +39,27 @@ public class SwapTeamGUI extends Application {
 
         yAxis.setCategories(FXCollections. < String > observableArrayList(projectIds));
 
-        yAxis.setLabel("model.Project Teams");
+        yAxis.setLabel("Project Teams");
         NumberAxis xAxis = new NumberAxis();
         xAxis.setLabel("Fitness");
 
         StackedBarChart < Number, String > fitnessBarChart = new StackedBarChart < > (xAxis, yAxis);
-        fitnessBarChart.setTitle("model.Team Fitness");
+        fitnessBarChart.setTitle("Team Fitness");
 
         XYChart.Series < Number, String > constraintOne = new XYChart.Series < > ();
         XYChart.Series < Number, String > constraintTwo = new XYChart.Series < > ();
         XYChart.Series < Number, String > constraintThree = new XYChart.Series < > ();
 
         //first constraint data for chart
-        constraintOne.setName("model.Constraint 1");
+        constraintOne.setName("Constraint 1");
         constraintOneSetData(constraintOne);
 
         //second constraint data for chart
-        constraintTwo.setName("model.Constraint 2");
+        constraintTwo.setName("Constraint 2");
         constraintTwoSetData(constraintTwo);
 
         //third constraint data for chart
-        constraintThree.setName("model.Constraint 3");
+        constraintThree.setName("Constraint 3");
         constraintThreeSetData(constraintThree);
 
         //adding all constraints to bar chart
@@ -85,7 +85,7 @@ public class SwapTeamGUI extends Application {
                     Stage stageTwo = new Stage();
                     Parent root = FXMLLoader.load(getClass().getResource("view/SwapTeamMembers.fxml"));
                     Scene scene = new Scene(root);
-                    stageTwo.setTitle("Enter model.Student IDs");
+                    stageTwo.setTitle("Enter Student IDs");
                     stageTwo.setScene(scene);
                     stageTwo.show();
                 } catch (IOException e) {
@@ -109,7 +109,7 @@ public class SwapTeamGUI extends Application {
         chart.getChildren().add(swapButton);
         chart.getChildren().add(closeButton);
         Scene scene = new Scene(chart, 550, 400);
-        stage.setTitle("model.Team Fitness");
+        stage.setTitle("Team Fitness");
         stage.setScene(scene);
         stage.show();
     }
@@ -117,7 +117,7 @@ public class SwapTeamGUI extends Application {
     public static void constraintOneSetData(XYChart.Series<Number, String> constraintOne) {
         for (int i = 0; i < Team.allTeams.size(); i++) {
             for (Constraint constraint: Team.allTeams.get(i).getConstraintsMet()) {
-                if (constraint.getConstraintId().compareTo("model.Constraint 1") == 0) {
+                if (constraint.getConstraintId().compareTo("Constraint 1") == 0) {
                     constraintOne.getData().add(new XYChart.Data < > (constraint.getWeightAge(), Team.allTeams.get(i).getProjectAssigned().getProjectId()));
                 }
             }
@@ -127,7 +127,7 @@ public class SwapTeamGUI extends Application {
     public static void constraintTwoSetData(XYChart.Series<Number, String> constraintTwo) {
         for (int i = 0; i < Team.allTeams.size(); i++) {
             for (Constraint constraint: Team.allTeams.get(i).getConstraintsMet()) {
-                if (constraint.getConstraintId().compareTo("model.Constraint 2") == 0) {
+                if (constraint.getConstraintId().compareTo("Constraint 2") == 0) {
                     constraintTwo.getData().add(new XYChart.Data < > (constraint.getWeightAge(), Team.allTeams.get(i).getProjectAssigned().getProjectId()));
                 }
             }
@@ -137,7 +137,7 @@ public class SwapTeamGUI extends Application {
     public static void constraintThreeSetData(XYChart.Series<Number, String> constraintThree) {
         for (int i = 0; i < Team.allTeams.size(); i++) {
             for (Constraint constraint: Team.allTeams.get(i).getConstraintsMet()) {
-                if (constraint.getConstraintId().compareTo("model.Constraint 3") == 0) {
+                if (constraint.getConstraintId().compareTo("Constraint 3") == 0) {
                     constraintThree.getData().add(new XYChart.Data < > (constraint.getWeightAge(), Team.allTeams.get(i).getProjectAssigned().getProjectId()));
                 }
             }

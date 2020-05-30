@@ -150,9 +150,9 @@ public class Project implements Serializable {
         }
 
         this.client = client;
-        System.out.println("Enter model.Project Title: ");
+        System.out.println("Enter Project Title: ");
         projectTitle = Global.scan.next() + Global.scan.nextLine();
-        System.out.println("Enter model.Project details: ");
+        System.out.println("Enter Project details: ");
         projectDetails = Global.scan.nextLine();
 
         String choice;
@@ -179,7 +179,7 @@ public class Project implements Serializable {
         projectsNotAssigned.add(this);
         FileReadWrite.saveProjectDetails(Main.projectsFileName, Project.totalProjects);
         FileReadWrite.saveProjectDetails(Main.projectsNotAssignedFileName, Project.projectsNotAssigned);
-        System.out.println("Success! model.Project is created with Id : " + projectId);
+        System.out.println("Success! Project is created with Id : " + projectId);
     }
 
     /**
@@ -188,12 +188,12 @@ public class Project implements Serializable {
      */
     public void displayProject() {
         System.out.println("\nClient Id\t:\t" + this.getClient().getId());
-        System.out.println("model.Project Id\t:\t" + this.getProjectId());
-        System.out.println("model.Project Title\t:\t" + this.getProjectTitle());
-        System.out.println("model.Project Details\t:\t" + this.getProjectDetails());
+        System.out.println("Project Id\t:\t" + this.getProjectId());
+        System.out.println("Project Title\t:\t" + this.getProjectTitle());
+        System.out.println("Project Details\t:\t" + this.getProjectDetails());
         int roleNumber = 1;
         for (Role role: this.getRolesInProject()) {
-            System.out.println("model.Role\t\t:\t" + roleNumber + ")" + role.getRoleName());
+            System.out.println("Role\t\t:\t" + roleNumber + ")" + role.getRoleName());
             roleNumber++;
             System.out.print("Frameworks\t:\t");
             int frameworkNumber = 1;

@@ -7,17 +7,17 @@
 //import static org.junit.Assert.*;
 //
 //public class UserTest {
-//    model.User u = new model.User();
-//    model.User u1 = new model.Student("ST101", "abc1", "abc1", "abc1", "abc1", "abc4", "abc1", 2.8, 1, 'm', '0');
+//    User u = new User();
+//    User u1 = new Student("ST101", "abc1", "abc1", "abc1", "abc1", "abc4", "abc1", 2.8, 1, 'm', '0');
 //
 //    String[] login = { "abc1", "abc4" }; // dummy values for login
 //    String[] signup = { "jk", "kul", "rmit", "jkul", "jkul", "jkul" }; // dummy values for signup
 //
 //    @Before
 //    public void setUp() throws Exception {
-//        model.Project pr = new model.Project();
+//        Project pr = new Project();
 //
-//        model.Project p1 = new model.Project("CL101", "PROJ201", "xyz1", "xyz1", null, 7);
+//        Project p1 = new Project("CL101", "PROJ201", "xyz1", "xyz1", null, 7);
 //        pr.proj.add(p1);
 //    }
 //
@@ -25,7 +25,7 @@
 //    public void signup() {
 //        try {
 //            u.signup();
-//        } catch (model.IncorrectInputException e) {
+//        } catch (IncorrectInputException e) {
 //            //  Auto-generated catch block
 //            System.err.println(e.getMessage());
 //        }
@@ -54,7 +54,7 @@
 //        u.details.add(u1);
 //        try {
 //            u.login();
-//        } catch (model.IncorrectInputException e) {
+//        } catch (IncorrectInputException e) {
 //            //  Auto-generated catch block
 //            System.err.println(e.getMessage());
 //        }

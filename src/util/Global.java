@@ -8,6 +8,6 @@ import java.util.Scanner;
  *
  */
 public class Global {
-    //util.Global Scanner
+    //Global Scanner
     public static Scanner scan = new Scanner(System.in);
 }
