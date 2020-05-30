@@ -264,9 +264,9 @@ public class User implements Serializable {
                 ProjectManager.studentsNotInATeam.add(new Student(newStudentID, firstName, lastName, emailID, userName, password, organisation, gpa,
                         experience, gender));
 
-                FileReadWrite.saveUserDetails(Main.userFileName, allUserDetails);
-                FileReadWrite.saveStudentDetails(Main.studentsFileName, Student.allStudents);
-                FileReadWrite.saveStudentDetails(Main.studentsNotInATeamFileName, ProjectManager.studentsNotInATeam);
+//                FileReadWrite.saveUserDetails(Main.userFileName, allUserDetails);
+//                FileReadWrite.saveStudentDetails(Main.studentsFileName, Student.allStudents);
+//                FileReadWrite.saveStudentDetails(Main.studentsNotInATeamFileName, ProjectManager.studentsNotInATeam);
 
                 System.out.println("You have successfully signed up with ID: " + newStudentID + "!\n");
                 setUserName(userName);

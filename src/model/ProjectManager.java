@@ -50,6 +50,7 @@ public class ProjectManager extends User implements Serializable {
 
     public void setTempStudent(ArrayList < Student > tempStudent) {
         ProjectManager.studentsNotInATeam = tempStudent;
+//        System.out.println();
     }
 
     public boolean getSignUpStatus() {

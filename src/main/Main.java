@@ -33,6 +33,7 @@ public class Main implements Serializable {
         Constraint.allSoftConstraints = FileReadWrite.readConstraintDetails(softConstraintFileName); //Updating all soft constraints
         ProjectManager.constraints = FileReadWrite.readConstraintDetails(softConstraintFileName); //Updating all constraints
         Constraint.allConstraints = FileReadWrite.readConstraintDetails(allConstraintFileName);//Updating all constraints
+//        System.out.println();
     }
 
     /**

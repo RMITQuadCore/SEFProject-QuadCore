@@ -213,6 +213,17 @@ public class Student extends User implements Serializable {
                     break;
             }
         } while (!quit);
+
+        ArrayList<Student> tempList = new ArrayList<>();
+        for (Student s1: ProjectManager.studentsNotInATeam) {
+            for (Student s2 : Student.allStudents) {
+                if (s1.getId().equals(s2.getId())) {
+                    tempList.add(s2);
+                }
+            }
+        }
+        ProjectManager.studentsNotInATeam = tempList;
+        FileReadWrite.saveStudentDetails(Main.studentsNotInATeamFileName, ProjectManager.studentsNotInATeam);
     }
 
 
@@ -308,6 +319,7 @@ public class Student extends User implements Serializable {
                 }
             } while (!projectExists);
         }
+//        System.out.println(preferredProjects);
         this.setPreferredProjects(preferredProjects);
         ArrayList < Role > allRolesInPreferredProjects = new ArrayList < > ();
         System.out.println("                    ****Your Preferred Projects and the Roles that are available!****\n\n" +
