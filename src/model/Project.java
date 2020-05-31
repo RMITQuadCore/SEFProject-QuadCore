@@ -114,8 +114,19 @@ public class Project implements Serializable {
             }
         }
 
+        Project pr = new Project();
+        boolean projectFound = false;
         //deleting unpopular projects
         for (int i = numProjects - 1; i >= numProjectReqd; i--) {
+            for (Project project : Project.projectsNotAssigned) {
+                if (Project.totalProjects.get(i).getProjectId().compareTo(project.getProjectId()) == 0) {
+                    pr = project;
+                    projectFound = true;
+                }
+            }
+            if (projectFound){
+                Project.projectsNotAssigned.remove(pr);
+            }
             Project.totalProjects.remove(i);
         }
 
@@ -124,7 +135,6 @@ public class Project implements Serializable {
         for (Project p: totalProjects) {
             p.displayProject();
             System.out.println("Popularity\t\t:   " + p.getPopularityCounter());
-
         }
 
         //after discarding, boolean for projects discarded is set to true

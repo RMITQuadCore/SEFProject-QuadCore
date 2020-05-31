@@ -124,6 +124,10 @@ public class User implements Serializable {
                     break;
 
                 case 3:
+                    FileReadWrite.saveUserDetails(Main.userFileName, allUserDetails);
+                    FileReadWrite.saveStudentDetails(Main.studentsFileName, Student.allStudents);
+                    FileReadWrite.saveProjectDetails(Main.projectsFileName, Project.totalProjects);
+                    FileReadWrite.saveProjectDetails(Main.projectsNotAssignedFileName, Project.projectsNotAssigned);
                     System.out.println("System exited! Thanks for using Project Team Formation System");
                     System.exit(0);
                     break;
@@ -254,11 +258,6 @@ public class User implements Serializable {
                         experience, gender));
                 ProjectManager.studentsNotInATeam.add(new Student(newStudentID, firstName, lastName, emailID, userName, password, organisation, gpa,
                         experience, gender));
-
-//                FileReadWrite.saveUserDetails(Main.userFileName, allUserDetails);
-//                FileReadWrite.saveStudentDetails(Main.studentsFileName, Student.allStudents);
-//                FileReadWrite.saveStudentDetails(Main.studentsNotInATeamFileName, ProjectManager.studentsNotInATeam);
-
                 System.out.println("You have successfully signed up with ID: " + newStudentID + "!\n");
                 setUserName(userName);
                 setPassword(password);
@@ -277,7 +276,6 @@ public class User implements Serializable {
 
                 allUserDetails.add(
                         new ClientRepresentative(newClientID, firstName, lastName, emailID, userName, password, organisation));
-                FileReadWrite.saveUserDetails(Main.userFileName, allUserDetails);
                 System.out.println("You have successfully signed up with ID: " + newClientID + "!\n");
                 setUserName(userName);
                 setPassword(password);
@@ -294,7 +292,6 @@ public class User implements Serializable {
                 newManagerID = "PM" + String.format("%03d", (totalMangers+ 1));
 
                 allUserDetails.add(new ProjectManager(newManagerID, firstName, lastName, emailID, userName, password, organisation));
-                FileReadWrite.saveUserDetails(Main.userFileName, allUserDetails);
                 System.out.println("You have successfully signed up with ID: " + newManagerID + "!\n");
                 setUserName(userName);
                 setPassword(password);

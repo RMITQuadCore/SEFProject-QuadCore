@@ -218,7 +218,6 @@ public class ProjectManager extends User implements Serializable {
     public void createTeams()
     {
         ArrayList<Student> teamCreator = new ArrayList<Student>();
-        Project.projectsNotAssigned=Project.totalProjects;
         Integer[] teamSize = getTeamSizeArray();// Calculate all the sizes
         for (int i =0 ; i < teamSize.length ; i ++)
         {
