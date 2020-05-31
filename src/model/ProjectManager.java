@@ -108,12 +108,17 @@ public class ProjectManager extends User implements Serializable {
                     break;
 
                 case 6:
-                    //TODO write function
+                    displayAllProjects();//TODO write function
                     break;
 
                 case 7:
-                    if (projectsDiscarded == true)
-                        createTeams();
+                    if (projectsDiscarded == true) {
+                        if (Constraint.allSoftConstraints.isEmpty() == false) {
+                            createTeams();
+                        } else {
+                            System.out.println("\n\n You need to set weightage of constraints first.");
+                        }
+                    }
                     else
                         System.out.println("\n\n You need to discard unpopular projects before creating teams.");
                     break;
@@ -133,6 +138,15 @@ public class ProjectManager extends User implements Serializable {
         } while (choice != 10);
     }
 
+    /**
+     * Method to display all projects
+     */
+    private void displayAllProjects() {
+        for(Project projects: Project.totalProjects){
+            projects.displayProject();
+            System.out.println("Popularity: " + projects.getPopularityCounter());
+        }
+    }
     /**
      * Method to assign personality to all students
      *
@@ -383,6 +397,7 @@ public class ProjectManager extends User implements Serializable {
      */
     public static ArrayList < Student > femaleHardConstraintApplicator(ArrayList < Student > teamCreator, Integer teamSize) {
         int femaleCount = 0;
+        //Checking total number of females so that everytime a female is added in a team the counter is decremented
         for (Student t: studentsNotInATeam) {
             if (t.getGender() == 'f' || t.getGender() == 'F') {
                 femaleCount++;
@@ -391,10 +406,11 @@ public class ProjectManager extends User implements Serializable {
         int k = 0;
         boolean femaleFound = false;
         if (femaleCount != studentsNotInATeam.size()) {
+            //for equating required number of members in a team with values in teamsize array
             while (k < teamSize) {
-
+            //for adding the first member which should be a female in every team
                 for (int z = 0; z < studentsNotInATeam.size(); z++) {
-
+                    //if a female is found, she is added to teamCreator arraylist and removed from studentsNotInATeam arraylist
                     if (studentsNotInATeam.get(z).getGender() == 'f' || studentsNotInATeam.get(z).getGender() == 'F' && !femaleFound) {
                         teamCreator.add(studentsNotInATeam.get(z));
                         femaleFound = true;
@@ -403,13 +419,16 @@ public class ProjectManager extends User implements Serializable {
                         k++;
                         break;
                     }
+                    //to add remaining members in a team who are male, eventually removing them from studentsNotInATeam arraylist
                     if ((studentsNotInATeam.get(z).getGender() == 'm' || studentsNotInATeam.get(z).getGender() == 'M') && femaleFound == true) {
                         teamCreator.add(studentsNotInATeam.get(z));
                         studentsNotInATeam.remove(studentsNotInATeam.get(z));
                         k++;
                         break;
 
-                    } else {
+                    }
+                    // when there are no females found/left
+                    else {
                         if (femaleCount == 0) {
                             teamCreator.add(studentsNotInATeam.get(z));
                             studentsNotInATeam.remove(studentsNotInATeam.get(z));
@@ -419,6 +438,7 @@ public class ProjectManager extends User implements Serializable {
                     }
 
                 }
+                //in case hwen there are females still remaining in studentsNotInATeam
                 if (femaleCount == studentsNotInATeam.size() && k != teamSize) {
                     for (Student s: studentsNotInATeam) {
                         teamCreator.add(s);
@@ -567,11 +587,13 @@ public class ProjectManager extends User implements Serializable {
     public static ArrayList < Student > experienceSoftConstraintApplicator(ArrayList < Student > teamCreator) {
         boolean experienceCriteria = false;
         for (Student student: teamCreator) {
+            // to check if any student in the team formed has experience >= 5
             if (student.getExperience() >= 5) {
                 experienceCriteria = true;
                 break;
             }
         }
+        //if no student with experience >= 5 is not found then, swapping is carried out such that only male students are considered for swapping in order to maintain the female constraint
         if (!experienceCriteria) {
             boolean replacementFound = false;
             Student replacement = new Student();

@@ -84,7 +84,11 @@ public class Project implements Serializable {
         System.out.println("Number of projects: " + numProjects);
 
         try {
-            numProjectReqd = (numStudents / 4 + 1);
+            if(numStudents % 4 != 0) {
+                numProjectReqd = (numStudents / 4 + 1);
+            }else {
+                numProjectReqd = (numStudents / 4 );
+            }
             System.out.println("Number of projects required: " + numProjectReqd);
 
             if (numProjectReqd > numProjects) {
