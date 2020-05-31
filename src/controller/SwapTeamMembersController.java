@@ -34,7 +34,9 @@ public class SwapTeamMembersController {
     @FXML
     private Button cancelButton;
 
-    //Method to calculate all team constraint
+    /**
+     * Method to calculate all team constraint
+     */
     @FXML
     public static void calculateTeamConstraints() {
         for (Team team: Team.allTeams) {
@@ -67,6 +69,7 @@ public class SwapTeamMembersController {
         }
     }
 
+
     @FXML
     public void initialize() {
         messageLabel.setText("");
@@ -88,6 +91,9 @@ public class SwapTeamMembersController {
         projectListView.getItems().addAll(projectObservableList);
     }
 
+    /**
+     * Button handler to perform swapping of students and show predicted team fitness
+     */
     @FXML
     private void tryButtonHandler(ActionEvent actionEvent) {
         // hiding previous window
@@ -209,7 +215,9 @@ public class SwapTeamMembersController {
         }
     }
 
-    //Method to swap team members
+    /**
+     * Method to swap team members
+     */
     @FXML
     private void membersSwap() {
         loop: for (Team teamOne: Team.allTeams) {
@@ -242,7 +250,9 @@ public class SwapTeamMembersController {
         }
     }
 
-    //Method to return back to Main GUI if CANCEL is pressed
+    /**
+     * Method to return back to Main GUI if CANCEL is pressed
+     */
     @FXML
     private void cancelButtonHandler(ActionEvent actionEvent) {
         cancelButton.getScene().getWindow().hide();
