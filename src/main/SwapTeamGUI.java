@@ -88,7 +88,7 @@ public class SwapTeamGUI extends Application {
                 stage.hide();
                 try {
                     Stage stageTwo = new Stage();
-                    Parent root = FXMLLoader.load(getClass().getResource("view/SwapTeamMembers.fxml"));
+                    Parent root = FXMLLoader.load(getClass().getResource("/view/SwapTeamMembers.fxml"));
                     Scene scene = new Scene(root);
                     stageTwo.setTitle("Enter Student IDs");
                     stageTwo.setScene(scene);

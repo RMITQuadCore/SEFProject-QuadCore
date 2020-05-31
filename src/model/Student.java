@@ -202,6 +202,7 @@ public class Student extends User implements Serializable {
                             System.out.println("ID : " + student.getId() + "\tName : " + student.getFirstName() + " " + student.getLastName() + "\n");
                         }
                     }
+
                     break;
 
                 case 4:
