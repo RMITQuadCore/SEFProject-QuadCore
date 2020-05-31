@@ -267,7 +267,7 @@ public class ProjectManager extends User implements Serializable {
                         teamCreator = uniquePersonalityConstraintApplicator(teamCreator);
                         break;
                     case 2:
-                        teamCreator = personalityAorBPresentApplicator(teamCreator);
+                        teamCreator = requiredPersonalityApplicator(teamCreator);
                         break;
                     case 3:
                         teamCreator = experienceSoftConstraintApplicator(teamCreator);
@@ -537,7 +537,7 @@ public class ProjectManager extends User implements Serializable {
      * @param teamCreator arraylist containing details of students who can form a team.
      * @return students whom can form a team
      */
-    public ArrayList < Student > personalityAorBPresentApplicator(ArrayList < Student > teamCreator) {
+    public static ArrayList < Student > requiredPersonalityApplicator(ArrayList < Student > teamCreator) {
         boolean persoAOrBPresent = false;
         for (Student student: teamCreator) {
             if (student.getStudentPersonality() == 'A' || student.getStudentPersonality() == 'B' || student.getStudentPersonality() == 'a' || student.getStudentPersonality() == 'b') {
