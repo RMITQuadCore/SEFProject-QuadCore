@@ -674,7 +674,7 @@ public class ProjectManager extends User implements Serializable {
      * @param teamCreator arraylist containing details of students who can form a team.
      * @return students whom can form a team
      */
-    private static ArrayList < Student > teamMemberGPAConstraintApplicator(ArrayList < Student > teamCreator) {
+    public static ArrayList < Student > teamMemberGPAConstraintApplicator(ArrayList < Student > teamCreator) {
         int GPAGreaterThanThreeCounter = 0;
         for (int i = 0; i < teamCreator.size(); i++) {
             if (teamCreator.get(i).getGpa() >= 3.00) {
@@ -691,9 +691,9 @@ public class ProjectManager extends User implements Serializable {
 
         if (GPAGreaterThanThreeCounter < 2) { //if hard constraint is violeted then we will first try to meet it by swapping students between teamCreator and studentsNotInATeam
             for (int i = 0; i < studentsNotInATeam.size(); i++) {
-                if (studentsNotInATeam.get(i).getGender() == 'm' && studentsNotInATeam.get(i).getGpa() >= 3.00) {
+                if ((studentsNotInATeam.get(i).getGender() == 'm' || studentsNotInATeam.get(i).getGender() == 'M')&& studentsNotInATeam.get(i).getGpa() >= 3.00) {
                     for (Student student: teamCreator) {
-                        if ((studentsNotInATeam.get(i).getGender() == 'm' && student.getGpa() < 3.00) && (((sumOfGPA + studentsNotInATeam.get(i).getGpa() - student.getGpa()) / 4) < 3.50)) {
+                        if (((studentsNotInATeam.get(i).getGender() == 'm' || studentsNotInATeam.get(i).getGender() == 'M') && student.getGpa() < 3.00) && (((sumOfGPA + studentsNotInATeam.get(i).getGpa() - student.getGpa()) / 4) < 3.50)) {
                             //swapping students
                             studentsNotInATeam.add(student);
                             teamCreator.remove(student);

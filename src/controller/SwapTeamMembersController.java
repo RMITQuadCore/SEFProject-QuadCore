@@ -154,15 +154,16 @@ public class SwapTeamMembersController {
 
                 //first constraint data for chart
                 constraintOne.setName("Constraint 1");
-                SwapTeamGUI.constraintOneSetData(constraintOne);// Access changed to public
+                SwapTeamGUI.constraintSetData(constraintOne, "Constraint 1");
 
                 //Second constraint data for chart
                 constraintTwo.setName("Constraint 2");
-                SwapTeamGUI.constraintTwoSetData(constraintTwo);
+                SwapTeamGUI.constraintSetData(constraintTwo, "Constraint 2");
 
                 //Second constraint data for chart
                 constraintThree.setName("Constraint 3");
-                SwapTeamGUI.constraintThreeSetData(constraintThree);
+                SwapTeamGUI.constraintSetData(constraintThree,"Constraint 3");
+
 
                 //adding all constraints to bar chart
                 fitnessBarChart.getData().addAll(constraintOne, constraintTwo, constraintThree);

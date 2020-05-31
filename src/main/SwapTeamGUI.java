@@ -26,6 +26,11 @@ public class SwapTeamGUI extends Application {
         launch(args);
     }
 
+    @Override
+    public void start(Stage stageOne) throws InterruptedException {
+        displayAllTeamsFitness();
+    }
+
     public static void displayAllTeamsFitness() {
 
         Stage stage = new Stage();
@@ -52,15 +57,15 @@ public class SwapTeamGUI extends Application {
 
         //first constraint data for chart
         constraintOne.setName("Constraint 1");
-        constraintOneSetData(constraintOne);
+        constraintSetData(constraintOne,"Constraint 1");
 
         //second constraint data for chart
         constraintTwo.setName("Constraint 2");
-        constraintTwoSetData(constraintTwo);
+        constraintSetData(constraintTwo,"Constraint 2");
 
         //third constraint data for chart
         constraintThree.setName("Constraint 3");
-        constraintThreeSetData(constraintThree);
+        constraintSetData(constraintThree,"Constraint 3");
 
         //adding all constraints to bar chart
         fitnessBarChart.getData().addAll(constraintOne, constraintTwo, constraintThree);
@@ -114,38 +119,14 @@ public class SwapTeamGUI extends Application {
         stage.show();
     }
 
-    public static void constraintOneSetData(XYChart.Series<Number, String> constraintOne) {
-        for (int i = 0; i < Team.allTeams.size(); i++) {
-            for (Constraint constraint: Team.allTeams.get(i).getConstraintsMet()) {
-                if (constraint.getConstraintId().compareTo("Constraint 1") == 0) {
-                    constraintOne.getData().add(new XYChart.Data < > (constraint.getWeightAge(), Team.allTeams.get(i).getProjectAssigned().getProjectId()));
+    //set constraint data for chart according to constraint Id
+    public static void constraintSetData(XYChart.Series<Number, String> constraintNumber, String constraintId) {
+        for(int i = 0; i < Team.allTeams.size(); i++) {
+            for (Constraint constraint : Team.allTeams.get(i).getConstraintsMet()) {
+                if (constraint.getConstraintId().compareTo(constraintId) == 0) {
+                    constraintNumber.getData().add(new XYChart.Data<>(constraint.getWeightAge(), Team.allTeams.get(i).getProjectAssigned().getProjectId()));
                 }
             }
         }
-    }
-
-    public static void constraintTwoSetData(XYChart.Series<Number, String> constraintTwo) {
-        for (int i = 0; i < Team.allTeams.size(); i++) {
-            for (Constraint constraint: Team.allTeams.get(i).getConstraintsMet()) {
-                if (constraint.getConstraintId().compareTo("Constraint 2") == 0) {
-                    constraintTwo.getData().add(new XYChart.Data < > (constraint.getWeightAge(), Team.allTeams.get(i).getProjectAssigned().getProjectId()));
-                }
-            }
-        }
-    }
-
-    public static void constraintThreeSetData(XYChart.Series<Number, String> constraintThree) {
-        for (int i = 0; i < Team.allTeams.size(); i++) {
-            for (Constraint constraint: Team.allTeams.get(i).getConstraintsMet()) {
-                if (constraint.getConstraintId().compareTo("Constraint 3") == 0) {
-                    constraintThree.getData().add(new XYChart.Data < > (constraint.getWeightAge(), Team.allTeams.get(i).getProjectAssigned().getProjectId()));
-                }
-            }
-        }
-    }
-
-    @Override
-    public void start(Stage stageOne) throws InterruptedException {
-        displayAllTeamsFitness();
     }
 }

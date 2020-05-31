@@ -253,7 +253,7 @@ public class Constraint implements Serializable {
                 GPAGreaterThanThreeCounter++;
             }
         }
-        if (GPAGreaterThanThreeCounter > 2) {
+        if (GPAGreaterThanThreeCounter >= 2) {
             return true;
         } else return false;
     }
