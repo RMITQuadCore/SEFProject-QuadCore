@@ -120,10 +120,10 @@ public class Project implements Serializable {
         }
 
         //display required projects
-        System.out.println("Required Projects:");
+        System.out.println(Constraint.ANSI_BLUE + "\nRequired Popular Projects are:" + Constraint.ANSI_RESET);
         for (Project p: totalProjects) {
             p.displayProject();
-            System.out.println("Popularity: " + p.getPopularityCounter());
+            System.out.println("Popularity\t\t:   " + p.getPopularityCounter());
 
         }
 
@@ -191,15 +191,15 @@ public class Project implements Serializable {
      *
      */
     public void displayProject() {
-        System.out.println("\nClient Id\t:\t" + this.getClient().getId());
-        System.out.println("Project Id\t:\t" + this.getProjectId());
+        System.out.println("\nClient Id\t\t:\t" + this.getClient().getId());
+        System.out.println("Project Id\t\t:\t" + this.getProjectId());
         System.out.println("Project Title\t:\t" + this.getProjectTitle());
         System.out.println("Project Details\t:\t" + this.getProjectDetails());
         int roleNumber = 1;
         for (Role role: this.getRolesInProject()) {
-            System.out.println("Role\t\t:\t" + roleNumber + ")" + role.getRoleName());
+            System.out.println("Role\t\t\t:\t" + roleNumber + ")" + role.getRoleName());
             roleNumber++;
-            System.out.print("Frameworks\t:\t");
+            System.out.print("Frameworks\t\t:\t");
             int frameworkNumber = 1;
             for (String framework: role.getFrameworks()) {
                 System.out.print(frameworkNumber + ")" + framework + "\t");

@@ -83,15 +83,15 @@ public class Student extends User implements Serializable {
         do {
 
 
-            System.out.println("\n                    ****Hello! " + getFirstName() + "****\n" +
-                    "                    Your Details are given below :\n" +
-                    "                    Your System ID is " + getId() + "\n" +
-                    "                    Name \t\t\t: " + getFirstName() + " " + getLastName() + "\n" +
-                    "                    Organisation \t: " + getOrganisation() + "\n" +
-                    "                    Email\t\t\t: " + getEmailID() + "\n" +
-                    "                    Gender\t\t\t: " + getGender() + "\n" +
-                    "                    GPA\t\t\t\t: " + numberFormat.format(getGpa()) + "\n" +
-                    "                    Experience \t\t: " + numberFormat.format(getExperience()) + " Years" + "\n\t\t\t\t\tPersonality Type: " + getStudentPersonality() + "\n\n");
+            System.out.println("\n\t\t\t\t\t**** Hello! " + getFirstName() + " ****\n" +
+                    "\t\t\t\t\tYour Details are given below :\n\n" +
+                    "\t\t\t\t\tYour System ID is " + getId() + "\n" +
+                    "\t\t\t\t\tName \t\t\t: " + getFirstName() + " " + getLastName() + "\n" +
+                    "\t\t\t\t\tOrganisation \t: " + getOrganisation() + "\n" +
+                    "\t\t\t\t\tEmail\t\t\t: " + getEmailID() + "\n" +
+                    "\t\t\t\t\tGender\t\t\t: " + getGender() + "\n" +
+                    "\t\t\t\t\tGPA\t\t\t\t: " + numberFormat.format(getGpa()) + "\n" +
+                    "\t\t\t\t\tExperience \t\t: " + numberFormat.format(getExperience()) + " Years" + "\n\t\t\t\t\tPersonality Type: " + getStudentPersonality() + "\n\n");
 
             boolean preferencesIsEmpty = true;
             for (int i = 0; i < preferredProjects.length; i++) {
@@ -101,11 +101,11 @@ public class Student extends User implements Serializable {
                     break;
                 }
             }
-            System.out.print("\n                    Preferred Projects \t\t: ");
+            System.out.print("\n\t\t\t\t\tPreferred Projects : ");
             if (!preferencesIsEmpty) {
                 System.out.println();
                 for (int i = 0; i < preferredProjects.length; i++) {
-                    System.out.println("                    " + (i + 1) + ". ID : " + preferredProjects[i].getProjectId() + "\tClient: " + preferredProjects[i].getClient().getOrganisation() + "\t\t\t\t\tTitle : " + preferredProjects[i].getProjectTitle());
+                    System.out.println("\t\t\t\t\t" + (i + 1) + ". ID : " + preferredProjects[i].getProjectId() + "\t\t\tClient: " + preferredProjects[i].getClient().getOrganisation() + "\t\t\tTitle : " + preferredProjects[i].getProjectTitle());
                 }
             } else System.out.print("Not Entered");
 
@@ -116,21 +116,21 @@ public class Student extends User implements Serializable {
                     break;
                 }
             }
-            System.out.print("\n                    Preferred Roles \t\t: ");
+            System.out.print("\n\t\t\t\t\tPreferred Roles : ");
             if (!preferenceRoleIsEmpty) {
                 System.out.println();
                 for (int i = 0; i < preferredRoles.length; i++) {
-                    System.out.println("                    " + (i + 1) + ". Project ID : " + preferredRoles[i].getId() + "\tRole Name: " + preferredRoles[i].getRoleName());
+                    System.out.println("\t\t\t\t\t" + (i + 1) + ". Project ID : " + preferredRoles[i].getId() + "\t\tRole Name: " + preferredRoles[i].getRoleName());
                 }
             } else System.out.print("Not Entered");
 
-            System.out.print("\n                    Frameworks Known: \t\t: ");
+            System.out.print("\n\t\t\t\t\tFrameworks Known : ");
             if (!preferenceRoleIsEmpty) {
                 System.out.println();
                 int j = 0;
                 for (int i = 0; i < preferredRoles.length; i++) {
                     for (String framework: preferredRoles[i].getFrameworks()) {
-                        System.out.println("                    " + (j + 1) + ". Name : " + framework);
+                        System.out.println("\t\t\t\t\t" + (j + 1) + ". Name : " + framework);
                         j++;
                     }
 
@@ -144,11 +144,11 @@ public class Student extends User implements Serializable {
                     break;
                 }
             }
-            System.out.print("\n                    Disliked Students \t\t: ");
+            System.out.print("\n\t\t\t\t\tDisliked Students : ");
             if (!empty) {
                 System.out.println();
                 for (int i = 0; i < dislikedMembers.length; i++) {
-                    System.out.println("                    " + (i + 1) + ". ID : " + dislikedMembers[i].getId() + "\tName : " + dislikedMembers[i].getFirstName() + " " + dislikedMembers[i].getLastName());
+                    System.out.println("\t\t\t\t\t" + (i + 1) + ". ID : " + dislikedMembers[i].getId() + "\t\tName : " + dislikedMembers[i].getFirstName() + " " + dislikedMembers[i].getLastName());
                 }
             } else System.out.println("Not Entered");
             System.out.println("\n\n\n");

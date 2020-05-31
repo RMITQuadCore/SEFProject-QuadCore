@@ -372,9 +372,7 @@ public class User implements Serializable {
                                 ((ClientRepresentative) user).clientMenu();
                                 break;
                             } else if (user instanceof Student) {
-                                System.out.println("inside student else if");
                                 for (Student st: Student.allStudents) {
-                                    System.out.println("for " + st.getUserName() + "login: " + loginName);
                                     if (st.getUserName().compareTo(loginName) == 0) {
                                         st.studentMenu();
                                         break;

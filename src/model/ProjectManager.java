@@ -108,7 +108,7 @@ public class ProjectManager extends User implements Serializable {
                     break;
 
                 case 6:
-                    displayAllProjects();//TODO write function
+                    displayAllProjects();
                     break;
 
                 case 7:
@@ -144,7 +144,7 @@ public class ProjectManager extends User implements Serializable {
     private void displayAllProjects() {
         for(Project projects: Project.totalProjects){
             projects.displayProject();
-            System.out.println("Popularity: " + projects.getPopularityCounter());
+            System.out.println("Popularity\t\t:   " + projects.getPopularityCounter());
         }
     }
     /**
@@ -213,9 +213,11 @@ public class ProjectManager extends User implements Serializable {
         switch (choice) {
             case 1:
                 signUpStatus = true;
+                System.out.println("Sign Up Status : Open");
                 break;
             case 2:
                 signUpStatus = false;
+                System.out.println("Sign Up Status : Closed");
                 break;
         }
     }
@@ -292,15 +294,14 @@ public class ProjectManager extends User implements Serializable {
                 break;
             }
             Team team = setProjectForTeam(teamCreator);
-            System.out.println("\nTeam Created");
-            System.out.println("\nCongratulations! A team has been formed!!.\n" +
-                    "The team ID is : \t\t\t" + team.getTeamID() +
-                    "\nThe Project Assigned to this team is \t: " + team.getProjectAssigned().getProjectTitle() +
+            System.out.println(Constraint.ANSI_BLUE + "\nCongratulations! A team has been formed!!\n" +Constraint.ANSI_RESET +
+                    "The team ID is \t\t\t: " + team.getTeamID() +
+                    "\nThe Project Assigned\t: " + team.getProjectAssigned().getProjectTitle() +
                     "\n");
             System.out.print("The Students IDs of students in this team are: \n\n");
             for (Student student : teamCreator)
             {
-                System.out.print(student.getId() + "  Name: " + student.getFirstName() + "\t  Gender : " + student.getGender() + "\n");
+                System.out.print(student.getId() + "\t\tName: " + student.getFirstName() + "\t\t\t\tGender : " + student.getGender() + "\n");
             }
             Team.allTeams.add(team);
             for (Student student : teamCreator)
@@ -316,17 +317,12 @@ public class ProjectManager extends User implements Serializable {
             team = null;
 
             int choice = 0;
-            do {
-                try {
-                    System.out.println("Do you want to attempt to create another team ?\n" +
+
+                    System.out.println("\nDo you want to attempt to create another team ?\n" +
                             "1.Yes\n" +
                             "2.No \n");
-                    System.out.print("Enter your choice : ");
-                    choice = Integer.parseInt(Global.scan.next() + Global.scan.nextLine());
-                } catch (NumberFormatException e) {
-                    System.err.println("Enter an integer (1-2)");
-                }
-            } while (choice < 1 || choice > 3);
+                    choice = InputTools.intChecker(1,2);
+
             if (choice == 2)
             {
                 break;
@@ -764,17 +760,17 @@ public class ProjectManager extends User implements Serializable {
         SwapTeamMembersController.calculateTeamConstraints();
         System.out.println("\nTeams formed are:");
         for (Team team: Team.allTeams) {
-            System.out.println("\nThe team ID is : \t\t\t" + team.getTeamID() +
-                    "\nThe Project Assigned to this team is \t: " + team.getProjectAssigned().getProjectId() + ": " + team.getProjectAssigned().getProjectTitle() +
-                    "\nThe team's fitness is \t\t\t: " + team.getTeamFitness());
-            System.out.print("The Students IDs of students in this team are: \n");
+            System.out.println(Constraint.ANSI_GREEN + "\nThe team ID\t\t\t\t: " + team.getTeamID() + Constraint.ANSI_RESET +
+                    "\nThe Project Assigned\t: " + team.getProjectAssigned().getProjectId() + ": " + team.getProjectAssigned().getProjectTitle() +
+                    "\nThe team's fitness is\t: " + team.getTeamFitness());
+            System.out.print("\nThe Students IDs of students in this team are: \n");
             for (Student student: team.getStudentsInTeam()) {
-                System.out.print(student.getId() + "  Name: " + student.getFirstName() + "\t  Gender : " + student.getGender() + "\t  Experience : " + student.getExperience() + " years\n");
+                System.out.print(student.getId() + "\tName: " + student.getFirstName() + "\t\tGender : " + student.getGender() + "\t\tExperience : " + student.getExperience() + " years\n");
             }
             int j = 1;
-            System.out.println(" Constraints met are:");
+            System.out.println("\nConstraints met are (with weightage):");
             for (Constraint c: team.getConstraintsMet()) {
-                System.out.println(j + ". " + c.getConstraintDescription() + ": " + c.getWeightAge());
+                System.out.println(j + ". " + c.getConstraintDescription() + "\t: " + c.getWeightAge());
                 j++;
             }
         }
