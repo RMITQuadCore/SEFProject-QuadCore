@@ -31,6 +31,9 @@ public class SwapTeamGUI extends Application {
         displayAllTeamsFitness();
     }
 
+    /**
+     * Method to display all teams fitness in GUI
+     */
     public static void displayAllTeamsFitness() {
 
         Stage stage = new Stage();
@@ -119,7 +122,9 @@ public class SwapTeamGUI extends Application {
         stage.show();
     }
 
-    //set constraint data for chart according to constraint Id
+    /**
+     * Method to set constraint data for chart according to constraint Id
+     */
     public static void constraintSetData(XYChart.Series<Number, String> constraintNumber, String constraintId) {
         for(int i = 0; i < Team.allTeams.size(); i++) {
             for (Constraint constraint : Team.allTeams.get(i).getConstraintsMet()) {
