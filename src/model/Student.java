@@ -224,7 +224,7 @@ public class Student extends User implements Serializable {
             }
         }
         ProjectManager.studentsNotInATeam = tempList;
-        FileReadWrite.saveStudentDetails(Main.studentsNotInATeamFileName, ProjectManager.studentsNotInATeam);
+        //FileReadWrite.saveStudentDetails(Main.studentsNotInATeamFileName, ProjectManager.studentsNotInATeam);
     }
 
 
