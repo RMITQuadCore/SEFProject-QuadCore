@@ -215,16 +215,8 @@ public class Student extends User implements Serializable {
             }
         } while (!quit);
 
-        ArrayList<Student> tempList = new ArrayList<>();
-        for (Student s1: ProjectManager.studentsNotInATeam) {
-            for (Student s2 : Student.allStudents) {
-                if (s1.getId().equals(s2.getId())) {
-                    tempList.add(s2);
-                }
-            }
-        }
-        ProjectManager.studentsNotInATeam = tempList;
-        //FileReadWrite.saveStudentDetails(Main.studentsNotInATeamFileName, ProjectManager.studentsNotInATeam);
+        ProjectManager.studentsNotInATeam = (ArrayList<Student>)allStudents.clone();
+        FileReadWrite.saveStudentDetails(Main.studentsNotInATeamFileName, ProjectManager.studentsNotInATeam);
     }
 
 
