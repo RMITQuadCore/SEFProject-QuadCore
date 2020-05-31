@@ -117,9 +117,6 @@ public class User implements Serializable {
 
                 case 2:
                     try {
-                        for (User u1: User.allUserDetails) {
-                            System.out.println(u1.getId() + " " + u1.getUserName() + " " + u1.getPassword());
-                        }
                         login();
                     } catch (IncorrectInputException e) {
                         e.getMessage();
@@ -127,12 +124,6 @@ public class User implements Serializable {
                     break;
 
                 case 3:
-//                    FileReadWrite.saveUserDetails(Main.userFileName, allUserDetails);
-//                    FileReadWrite.saveStudentDetails(Main.studentsFileName, Student.allStudents);
-//                    FileReadWrite.saveStudentDetails(Main.studentsNotInATeamFileName,ProjectManager.studentsNotInATeam);
-//                    FileReadWrite.saveProjectDetails(Main.projectsFileName, Project.totalProjects);
-//                    FileReadWrite.saveProjectDetails(Main.projectsNotAssignedFileName, Project.projectsNotAssigned);
-//                    FileReadWrite.saveTeamDetails(Main.teamsFileName, Team.allTeams);
                     System.out.println("System exited! Thanks for using Project Team Formation System");
                     System.exit(0);
                     break;

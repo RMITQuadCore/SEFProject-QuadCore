@@ -286,7 +286,6 @@ public class Constraint implements Serializable {
         for (Student student: teamCreator) {
             if (student.getGender() == 'f' || student.getGender() == 'F') {
                 femaleCounter++;
-                System.out.println("Counter: " + femaleCounter);
             }
         }
 

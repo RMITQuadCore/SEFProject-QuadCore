@@ -76,14 +76,4 @@ public class Role implements Serializable {
             frameworks.add(input);
         } while (!frameWorkFound);
     }
-
-    /**
-     * Method to enter & define framework of a role by client representative
-     */ //TODO why method is not being used
-    public void enterFrameworks() {
-        System.out.println("Enter the framework : ");
-        String input = Global.scan.nextLine();
-        frameworks.add(input);
-    }
-
 }

@@ -194,12 +194,12 @@ public class Student extends User implements Serializable {
                     if (assignedTeam == null) {
                         System.out.println("\n\nSorry! No Team Assigned Yet, Please Come Back Later.\n\n");
                     } else {
-                        System.out.println("\n\n Your Team ID:\t\t " + assignedTeam.getTeamID() +
+                        System.out.println("\n\n\n Your Team ID:\t\t " + assignedTeam.getTeamID() +
                                 "\n Project Assigned to your team:\t" + assignedTeam.getProjectAssigned().getClient().getOrganisation() +
                                 ": " + assignedTeam.getProjectAssigned().getProjectTitle() +
                                 "\n Students in the team: ");
                         for (Student student: assignedTeam.getStudentsInTeam()) {
-                            System.out.println("ID : " + student.getId() + "\tName : " + student.getFirstName() + " " + student.getLastName() + "\n");
+                            System.out.println("ID : " + student.getId() + "\tName : " + student.getFirstName() + " " + student.getLastName());
                         }
                     }
 

@@ -46,7 +46,6 @@ public class Main implements Serializable {
      */
     public static void main(String[] args) throws IOException, ClassNotFoundException, NullPointerException {
         updateArrays();
-
         User user = new User();
         user.mainMenu();
     }
