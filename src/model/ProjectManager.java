@@ -36,23 +36,6 @@ public class ProjectManager extends User implements Serializable {
         ProjectManager.projectsDiscarded = projectsDiscarded;
     }
 
-    public static void setConstraints(ArrayList < Constraint > constraints) {
-        ProjectManager.constraints = constraints;
-    }
-
-    public static boolean isProjectsDiscarded() {
-        return projectsDiscarded;
-    }
-
-    public ArrayList < Student > getTempStudent() {
-        return studentsNotInATeam;
-    }
-
-    public void setTempStudent(ArrayList < Student > tempStudent) {
-        ProjectManager.studentsNotInATeam = tempStudent;
-//        System.out.println();
-    }
-
     public boolean getSignUpStatus() {
         return signUpStatus;
     }
@@ -61,6 +44,7 @@ public class ProjectManager extends User implements Serializable {
      * Project Manger Menu
      *
      * Displays Project Manager, it's menu and further navigate to required functionality.
+     *
      * @throws IOException if an I/O error occurs
      * @throws ClassNotFoundException if the class of a serialized object
      */
@@ -139,15 +123,6 @@ public class ProjectManager extends User implements Serializable {
     }
 
     /**
-     * Method to display all projects
-     */
-    private void displayAllProjects() {
-        for(Project projects: Project.totalProjects){
-            projects.displayProject();
-            System.out.println("Popularity\t\t:   " + projects.getPopularityCounter());
-        }
-    }
-    /**
      * Method to assign personality to all students
      *
      * <p>
@@ -170,14 +145,7 @@ public class ProjectManager extends User implements Serializable {
                     foundStudent = true;
                     System.out.println("\nPlease enter personality of " + studID + " :");
                     studPersonality = Global.scan.nextLine().toUpperCase().charAt(0);
-                    char[] validPersonalities = {
-                            'A',
-                            'B',
-                            'C',
-                            'D',
-                            'E',
-                            'F'
-                    };
+                    char[] validPersonalities = {'A', 'B', 'C', 'D', 'E', 'F'};
                     for (int i = 0; i < 6; i++) {
                         if (studPersonality == validPersonalities[i]) {
                             validPersonality = true;
@@ -223,6 +191,16 @@ public class ProjectManager extends User implements Serializable {
     }
 
     /**
+     * Method to display all projects
+     */
+    private void displayAllProjects() {
+        for(Project projects: Project.totalProjects){
+            projects.displayProject();
+            System.out.println("Popularity\t\t:   " + projects.getPopularityCounter());
+        }
+    }
+
+    /**
      * Method to form student team
      *
      * <p>
@@ -237,7 +215,7 @@ public class ProjectManager extends User implements Serializable {
      *     will be assigned to team and project will be assigned too.
      *
      */
-    public void createTeams() //TODO if consraints and weightage are not set methods shouldn't run.
+    public void createTeams()
     {
         ArrayList<Student> teamCreator = new ArrayList<Student>();
         Project.projectsNotAssigned=Project.totalProjects;
@@ -317,12 +295,10 @@ public class ProjectManager extends User implements Serializable {
             team = null;
 
             int choice = 0;
-
                     System.out.println("\nDo you want to attempt to create another team ?\n" +
                             "1.Yes\n" +
                             "2.No \n");
                     choice = InputTools.intChecker(1,2);
-
             if (choice == 2)
             {
                 break;
@@ -534,18 +510,18 @@ public class ProjectManager extends User implements Serializable {
      * @return students whom can form a team
      */
     public static ArrayList < Student > requiredPersonalityApplicator(ArrayList < Student > teamCreator) {
-        boolean persoAOrBPresent = false;
+        boolean requiredPersonalityPresent = false;
         for (Student student: teamCreator) {
-            if (student.getStudentPersonality() == 'A' || student.getStudentPersonality() == 'B' || student.getStudentPersonality() == 'a' || student.getStudentPersonality() == 'b') {
+            if (student.getStudentPersonality() == 'A' || student.getStudentPersonality() == 'B') {
                 //if A or B personality is present in team
-                persoAOrBPresent = true;
+                requiredPersonalityPresent = true;
             }
         }
-        if (!persoAOrBPresent) {
+        if (!requiredPersonalityPresent) {
             boolean replacementFound = false;
             Student replacement = new Student();
             for (Student student: studentsNotInATeam) {
-                if (student.getStudentPersonality() == 'A' || student.getStudentPersonality() == 'B' || student.getStudentPersonality() == 'a' || student.getStudentPersonality() == 'b') {
+                if (student.getStudentPersonality() == 'A' || student.getStudentPersonality() == 'B') {
                     if (student.getGender() == 'm' || student.getGender() == 'M') {
                         replacementFound = true;
                         replacement = student; //Replacement found

@@ -8,8 +8,6 @@ import java.util.ArrayList;
 public class FileReadWrite {
     private static File f;
 
-    //TODO Enter try and catch
-    //todo change file extension to .ser
     //This Class aids in writing and reading data from a text file
     public static void saveUserDetails(String fileName, ArrayList<User> userList) throws IOException {
         FileOutputStream file = new FileOutputStream(fileName);
@@ -21,10 +19,6 @@ public class FileReadWrite {
 
     @SuppressWarnings("unchecked")
     public static ArrayList<User> readUserDetails(String fileName) throws IOException, ClassNotFoundException {
-//        System.out.println("Reading");
-//        File file = new File(".");
-//        for(String fileNames : file.list()) System.out.println(fileNames);
-//        System.out.println(System.getProperty("user.dir"));
         f = new File(fileName);
         ArrayList<User> userList = new ArrayList<>();
         if (f.exists()) {
@@ -37,12 +31,6 @@ public class FileReadWrite {
     }
 
     //This Class aids in writing and reading data from a text file
-
-    /**
-     * @param fileName
-     * @param studentList
-     * @throws IOException
-     */
     public static void saveStudentDetails(String fileName, ArrayList<Student> studentList) throws IOException {
         FileOutputStream file = new FileOutputStream(fileName);
         ObjectOutputStream out = new ObjectOutputStream(file); //since the array contains an object

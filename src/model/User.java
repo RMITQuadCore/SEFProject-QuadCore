@@ -314,9 +314,9 @@ public class User implements Serializable {
      * <p>
      * User can sign up using their username and password where they are further directed to their respective Menu.
      *
-     * @throws IncorrectInputException
-     * @throws IOException
-     * @throws ClassNotFoundException
+     * @throws IncorrectInputException if desired input is not entered
+     * @throws IOException if an I/O error occurs
+     * @throws ClassNotFoundException if the class of a serialized object could not be found
      */
     public void login() throws IncorrectInputException, IOException, ClassNotFoundException {
 

@@ -39,10 +39,6 @@ public class Team implements Serializable {
         return studentsInTeam;
     }
 
-    public void setStudentsInTeam(ArrayList < Student > studentsInTeam) {
-        this.studentsInTeam = studentsInTeam;
-    }
-
     public int getTeamFitness() {
         return teamFitness;
     }

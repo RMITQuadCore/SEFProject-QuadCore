@@ -90,30 +90,6 @@ public class Constraint implements Serializable {
         this.teamSize = teamSize;
     }
 
-    public int getUniquePersonalityWeightAge() {
-        return uniquePersonalityWeightAge;
-    }
-
-    public void setUniquePersonalityWeightAge(int uniquePersonalityWeightAge) {
-        this.uniquePersonalityWeightAge = uniquePersonalityWeightAge;
-    }
-
-    public int getRequiredPersonalityWeightAge() {
-        return requiredPersonalityWeightAge;
-    }
-
-    public void setRequiredPersonalityWeightAge(int requiredPersonalityWeightAge) {
-        this.requiredPersonalityWeightAge = requiredPersonalityWeightAge;
-    }
-
-    public int getExperienceWeightAge() {
-        return experienceWeightAge;
-    }
-
-    public void setExperienceWeightAge(int experienceWeightAge) {
-        this.experienceWeightAge = experienceWeightAge;
-    }
-
     public int getMaxNosOfFemaleStudent() {
         return maxNosOfFemaleStudent;
     }
@@ -162,22 +138,6 @@ public class Constraint implements Serializable {
         this.minNosOfStudWithExperience = minNosOfStudWithExperience;
     }
 
-    public ArrayList < Character > getRequiredPersonalities() {
-        return requiredPersonalities;
-    }
-
-    public void setRequiredPersonalities(ArrayList < Character > requiredPersonalities) {
-        this.requiredPersonalities = requiredPersonalities;
-    }
-
-    public ArrayList < Character > getValidPersonalities() {
-        return validPersonalities;
-    }
-
-    public void setValidPersonalities(ArrayList < Character > validPersonalities) {
-        this.validPersonalities = validPersonalities;
-    }
-
     public boolean isUniquePersonality() {
         return uniquePersonality;
     }
@@ -214,8 +174,7 @@ public class Constraint implements Serializable {
     public static boolean requiredPersonalityConstraintCheck(ArrayList < Student > teamCreator) {
         boolean requiredPersonalityPresent = false;
         for (Student student: teamCreator) {
-            if (student.getStudentPersonality() == 'A' || student.getStudentPersonality() == 'B' ||
-                    student.getStudentPersonality() == 'a' || student.getStudentPersonality() == 'b') {
+            if (student.getStudentPersonality() == 'A' || student.getStudentPersonality() == 'B' ) {
                 requiredPersonalityPresent = true;
                 break;
             }
@@ -245,7 +204,7 @@ public class Constraint implements Serializable {
      * @param teamCreator arraylist containing details of students who can form a team.
      * @return boolean value to determine Hard constraint is met or not.
      */
-    public static boolean twoMembersWith3GPAHardConstraintCheck(ArrayList < Student > teamCreator) //TODO better name
+    public static boolean twoMembersWith3GPAHardConstraintCheck(ArrayList < Student > teamCreator)
     {
         int GPAGreaterThanThreeCounter = 0;
         for (int i = 0; i < teamCreator.size(); i++) {
@@ -374,7 +333,6 @@ public class Constraint implements Serializable {
         allConstraints.add(new Constraint(maxNosOfFemaleStudent,benchmarkStudentGpa, minNosOfStudWithBenchmarkGpa,
                 maxAvgGpaOfTeam, yearsOfExperience, minNosOfStudWithExperience,
                 uniquePersonality, teamSize));
-        //FileReadWrite.saveConstraintDetails(Main.allConstraintFileName, allConstraints);
 
         Constraint.allSoftConstraints.clear();
         System.out.println("\nEnter weight age for Soft-Constraints (1-4): ");
